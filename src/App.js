@@ -1,14 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
+import logotype from './assets/logotype.png';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>preserv</h1>
-        <p>test</p>
-        <p>test2</p>
-      </header>
+    <div className='app'>
+      <img src={logotype} width='200px' alt='preserv logotype'></img>
+      <button>SIGN UP</button>
+      <button>LOG IN</button>
     </div>
   );
 }
