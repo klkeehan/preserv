@@ -1,4 +1,4 @@
-import './App.css';
+import '../App.css';
 
 function Navbar({pantryLoad,shoppingLoad, recipeLoad, accountLoad}) {
     return (
