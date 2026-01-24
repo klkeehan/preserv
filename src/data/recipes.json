@@ -1,0 +1,66 @@
+[
+    {
+        "id": 1,
+        "name": "Spaghetti Bolognese",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Spaghetti_bolognese_%28hozinja%29_%28cropped%29.jpg/250px-Spaghetti_bolognese_%28hozinja%29_%28cropped%29.jpg",
+        "ingredients": [
+            "200g spaghetti",
+            "100g minced beef",
+            "1 onion, chopped",
+            "2 cloves garlic, minced",
+            "400g canned tomatoes",
+            "2 tbsp olive oil",
+            "Salt and pepper"
+        ],
+        "instructions": [
+            "Cook spaghetti according to package instructions.",
+            "Heat olive oil in a pan and sauté onion and garlic until translucent.",
+            "Add minced beef and cook until browned.",
+            "Pour in canned tomatoes, simmer for 15 minutes.",
+            "Season with salt and pepper.",
+            "Serve sauce over cooked spaghetti."
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Pancakes",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Spaghetti_bolognese_%28hozinja%29_%28cropped%29.jpg/250px-Spaghetti_bolognese_%28hozinja%29_%28cropped%29.jpg",
+        "ingredients": [
+            "1 cup flour",
+            "2 tbsp sugar",
+            "1 tsp baking powder",
+            "1/2 tsp salt",
+            "1 cup milk",
+            "1 egg",
+            "2 tbsp melted butter"
+        ],
+        "instructions": [
+            "Mix flour, sugar, baking powder, and salt in a bowl.",
+            "Whisk in milk, egg, and melted butter until smooth.",
+            "Heat a non-stick pan over medium heat.",
+            "Pour 1/4 cup batter per pancake.",
+            "Cook until bubbles form, flip and cook the other side.",
+            "Serve warm with syrup."
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Caesar Salad",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Spaghetti_bolognese_%28hozinja%29_%28cropped%29.jpg/250px-Spaghetti_bolognese_%28hozinja%29_%28cropped%29.jpg",
+        "ingredients": [
+            "1 romaine lettuce",
+            "50g parmesan cheese, shaved",
+            "100g croutons",
+            "2 tbsp Caesar dressing",
+            "Salt and pepper"
+        ],
+        "instructions": [
+            "Wash and chop romaine lettuce.",
+            "Place lettuce in a large bowl, add croutons and parmesan.",
+            "Drizzle Caesar dressing over salad.",
+            "Toss gently to combine.",
+            "Season with salt and pepper to taste.",
+            "Serve immediately."
+        ]
+    }
+]

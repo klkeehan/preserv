@@ -8,12 +8,14 @@ import Account from './components/account';
 import logotype from './assets/logotype.png';
 
 function App() {
-  //sign up/login page
+  // sign up / login page
   let defaultContent = (
     <div className='app'>
-      <img src={logotype} width='200px' alt='preserv logotype'></img>
+      <img src={logotype} width='200px' alt='preserv logotype' />
       <button>SIGN UP</button>
       <button>LOG IN</button>
+      <button onClick={() => setContent(<Recipe />)}>Go to Recipes</button>
+
     </div>
   );
 
@@ -24,6 +26,7 @@ function App() {
       {content}
     </div>
   );
+
 }
 
 export default App;

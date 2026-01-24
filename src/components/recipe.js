@@ -1,13 +1,24 @@
 import '../App.css';
+import recipesSet from '../data/recipes.json';
 import Navbar from './navbar';
 import React from 'react';
 import { useState } from 'react';
 
 function Recipe() {
-    //recipe home page
+
+    //recipe home page, using map to generate recipe cards pulling from recipes.json until we get the backend set up
     let recipeHome = (
-        <div>
+        <div className='app'>
             <h1>My Recipes</h1>
+            <div className="recipies-grid">
+                {recipesSet.map((recipe) => (
+                    <div className="recipies-card" key ={recipe.id}>
+                        <img className="recipies-image" src={recipe.image} alt={recipe.name} />
+                        <h4>{recipe.name}</h4>
+                    </div>
+                ))}
+            </div>
+
             <button onClick={rEdit}>edit</button>
         </div>
     );

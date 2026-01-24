@@ -37,3 +37,22 @@
 
   border: black 2px solid;
 }
+
+.recipies-grid {
+  display: grid;
+  width: 393px;
+  height: 800px;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.recipies-card {
+  border-color: black;
+  width: 163px;
+  height: 163px;
+
+}
+
+.recipies-image {
+  width: 163px;
+  height: 163px;
+}
