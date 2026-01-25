@@ -5,7 +5,8 @@ import React from 'react';
 import { useState } from 'react';
 
 function Recipe() {
-
+    const [page, getPage] = useState("home");
+    const [selectedRecipe, getSelectedRecipe] = useState(null);
     //recipe home page, using map to generate recipe cards pulling from recipes.json until we get the backend set up
     let recipeHome = (
         <div className='app'>
@@ -13,7 +14,12 @@ function Recipe() {
             <div className="recipies-grid">
                 {recipesSet.map((recipe) => (
                     <div className="recipies-card" key ={recipe.id}>
+                        <button onClick={() => {
+                            getSelectedRecipe(recipe);
+                            getPage("view");
+                        }}>
                         <img className="recipies-image" src={recipe.image} alt={recipe.name} />
+                        </button>
                         <h4>{recipe.name}</h4>
                     </div>
                 ))}
@@ -24,9 +30,20 @@ function Recipe() {
     );
 
     //individual recipe page
-    let recipePage = (
+    const recipePage = selectedRecipe && (
         <div>
-            <h1>Recipe Title</h1>
+                <div className="#" key ={selectedRecipe.id}>
+                    <h3>{selectedRecipe.name}</h3>
+                    <button onClick={null}>Add to Shopping List</button>
+                    <button onClick={null}>Edit</button>
+                    <img className="recipies-image" src={selectedRecipe.image} alt={selectedRecipe.name} />
+                    <p>{selectedRecipe.ingredients}</p>
+                    <h5>Instructions</h5>
+                    <p>{selectedRecipe.instructions}</p>
+                    <button onClick={() => getPage("home")}>back</button>
+                </div>
+
+
         </div>
     )
 
@@ -60,7 +77,10 @@ function Recipe() {
 
     return (
         <div>
-            {content}
+            {/*{content}*/}
+            {page === "home" && recipeHome}
+            {page === "view" && recipePage}
+            {page === "edit" && recipeEdit}
         </div>
     );
 }
