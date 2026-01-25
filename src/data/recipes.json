@@ -12,6 +12,15 @@
             "2 tbsp olive oil",
             "Salt and pepper"
         ],
+        "available": [
+            "1",
+            "0",
+            "1",
+            "1",
+            "0",
+            "0",
+            "1"
+        ],
         "instructions": [
             "Cook spaghetti according to package instructions.",
             "Heat olive oil in a pan and sauté onion and garlic until translucent.",
@@ -24,7 +33,7 @@
     {
         "id": 2,
         "name": "Pancakes",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Spaghetti_bolognese_%28hozinja%29_%28cropped%29.jpg/250px-Spaghetti_bolognese_%28hozinja%29_%28cropped%29.jpg",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Foodiesfeed.com_pouring-honey-on-pancakes-with-walnuts.jpg/500px-Foodiesfeed.com_pouring-honey-on-pancakes-with-walnuts.jpg",
         "ingredients": [
             "1 cup flour",
             "2 tbsp sugar",
@@ -33,6 +42,15 @@
             "1 cup milk",
             "1 egg",
             "2 tbsp melted butter"
+        ],
+        "available": [
+            "1",
+            "0",
+            "1",
+            "1",
+            "0",
+            "1",
+            "1"
         ],
         "instructions": [
             "Mix flour, sugar, baking powder, and salt in a bowl.",
@@ -46,13 +64,22 @@
     {
         "id": 3,
         "name": "Caesar Salad",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Spaghetti_bolognese_%28hozinja%29_%28cropped%29.jpg/250px-Spaghetti_bolognese_%28hozinja%29_%28cropped%29.jpg",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Caesar_salad_%282%29.jpg/500px-Caesar_salad_%282%29.jpg",
         "ingredients": [
             "1 romaine lettuce",
             "50g parmesan cheese, shaved",
             "100g croutons",
             "2 tbsp Caesar dressing",
             "Salt and pepper"
+        ],
+        "available": [
+            "1",
+            "1",
+            "1",
+            "1",
+            "0",
+            "1",
+            "1"
         ],
         "instructions": [
             "Wash and chop romaine lettuce.",

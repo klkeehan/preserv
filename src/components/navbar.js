@@ -1,12 +1,12 @@
 import '../App.css';
 
-function Navbar({pantryLoad,shoppingLoad, recipeLoad, accountLoad}) {
+const Navbar = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     return (
         <div class='navbar'>
-            <button onClick={pantryLoad}></button>
-            <button onClick={shoppingLoad}></button>
-            <button onClick={recipeLoad}></button>
-            <button onClick={accountLoad}></button>
+            <button onClick={pantryLoad}>pantry</button>
+            <button onClick={shoppingLoad}>shopping</button>
+            <button onClick={recipeLoad}>recipe</button>
+            <button onClick={accountLoad}>account</button>
         </div>
     );
 }
