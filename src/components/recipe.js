@@ -7,6 +7,7 @@ import { useState } from 'react';
 function Recipe() {
     const [page, getPage] = useState("home");
     const [selectedRecipe, getSelectedRecipe] = useState(null);
+    const [showMessage, setShowMessage] = useState(false);
     //recipe home page, using map to generate recipe cards pulling from recipes.json until we get the backend set up
     let recipeHome = (
         <div className='app'>
@@ -25,39 +26,62 @@ function Recipe() {
                 ))}
             </div>
 
-            <button onClick={rEdit}>edit</button>
+            <button onClick={() => getPage("new")}>new</button>
         </div>
     );
 
-    //individual recipe page
+    //individual recipe page, create a class name to style, use popup class for styling that.
     const recipePage = selectedRecipe && (
         <div>
-                <div className="#" key ={selectedRecipe.id}>
+                <div className="#">
                     <h3>{selectedRecipe.name}</h3>
-                    <button onClick={null}>Add to Shopping List</button>
-                    <button onClick={null}>Edit</button>
                     <img className="recipies-image" src={selectedRecipe.image} alt={selectedRecipe.name} />
-                    <p>{selectedRecipe.ingredients}</p>
+                    <button onClick={getMessage}>Add to Shopping List</button>
+                    <button onClick={() => getPage("edit")}>Edit</button>
+                    {/*This generates a list of ingredients based on the JSON data, adds a Missing text when it gets a 0 from the availablity section in the JSON file per each item*/}
+                    <ul>{selectedRecipe.ingredients.map((item,index) =>(
+                        <li key={index}>{item.trim()}
+                        {selectedRecipe.available[index] === "0" && (
+                                    <span> MISSING</span>
+                        )}</li>
+                    ))}</ul>
                     <h5>Instructions</h5>
                     <p>{selectedRecipe.instructions}</p>
                     <button onClick={() => getPage("home")}>back</button>
                 </div>
 
-
+            {showMessage && (
+                <div className="popup">Missing ingredients added to your shopping list!</div>
+                )}
         </div>
     )
 
     //recipe editing page
-    let recipeEdit = (
-        <div>
+    let recipeEdit = selectedRecipe &&(
+        <div class='recipie-edit'>
             <h1>Edit Recipe</h1>
+            <label>Recipe Name:<input type="text" defaultValue={selectedRecipe.name} /></label>< br/>
+            <label>Ingredients:<textarea defaultValue={selectedRecipe.ingredients}></textarea></label>< br/>
+            <label>Instructions:<textarea defaultValue={selectedRecipe.instructions}></textarea></label>< br/>
+            <label>Upload Image:<input type="file" accept="*" /></label>
+            <button type="button">Take Picture</button>
+            <button onClick={() => getPage("view")}>Save</button>
+            <button onClick={() => getPage("view")}>Cancel</button>
         </div>
+
     )
 
     //recipe creation page
     let recipeNew = (
-        <div>
+        <div class='recipie-edit'>
             <h1>New Recipe</h1>
+            <label>Recipe Name:<input type="text"/></label>< br/>
+            <label>Ingredients:<textarea></textarea></label>< br/>
+            <label>Instructions:<textarea></textarea></label>< br/>
+            <label>Upload Image:<input type="file" accept="*" /></label>
+            <button type="button">Take Picture</button>
+            <button onClick={() => getPage("view")}>Save</button>
+            <button onClick={() => getPage("view")}>Cancel</button>
         </div>
     )
 
@@ -75,12 +99,18 @@ function Recipe() {
         setContent(recipeNew)
     }
 
+    function getMessage() {
+        setShowMessage(true);
+        setTimeout(() => setShowMessage(false), 3000);
+    }
+
     return (
         <div>
-            {/*{content}*/}
             {page === "home" && recipeHome}
             {page === "view" && recipePage}
             {page === "edit" && recipeEdit}
+            {page === "new" && recipeNew}
+
         </div>
     );
 }
