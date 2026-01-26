@@ -161,3 +161,9 @@
   width: 163px;
   height: 163px;
 }
+
+.divider {
+  height: 1px;
+  width: 393px;
+  background-color: #595858;
+}

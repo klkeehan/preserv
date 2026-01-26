@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "name": "Bread",
+        "quantity": "2",
+        "checked": "false"
+    },
+    {
+        "id": 2,
+        "name": "Tomatoes",
+        "quantity": "6",
+        "checked": "false"
+    }
+]

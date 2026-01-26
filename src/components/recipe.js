@@ -4,7 +4,7 @@ import Navbar from './navbar';
 import React from 'react';
 import { useState } from 'react';
 
-function Recipe() {
+const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     const [page, getPage] = useState("home");
     const [selectedRecipe, getSelectedRecipe] = useState(null);
     const [showMessage, setShowMessage] = useState(false);
@@ -27,6 +27,7 @@ function Recipe() {
             </div>
 
             <button onClick={() => getPage("new")}>new</button>
+            <Navbar pantryLoad={pantryLoad} shoppingLoad={shoppingLoad} recipeLoad={recipeLoad} accountLoad={accountLoad} />
         </div>
     );
 

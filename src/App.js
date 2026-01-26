@@ -17,8 +17,8 @@ function App() {
       <button className='solid-button' onClick={loadSignUp}>SIGN UP</button>
       <button className='hollow-button' onClick={loadLogin}>LOG IN</button>
       <button onClick={() => setContent(<Recipe />)}>Go to Recipes</button>
-      <button onClick={() => setContent(<Pantry />)}>pantry</button>
-      <button onClick={() => setContent(<Shopping />)}>shopping list</button>
+      <button onClick={loadPantry}>pantry</button>
+      <button onClick={loadShopping}>shopping list</button>
       <button onClick={() => setContent(<Account />)}>account</button>
     </div>
   );
@@ -81,6 +81,22 @@ function App() {
 
   function loadPWReset() {
     setContent(pwReset);
+  }
+
+  function loadPantry() {
+    setContent(<Pantry pantryLoad={loadPantry} shoppingLoad={loadShopping} recipeLoad={loadRecipe} accountLoad={loadAccount} />);
+  }
+
+  function loadShopping() {
+    setContent(<Shopping pantryLoad={loadPantry} shoppingLoad={loadShopping} recipeLoad={loadRecipe} accountLoad={loadAccount} />);
+  }
+
+  function loadRecipe() {
+    setContent(<Recipe pantryLoad={loadPantry} shoppingLoad={loadShopping} recipeLoad={loadRecipe} accountLoad={loadAccount} />);
+  }
+
+  function loadAccount() {
+    setContent(<Account pantryLoad={loadPantry} shoppingLoad={loadShopping} recipeLoad={loadRecipe} accountLoad={loadAccount} />);
   }
 
   return (

@@ -3,10 +3,12 @@ import Navbar from './navbar';
 import React from 'react';
 import { useState } from 'react';
 
-function Pantry() {
+const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     return (
         <div>
             <h1>Pantry</h1>
+            <input type="search" />
+            <Navbar pantryLoad={pantryLoad} shoppingLoad={shoppingLoad} recipeLoad={recipeLoad} accountLoad={accountLoad} />
         </div>
     );
 }

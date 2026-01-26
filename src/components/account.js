@@ -4,7 +4,7 @@ import profileLime from '../assets/profilelime.png'
 import React from 'react';
 import { useState } from 'react';
 
-function Account() {
+const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     let accountPage = (
         <div className='app'>
             <h1>Account</h1>
@@ -67,6 +67,7 @@ function Account() {
                     </label>
                 </div>
             </div>
+            <Navbar pantryLoad={pantryLoad} shoppingLoad={shoppingLoad} recipeLoad={recipeLoad} accountLoad={accountLoad} />
         </div>
     );
     //HOUSEHOLD STUFF
