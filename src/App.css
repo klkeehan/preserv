@@ -27,6 +27,7 @@
   text-align: center;
   align-items: center;
   justify-content: center;
+  position: relative;
 
   /*center align spacing*/
   margin-left: auto;
@@ -48,6 +49,19 @@
 
   display: flex;
   flex-direction: column;
+}
+
+.navbar {
+  position: absolute;
+  bottom: 0;
+  width: 353px;
+  height: 78px;
+  border-radius: 100px;
+  margin-bottom: 19px;
+  margin-left: 20px;
+  margin-right: auto;
+  
+  background-color: var(--green);
 }
 
 .logotype {
