@@ -1,6 +1,8 @@
 import '../App.css';
 import itemSet from '../data/shopping.json';
 import Navbar from './navbar';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 const Shopping = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     let shoppingPage = (
@@ -19,7 +21,23 @@ const Shopping = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 ))}
             </div>
             <button>Remove</button>
-            <button>add</button>
+            <Popup trigger=
+                {<button>add</button>}
+                modal nested>
+                {
+                    close => (
+                        <div className='modal'>
+                            <div className='content'>
+                                <label>Item Name: <input type='text' /></label>
+                                <label>Amount: <input type='number' /></label>
+                            </div>
+                            <div>
+                                <button onClick={() => close()}>Confirm</button>
+                            </div>
+                        </div>
+                    )
+                }
+                </Popup>
             <Navbar pantryLoad={pantryLoad} shoppingLoad={shoppingLoad} recipeLoad={recipeLoad} accountLoad={accountLoad} />
         </div>
     )

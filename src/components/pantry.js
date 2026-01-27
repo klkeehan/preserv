@@ -1,7 +1,5 @@
 import '../App.css';
 import Navbar from './navbar';
-import React from 'react';
-import { useState } from 'react';
 
 const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     return (
