@@ -1,16 +1,49 @@
 import '../App.css';
 import { useState } from 'react';
 import Pantry from './pantry';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
-const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, itemCat}) => {
+const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, itemCat, loadPantry}) => {
     let item = (
         <div>
             <div>
                 <img className='item-image' src={itemImg} alt={itemName}></img>
-                <aside>
+                <aside className='item-column'>
                     <button>Edit</button>
-                    <button>Trash</button>
-                    <button>Cart</button>
+                    <Popup trigger=
+                        {<button>Trash</button>}
+                        modal nested>
+                        {
+                            close => (
+                                <div className='modal'>
+                                    <div className='content'>
+                                        <p>Are you sure you want to trash this item?</p>
+                                    </div>
+                                <div>
+                                    <button onClick={() => {setContent(<Pantry />)}}>Confirm</button>
+                                </div>
+                            </div>
+                            )
+                        }
+                    </Popup>
+                    <Popup trigger=
+                        {<button>cart</button>}
+                        modal nested>
+                        {
+                            close => (
+                                <div className='modal'>
+                                    <div className='content'>
+                                        <p>What quantity would you like to add?</p>
+                                        <label>Amount: <input type='number' /></label>
+                                    </div>
+                                <div>
+                                    <button onClick={() => {close()}}>Confirm</button>
+                                </div>
+                            </div>
+                            )
+                        }
+                    </Popup>
                 </aside>
             </div>
             <p>{itemStatus}</p>
@@ -26,7 +59,8 @@ const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, 
             <p>{itemExp}</p>
             <h3>Category:</h3>
             <p>{itemCat}</p>
-            <button onClick={() => setContent(<Pantry />)}>back</button>
+            <h3>Nutrition Facts</h3>
+            <button onClick={() => {setContent(<Pantry />)}}>back</button>
         </div>
     );
 
@@ -34,7 +68,7 @@ const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, 
 
     return (
         <div>
-            {content};
+            {content}
         </div>
     )
 }

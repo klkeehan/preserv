@@ -17,7 +17,7 @@
         "purchDate": "01/01/2026",
         "expDate": "02/10/2026",
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Homemade_marmalade%2C_England.jpg/500px-Homemade_marmalade%2C_England.jpg",
-        "category": "Produce"
+        "category": "Condiments"
     },
     {
         "id": 3,
@@ -29,7 +29,7 @@
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Popcorn_up_close_salted_and_air_popped.jpg/960px-Popcorn_up_close_salted_and_air_popped.jpg",
         "category": "Produce"
     },
-        {
+    {
         "id": 4,
         "status": "FRESH",
         "name": "Almonds",
@@ -38,5 +38,25 @@
         "expDate": "08/01/2026",
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Almonds.png/960px-Almonds.png",
         "category": "Snacks"
+    },
+    {
+        "id": 5,
+        "status": "FRESH",
+        "name": "Eggs",
+        "quantity": "6",
+        "purchDate": "02/01/2026",
+        "expDate": "02/15/2026",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/6-Pack-Chicken-Eggs.jpg/960px-6-Pack-Chicken-Eggs.jpg",
+        "category": "Dairy"
+    },
+    {
+        "id": 6,
+        "status": "FRESH",
+        "name": "Pasta",
+        "quantity": "6",
+        "purchDate": "02/01/2026",
+        "expDate": "02/01/2027",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/A_better_homemade_pasta.jpg/960px-A_better_homemade_pasta.jpg",
+        "category": "Grain"
     }
 ]

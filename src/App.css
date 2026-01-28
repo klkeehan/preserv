@@ -176,12 +176,6 @@
   height: 163px;
 }
 
-.divider {
-  height: 1px;
-  width: 393px;
-  background-color: #595858;
-}
-
 /*pantry styling*/
 .pantry-grid {
   justify-content: center;
@@ -212,7 +206,7 @@
   position: absolute;
   top: 0;
   margin-top: 71px;
-  margin-left: 6px;
+  margin-left: 2px;
   border-radius: 0px 0px 20px 20px;
   text-align: left;
   padding: 10px;
@@ -231,4 +225,41 @@
   height: 149px;
   border-radius: 20px;
   box-shadow: 0px 0px 10px var(--pink); /*temp - needs to be conditional*/
+}
+
+.item-column {
+  float: right;
+  display: flex;
+  flex-direction: column;
+}
+
+/*shopping styling*/
+.shopping-item {
+  width: 323px;
+  height: 77px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+.shopping-info {
+  text-align: left;
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  line-height: 0;
+}
+
+.button-bar {
+  width: 393px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.divider {
+  height: 1px;
+  width: 393px;
+  background-color: #a0a0a0;
 }

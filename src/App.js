@@ -1,7 +1,6 @@
 import './App.css';
 import React from 'react';
 import { useState } from 'react';
-import Navbar from './components/navbar';
 import Pantry from './components/pantry';
 import Shopping from './components/shopping';
 import Recipe from './components/recipe';
@@ -64,7 +63,7 @@ function App() {
       <input name='email' placeholder='Email' className='input'/>
       <button className='solid-button' style={{color:'var(--white)'}}>SEND EMAIL</button>
     </div>
-  )
+  );
 
   //load functions
   function loadHome() {

@@ -25,23 +25,22 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
             <div className='pantry-grid'>
                 {pantrySet.map((item) => (
                     <div key={item.id} className='pantry-item'>
-                        <button className='pantry-button' onClick={() => setContent(<Item itemImg={item.image} itemStatus={item.status} itemName={item.name} itemQuantity={item.quantity} itemPurch={item.purchDate} itemExp={item.expDate} itemCat={item.category} />)}><img src={item.image} className='pantry-image' alt={item.name}></img></button>
-                        <div>
-                            <p className='pantry-overlay'>{item.name}</p>
-                        </div>
+                        <button className='pantry-button' onClick={() => setContent(<Item itemImg={item.image} itemStatus={item.status} itemName={item.name} itemQuantity={item.quantity} itemPurch={item.purchDate} itemExp={item.expDate} itemCat={item.category} pantryLoad={setContent(pantryHome)}/>)}><img src={item.image} className='pantry-image' alt={item.name}></img>
+                        <p className='pantry-overlay'>{item.name}</p>
+                        </button>
                     </div>
                 ))}
             </div>
             <button>add</button>
             <Navbar pantryLoad={pantryLoad} shoppingLoad={shoppingLoad} recipeLoad={recipeLoad} accountLoad={accountLoad} />
         </div>
-    )
+    );
 
     let [content, setContent] = useState(pantryHome);
 
     return (
         <div>
-            {content};
+            {content}
         </div>
     );
 }
