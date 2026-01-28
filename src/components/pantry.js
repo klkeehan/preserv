@@ -7,8 +7,10 @@ import Navbar from './navbar';
 const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     let pantryHome = (
         <div className='layout'>
-            <h1>Pantry</h1>
-            <input type="search" placeholder='Search' />
+            <div className='pantry-header'>
+                <h1>Pantry</h1>
+                <input type="search" placeholder='Search' className='search-bar' />
+            </div>
             <div>
                 <button>All</button>
                 <button>Produce</button>

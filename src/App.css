@@ -51,6 +51,12 @@
   flex-direction: column;
 }
 
+h1 {
+  font-family: manrope;
+  font-size: 28px;
+  font-weight: 800;
+}
+
 .navbar {
   position: absolute;
   bottom: 0;
@@ -177,6 +183,27 @@
 }
 
 /*pantry styling*/
+.pantry-header {
+  width: 353px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-bar {
+  width: 240px;
+  height: 34px;
+  padding-left: 10px;
+  font-family: figtree;
+  font-size: 14px;
+  font-weight: 700;
+  background-color: #e3e3e3;
+  border-color: var(--green);
+  border-width: 3px;
+  border-radius: 20px;
+  color: var(--black);
+}
+
 .pantry-grid {
   justify-content: center;
   display: grid;

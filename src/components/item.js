@@ -10,7 +10,7 @@ const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, 
             <div>
                 <img className='item-image' src={itemImg} alt={itemName}></img>
                 <aside className='item-column'>
-                    <button>Edit</button>
+                    <button onClick={() => setContent(itemEdit)}>Edit</button>
                     <Popup trigger=
                         {<button>Trash</button>}
                         modal nested>
@@ -65,6 +65,23 @@ const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, 
     );
 
     let [content, setContent] = useState(item);
+
+    let itemEdit = (
+        <div>
+            <h1>Pantry Edit</h1>
+            <label>Item Name: <input type='text' placeholder={itemName} /></label>
+            <label>Amount: <input type='number' placeholder={itemQuantity} /></label>
+            <label>Date Purchased: <input type='date' placeholder={itemPurch} /></label>
+            <label>Expiration Date: <input type='date' placeholder={itemExp} /></label>
+            <label>Item Type: <input /></label>
+            <h3>Image:</h3>
+            <img className='item-image' src={itemImg} alt={itemName}></img>
+            <label>a<input type="file" accept="*" /></label>
+            <button>camera</button>
+            <button onClick={() => setContent(item)}>Save Item</button>
+            <button onClick={() => setContent(item)}>x</button>
+        </div>
+    );
 
     return (
         <div>
