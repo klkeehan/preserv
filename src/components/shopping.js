@@ -6,7 +6,7 @@ import 'reactjs-popup/dist/index.css';
 
 const Shopping = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     let shoppingPage = (
-        <div>
+        <div className='layout'>
             <h1>My Shopping List</h1>
             <div className='item-grid'>
                 {itemSet.map((item) => (

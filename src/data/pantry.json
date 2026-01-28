@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "status": "EXPIRED",
+        "name": "Apples",
+        "quantity": "2",
+        "purchDate": "01/01/2026",
+        "expDate": "01/15/2026",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/9/92/95apple.jpeg",
+        "category": "Produce"
+    },
+    {
+        "id": 2,
+        "status": "USE SOON - NEAR EXPIRATION",
+        "name": "Jam",
+        "quantity": "1",
+        "purchDate": "01/01/2026",
+        "expDate": "02/10/2026",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Homemade_marmalade%2C_England.jpg/500px-Homemade_marmalade%2C_England.jpg",
+        "category": "Produce"
+    },
+    {
+        "id": 3,
+        "status": "FRESH",
+        "name": "Popcorn",
+        "quantity": "3",
+        "purchDate": "02/01/2026",
+        "expDate": "08/01/2026",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Popcorn_up_close_salted_and_air_popped.jpg/960px-Popcorn_up_close_salted_and_air_popped.jpg",
+        "category": "Produce"
+    },
+        {
+        "id": 4,
+        "status": "FRESH",
+        "name": "Almonds",
+        "quantity": "5",
+        "purchDate": "02/01/2026",
+        "expDate": "08/01/2026",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Almonds.png/960px-Almonds.png",
+        "category": "Snacks"
+    }
+]

@@ -35,7 +35,7 @@ function App() {
       <input name='email' placeholder='Email' className='input'/>
       <input name='username' placeholder='Username' className='input'/>
       <input name='password' placeholder='Password' className='input'/>
-      <button className='solid-button' style={{color:'var(--white)'}} onClick={() => setContent(<Pantry />)}>GET STARTED</button>
+      <button className='solid-button' style={{color:'var(--white)'}} onClick={loadPantry}>GET STARTED</button>
     </div>
   );
 
@@ -48,7 +48,7 @@ function App() {
       <input name='username' placeholder='Username' className='input' />
       <input name='password' placeholder='Password' className='input' style={{marginBottom:'0px'}} />
       <button className='pw-forgot' onClick={loadPWReset}>Forgot Password?</button>
-      <button className='solid-button' style={{color:'var(--white)'}} onClick={() => setContent(<Pantry />)}>LOG IN</button>
+      <button className='solid-button' style={{color:'var(--white)'}} onClick={loadPantry}>LOG IN</button>
     </div>
   );
 
