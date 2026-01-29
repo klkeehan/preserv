@@ -1,0 +1,44 @@
+{
+  "Owner": {
+    "id": 1,
+    "name": "Alexboi777",
+    "image": "https://upload.wikimedia.org/wikipedia/en/0/07/Default_Miis.jpeg",
+    "paccess": "edit",
+    "slaccess": "edit",
+    "role": "Owner"
+  },
+  "Members": [
+    {
+      "id": 2,
+      "name": "Memberman",
+      "image": "https://upload.wikimedia.org/wikipedia/en/0/07/Default_Miis.jpeg",
+      "paccess": "view",
+      "slaccess": "view",
+      "role": "Member"
+    },
+    {
+      "id": 3,
+      "name": "Fellowmember",
+      "image": "https://upload.wikimedia.org/wikipedia/en/0/07/Default_Miis.jpeg",
+      "paccess": "view",
+      "slaccess": "edit",
+      "role": "Member"
+    },
+    {
+      "id": 4,
+      "name": "Membrother",
+      "image": "https://upload.wikimedia.org/wikipedia/en/0/07/Default_Miis.jpeg",
+      "paccess": "view",
+      "slaccess": "edit",
+      "role": "Member"
+    },
+    {
+      "id": 5,
+      "name": "Memberperson",
+      "image": "https://upload.wikimedia.org/wikipedia/en/0/07/Default_Miis.jpeg",
+      "paccess": "view",
+      "slaccess": "view",
+      "role": "Member"
+    }
+  ]
+}
