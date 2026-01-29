@@ -6,7 +6,7 @@ import householdMember from '../data/householdtwo.json';
 import React from 'react';
 import { useState } from 'react';
 
-function Account() {
+const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
 
     let [page, getPage] = useState("account")
     
@@ -115,6 +115,7 @@ function Account() {
                     </label>
                 </div>
             </div>
+            <Navbar pantryLoad={pantryLoad} shoppingLoad={shoppingLoad} recipeLoad={recipeLoad} accountLoad={accountLoad} />
         </div>
     );
     //Create or Join
