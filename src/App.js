@@ -1,7 +1,6 @@
 import './App.css';
 import React from 'react';
 import { useState } from 'react';
-import Navbar from './components/navbar';
 import Pantry from './components/pantry';
 import Shopping from './components/shopping';
 import Recipe from './components/recipe';
@@ -17,8 +16,8 @@ function App() {
       <button className='solid-button' onClick={loadSignUp}>SIGN UP</button>
       <button className='hollow-button' onClick={loadLogin}>LOG IN</button>
       <button onClick={() => setContent(<Recipe />)}>Go to Recipes</button>
-      <button onClick={() => setContent(<Pantry />)}>pantry</button>
-      <button onClick={() => setContent(<Shopping />)}>shopping list</button>
+      <button onClick={loadPantry}>pantry</button>
+      <button onClick={loadShopping}>shopping list</button>
       <button onClick={() => setContent(<Account />)}>account</button>
     </div>
   );
@@ -35,7 +34,7 @@ function App() {
       <input name='email' placeholder='Email' className='input'/>
       <input name='username' placeholder='Username' className='input'/>
       <input name='password' placeholder='Password' className='input'/>
-      <button className='solid-button' style={{color:'var(--white)'}} onClick={() => setContent(<Pantry />)}>GET STARTED</button>
+      <button className='solid-button' style={{color:'var(--white)'}} onClick={loadPantry}>GET STARTED</button>
     </div>
   );
 
@@ -48,7 +47,7 @@ function App() {
       <input name='username' placeholder='Username' className='input' />
       <input name='password' placeholder='Password' className='input' style={{marginBottom:'0px'}} />
       <button className='pw-forgot' onClick={loadPWReset}>Forgot Password?</button>
-      <button className='solid-button' style={{color:'var(--white)'}} onClick={() => setContent(<Pantry />)}>LOG IN</button>
+      <button className='solid-button' style={{color:'var(--white)'}} onClick={loadPantry}>LOG IN</button>
     </div>
   );
 
@@ -64,7 +63,7 @@ function App() {
       <input name='email' placeholder='Email' className='input'/>
       <button className='solid-button' style={{color:'var(--white)'}}>SEND EMAIL</button>
     </div>
-  )
+  );
 
   //load functions
   function loadHome() {
@@ -81,6 +80,22 @@ function App() {
 
   function loadPWReset() {
     setContent(pwReset);
+  }
+
+  function loadPantry() {
+    setContent(<Pantry pantryLoad={loadPantry} shoppingLoad={loadShopping} recipeLoad={loadRecipe} accountLoad={loadAccount} />);
+  }
+
+  function loadShopping() {
+    setContent(<Shopping pantryLoad={loadPantry} shoppingLoad={loadShopping} recipeLoad={loadRecipe} accountLoad={loadAccount} />);
+  }
+
+  function loadRecipe() {
+    setContent(<Recipe pantryLoad={loadPantry} shoppingLoad={loadShopping} recipeLoad={loadRecipe} accountLoad={loadAccount} />);
+  }
+
+  function loadAccount() {
+    setContent(<Account pantryLoad={loadPantry} shoppingLoad={loadShopping} recipeLoad={loadRecipe} accountLoad={loadAccount} />);
   }
 
   return (

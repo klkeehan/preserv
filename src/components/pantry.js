@@ -1,12 +1,48 @@
 import '../App.css';
-import Navbar from './navbar';
-import React from 'react';
+import pantrySet from '../data/pantry.json';
+import Item from './item';
 import { useState } from 'react';
+import Navbar from './navbar';
 
-function Pantry() {
+const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
+    let pantryHome = (
+        <div className='layout'>
+            <div className='pantry-header'>
+                <h1>Pantry</h1>
+                <input type="search" placeholder='Search' className='search-bar' />
+            </div>
+            <div>
+                <button>All</button>
+                <button>Produce</button>
+                <button>Proteins</button>
+                <button>Dairy</button>
+                <button>Grains</button>
+                <button>Canned</button>
+                <button>Condiments</button>
+                <button>Beverages</button>
+                <button>Frozen</button>
+                <button>Snacks</button>
+                <button>Other</button>
+            </div>
+            <div className='pantry-grid'>
+                {pantrySet.map((item) => (
+                    <div key={item.id} className='pantry-item'>
+                        <button className='pantry-button' onClick={() => setContent(<Item itemImg={item.image} itemStatus={item.status} itemName={item.name} itemQuantity={item.quantity} itemPurch={item.purchDate} itemExp={item.expDate} itemCat={item.category} pantryLoad={setContent(pantryHome)}/>)}><img src={item.image} className='pantry-image' alt={item.name}></img>
+                        <p className='pantry-overlay'>{item.name}</p>
+                        </button>
+                    </div>
+                ))}
+            </div>
+            <button>add</button>
+            <Navbar pantryLoad={pantryLoad} shoppingLoad={shoppingLoad} recipeLoad={recipeLoad} accountLoad={accountLoad} />
+        </div>
+    );
+
+    let [content, setContent] = useState(pantryHome);
+
     return (
         <div>
-            <h1>Pantry</h1>
+            {content}
         </div>
     );
 }
