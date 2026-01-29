@@ -4,6 +4,8 @@ import profileLime from '../assets/profilelime.png'
 import householdOwner from '../data/household.json';
 import householdMember from '../data/householdtwo.json';
 import React from 'react';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 import { useState } from 'react';
 
 const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
@@ -23,13 +25,64 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     function leaveremoveButton () {
         if (alexboiOwner) {
             if (theOwner) {
-                return <button className="kick-leave-button" onClick={() => {setInHousehold(false); getPage("household");}}>Leave Household</button>
+                return <Popup trigger=
+                        {<button className="kick-leave-button">Leave Household</button>}
+                        modal nested>
+                        {
+                            close => (
+                                <div className='modal'>
+                                    <div className='content'>
+                                        <p>Leave your current household?</p>
+                                    </div>
+                                <div className="pop-up-buttons">
+                                    <button onClick={() => {setInHousehold(false); getPage("household"); close();}}>Leave Household</button>
+                                    <button onClick={() => {close()}}>Cancel</button>
+                                </div>
+                            </div>
+                            )
+                        }
+                        </Popup> 
+                // <button className="kick-leave-button" onClick={() => {setInHousehold(false); getPage("household");}}>Leave Household</button>
             } else {
-                return <button className="kick-leave-button">Remove From Household</button>
+                return <Popup trigger=
+                        {<button className="kick-leave-button">Remove From Household</button>}
+                        modal nested>
+                        {
+                            close => (
+                                <div className='modal'>
+                                    <div className='content'>
+                                        <p>Remove member from household?</p>
+                                    </div>
+                                <div className="pop-up-buttons">
+                                    <button onClick={() => {getPage("created"); close();}}>Remove</button>
+                                    <button onClick={() => {close()}}>Cancel</button>
+                                </div>
+                            </div>
+                            )
+                        }
+                        </Popup> 
+                // <button className="kick-leave-button">Remove From Household</button>
             }
         }
         if (!alexboiOwner && alexboiselfReflection) {
-            return <button className="kick-leave-button" onClick={() => {setInHousehold(false); getPage("household");}}>Leave Household</button>
+            return <Popup trigger=
+                        {<button className="kick-leave-button">Leave Household</button>}
+                        modal nested>
+                        {
+                            close => (
+                                <div className='modal'>
+                                    <div className='content'>
+                                        <p>Leave your current household?</p>
+                                    </div>
+                                <div className="pop-up-buttons">
+                                    <button onClick={() => {setInHousehold(false); getPage("household"); close();}}>Leave Household</button>
+                                    <button onClick={() => {close()}}>Cancel</button>
+                                </div>
+                            </div>
+                            )
+                        }
+                    </Popup> 
+            //<button className="kick-leave-button" onClick={() => {setInHousehold(false); getPage("household");}}>Leave Household</button>
         }
         return null;
     }
@@ -66,8 +119,42 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                     <h2>Alex</h2>
                     <p onClick={skiptoHousehold}>Household Settings</p>
                     <p>Change Profile Picture...</p>
-                    <p>Change Password...</p>
-                    <p className="accountpage-logout">Logout...</p>
+                    <Popup trigger=
+                        {<p>Change Password...</p>}
+                        modal nested>
+                        {
+                            close => (
+                                <div className='modal'>
+                                    <div className='content'>
+                                        <label className="popup-label">New Password:</label>
+                                        <input className="popup-input" type="text" name="newpassword"/>
+                                        <label className="popup-label">Confirm Password:</label>
+                                        <input className="popup-input" type="text" name="confirmpassword"/>
+                                    </div>
+                                <div className="pop-up-buttons">
+                                    <button onClick={() => {close()}}>Submit</button>
+                                </div>
+                            </div>
+                            )
+                        }
+                    </Popup> 
+                    <Popup trigger=
+                        {<p className="accountpage-logout">Logout...</p>}
+                        modal nested>
+                        {
+                            close => (
+                                <div className='modal'>
+                                    <div className='content'>
+                                        <p>Log out of your account?</p>
+                                    </div>
+                                <div className="pop-up-buttons">
+                                    <button>Log Out</button>
+                                    <button onClick={() => {close()}}>Cancel</button>
+                                </div>
+                            </div>
+                            )
+                        }
+                    </Popup> 
                 </div>
             </div>
             <div className="account-notifications">
