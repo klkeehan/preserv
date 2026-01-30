@@ -33,12 +33,42 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                     </div>
                 ))}
             </div>
-            <button>add</button>
+            <button onClick={() => setContent(pantryAdd)}>add</button>
             <Navbar pantryLoad={pantryLoad} shoppingLoad={shoppingLoad} recipeLoad={recipeLoad} accountLoad={accountLoad} />
         </div>
     );
 
     let [content, setContent] = useState(pantryHome);
+
+    let pantryAdd = (
+        <div>
+            <h1>Pantry Add</h1>
+            <div>
+                <button>manual</button>
+                <button>scan</button>
+            </div>
+            <label>Item Name: <input type='text' /></label>
+            <label>Amount: <input type='number' /></label>
+            <label>Date Purchased: <input type='date' /></label>
+            <label>Expiration Date: <input type='date' /></label>
+            <label>Item Type: <select name='type' >
+                <option value='' disabled selected>Select</option>
+                <option value='produce'>Produce</option>
+                <option value='proteins'>Proteins</option>
+                <option value='dairy'>Dairy</option>
+                <option value='grains'>Grains</option>
+                <option value='canned'>Canned</option>
+                <option value='condiments'>Condiments</option>
+                <option value='beverages'>Beverages</option>
+                <option value='frozen'>Frozen</option>
+                <option value='snacks'>Snacks</option>
+                <option value='other'>Other</option>
+            </select></label>
+            <h3>Image:</h3>
+            <label>a<input type="file" accept="*" /></label>
+            <button>camera</button>
+        </div>
+    )
 
     return (
         <div>

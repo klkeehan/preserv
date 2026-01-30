@@ -69,11 +69,22 @@ const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, 
     let itemEdit = (
         <div>
             <h1>Pantry Edit</h1>
-            <label>Item Name: <input type='text' placeholder={itemName} /></label>
-            <label>Amount: <input type='number' placeholder={itemQuantity} /></label>
-            <label>Date Purchased: <input type='date' placeholder={itemPurch} /></label>
-            <label>Expiration Date: <input type='date' placeholder={itemExp} /></label>
-            <label>Item Type: <input /></label>
+            <label>Item Name: <input type='text' defaultValue={itemName} /></label>
+            <label>Amount: <input type='number' defaultValue={itemQuantity} /></label>
+            <label>Date Purchased: <input type='text' defaultValue={itemPurch} /></label>
+            <label>Expiration Date: <input type='text' defaultValue={itemExp} /></label>
+            <label>Item Type: <select name='type'>
+                <option value='produce'>Produce</option>
+                <option value='proteins'>Proteins</option>
+                <option value='dairy'>Dairy</option>
+                <option value='grains'>Grains</option>
+                <option value='canned'>Canned</option>
+                <option value='condiments'>Condiments</option>
+                <option value='beverages'>Beverages</option>
+                <option value='frozen'>Frozen</option>
+                <option value='snacks'>Snacks</option>
+                <option value='other'>Other</option>
+            </select></label>
             <h3>Image:</h3>
             <img className='item-image' src={itemImg} alt={itemName}></img>
             <label>a<input type="file" accept="*" /></label>
