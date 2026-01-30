@@ -2,12 +2,12 @@ import '../App.css';
 import recipesSet from '../data/recipes.json';
 import Navbar from './navbar';
 import React from 'react';
+import Popup from 'reactjs-popup';
 import { useState } from 'react';
 
 const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     const [page, getPage] = useState("home");
     const [selectedRecipe, getSelectedRecipe] = useState(null);
-    const [showMessage, setShowMessage] = useState(false);
     //recipe home page, using map to generate recipe cards pulling from recipes.json until we get the backend set up
     let recipeHome = (
         <div className='app'>
@@ -37,7 +37,25 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 <div className="#">
                     <h3>{selectedRecipe.name}</h3>
                     <img className="recipies-image" src={selectedRecipe.image} alt={selectedRecipe.name} />
-                    <button onClick={getMessage}>Add to Shopping List</button>
+                    <Popup
+                        trigger={<button>Add to Shopping List</button>}
+                        modal
+                        nested
+                    >
+                        {close => {
+                            setTimeout(() => {
+                                close();
+                            }, 2000); // closes after 2 seconds
+
+                            return (
+                                <div className='modal'>
+                                    <div className='content'>
+                                        <p>Missing ingredients added to your shopping list!</p>
+                                    </div>
+                                </div>
+                            );
+                        }}
+                    </Popup>
                     <button onClick={() => getPage("edit")}>Edit</button>
                     {/*This generates a list of ingredients based on the JSON data, adds a Missing text when it gets a 0 from the availablity section in the JSON file per each item*/}
                     <ul>{selectedRecipe.ingredients.map((item,index) =>(
@@ -51,9 +69,6 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                     <button onClick={() => getPage("home")}>back</button>
                 </div>
 
-            {showMessage && (
-                <div className="popup">Missing ingredients added to your shopping list!</div>
-                )}
         </div>
     )
 
@@ -100,10 +115,6 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
         setContent(recipeNew)
     }
 
-    function getMessage() {
-        setShowMessage(true);
-        setTimeout(() => setShowMessage(false), 3000);
-    }
 
     return (
         <div>
