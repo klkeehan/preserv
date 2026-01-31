@@ -1,11 +1,11 @@
 import './App.css';
-import React from 'react';
 import { useState } from 'react';
 import Pantry from './components/pantry';
 import Shopping from './components/shopping';
 import Recipe from './components/recipe';
 import Account from './components/account';
-import logotype from './assets/logotype.png';
+import logotype from './assets/logotype.svg';
+import backArrow from './assets/back.svg';
 
 function App() {
   //home page
@@ -27,7 +27,7 @@ function App() {
   //sign up page
   let signUp = (
     <div className='layout' style={{backgroundColor:'var(--white)'}}>
-      <button className='back-arrow' onClick={loadHome}>back</button>
+      <button className='back-arrow' onClick={loadHome}><img src={backArrow} style={{width:'28px'}} alt='back arrow'></img></button>
       <img src={logotype} className='logotype' alt='preserv logotype'/>
       <div className='spacer' style={{height:'150px'}}></div>
       <input name='fName' placeholder='First Name' className='input'/>
@@ -41,7 +41,7 @@ function App() {
   //login page
   let login = (
     <div className='layout' style={{backgroundColor:'var(--white)'}}>
-      <button className='back-arrow' onClick={loadHome}>back</button>
+      <button className='back-arrow' onClick={loadHome}><img src={backArrow} style={{width:'28px'}} alt='back arrow'></img></button>
       <img src={logotype} className='logotype' alt='preserv logotype' />
       <div className='spacer' style={{height:'50px'}}></div>
       <input name='username' placeholder='Username' className='input' />
@@ -54,14 +54,14 @@ function App() {
   //password reset page
   let pwReset = (
     <div className='layout' style={{backgroundColor:'var(--white)'}}>
-      <button className='back-arrow' onClick={loadLogin}>back</button>
+      <button className='back-arrow' onClick={loadLogin}><img src={backArrow} style={{width:'28px'}} alt='back arrow'></img></button>
       <img src={logotype} className='logotype' alt='preserv logotype'/>
       <div className='spacer' style={{height:'50px'}}></div>
       <p className='small-header'>Password Reset</p>
       <p className='body-text'>Enter your email address and we will send you instructions to reset your password.</p>
       <div className='spacer' style={{height:'20px'}}></div>
       <input name='email' placeholder='Email' className='input'/>
-      <button className='solid-button' style={{color:'var(--white)'}}>SEND EMAIL</button>
+      <button className='solid-button' style={{color:'var(--white)'}} onClick={loadLogin}>SEND EMAIL</button>
     </div>
   );
 
