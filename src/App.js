@@ -15,10 +15,6 @@ function App() {
       <div className='spacer' style={{height:'180px'}}></div>
       <button className='solid-button' onClick={loadSignUp}>SIGN UP</button>
       <button className='hollow-button' onClick={loadLogin}>LOG IN</button>
-      <button onClick={() => setContent(<Recipe />)}>Go to Recipes</button>
-      <button onClick={loadPantry}>pantry</button>
-      <button onClick={loadShopping}>shopping list</button>
-      <button onClick={() => setContent(<Account />)}>account</button>
     </div>
   );
 

@@ -27,7 +27,7 @@
         "purchDate": "02/01/2026",
         "expDate": "08/01/2026",
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Popcorn_up_close_salted_and_air_popped.jpg/960px-Popcorn_up_close_salted_and_air_popped.jpg",
-        "category": "Produce"
+        "category": "Snacks"
     },
     {
         "id": 4,
@@ -57,7 +57,7 @@
         "purchDate": "02/01/2026",
         "expDate": "02/01/2027",
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/A_better_homemade_pasta.jpg/960px-A_better_homemade_pasta.jpg",
-        "category": "Grain"
+        "category": "Grains"
     },
         {
         "id": 7,
@@ -97,7 +97,7 @@
         "purchDate": "02/01/2023",
         "expDate": "05/14/2025",
         "image": "https://upload.wikimedia.org/wikipedia/commons/d/d4/Euroshopper_canned_marrowfat_peas.jpg",
-        "category": "Other"
+        "category": "Canned"
     },
     {
         "id": 11,
@@ -107,7 +107,7 @@
         "purchDate": "02/01/2025",
         "expDate": "05/14/2025",
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Tofu_4.jpg/960px-Tofu_4.jpg",
-        "category": "Other"
+        "category": "Proteins"
     },
     {
         "id": 12,
@@ -117,7 +117,7 @@
         "purchDate": "02/01/2025",
         "expDate": "02/14/2025",
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Oat_milk_glass_and_bottles.jpg/960px-Oat_milk_glass_and_bottles.jpg",
-        "category": "Other"
+        "category": "Beverages"
     },
     {
         "id": 13,
@@ -177,6 +177,6 @@
         "purchDate": "02/01/2026",
         "expDate": "08/01/2026",
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Popcorn_up_close_salted_and_air_popped.jpg/960px-Popcorn_up_close_salted_and_air_popped.jpg",
-        "category": "Produce"
+        "category": "Snacks"
     }
 ]
