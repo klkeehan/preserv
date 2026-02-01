@@ -1,25 +1,29 @@
 import '../App.css';
 import pantrySet from '../data/pantry.json';
-import Item from './item';
 import { useState } from 'react';
 
-const Grid = () => {
-    // search bar functionality
+const Grid = ({handleItem}) => {
+    //search bar functionality
     const [search, setSearch] = useState('');
     const [items, setItems] = useState(pantrySet);
     
     const handleSearch = (e) => {
-        const searchInput = e.target.value;
-        setSearch(searchInput);
+        if (e.target.value.length > 0) {
+            const searchInput = e.target.value;
+            setSearch(searchInput);
 
-        const newItems = items.filter((item) => 
-        item.name.toLowerCase().includes(search.toLowerCase())
-        );
+            const newItems = items.filter((item) => 
+            item.name.toLowerCase().includes(search.toLowerCase())
+            );
 
-        setItems(newItems)
+            setItems(newItems)
+        } else {
+            setSearch('');
+            setItems(pantrySet);
+        }
     };
 
-    // category filters for data mapping
+    //category filters for data mapping
     const prodData = pantrySet.filter((item) => item.category === 'Produce');
     const proData = pantrySet.filter((item) => item.category === 'Proteins');
     const dairyData = pantrySet.filter((item) => item.category === 'Dairy');
@@ -32,7 +36,7 @@ const Grid = () => {
     const otherData = pantrySet.filter((item) => item.category === 'Other');
     
     return (
-        <div>
+        <div className='pantry'>
             <div className='pantry-header'>
                 <h2>Pantry</h2>
                 <input type="text" value={search} onChange={handleSearch} placeholder='Search' className='search-bar' />
@@ -53,12 +57,12 @@ const Grid = () => {
             <div className='pantry-grid'>
                 {items.map((item) => (
                     <div key={item.id} className='pantry-item'>
-                        <button className='pantry-button'><img src={item.image} className='pantry-image' alt={item.name}></img>
+                        <button onClick={() => handleItem(item)} className='pantry-button'><img src={item.image} className={item.status === 'FRESH' ? 'pantry-fresh' : item.status === 'EXPIRED' ? 'pantry-exp' : 'pantry-soon'} alt={item.name}></img>
                         <p className='pantry-overlay'>{item.name}</p>
                         </button>
                     </div>
                 ))}
-            </div>    
+            </div>
         </div>
     )
 }

@@ -1,17 +1,16 @@
 import '../App.css';
 import { useState } from 'react';
-import Pantry from './pantry';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import x from '../assets/close.svg';
 import camera from '../assets/camera-icon.svg';
 import upload from '../assets/upload-icon.svg';
 
-const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, itemCat, loadPantry}) => {
+const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, itemCat, handlePantry}) => {
     let item = (
         <div className='item-page'>
             <div className='item-header'>
-                <img className='item-image' src={itemImg} alt={itemName}></img>
+                <img className={itemStatus === 'FRESH' ? 'pantry-fresh2' : itemStatus === 'EXPIRED' ? 'pantry-exp2' : 'pantry-soon2'} src={itemImg} alt={itemName}></img>
                 <aside className='item-column'>
                     <button className='item-button' onClick={() => setContent(itemEdit)}>Edit</button>
                     <Popup trigger=
@@ -24,7 +23,7 @@ const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, 
                                         <p>Are you sure you want to trash this item?</p>
                                     </div>
                                 <div>
-                                    <button onClick={() => {setContent(<Pantry />)}}>Confirm</button>
+                                    <button onClick={handlePantry}>Confirm</button>
                                 </div>
                             </div>
                             )
@@ -51,7 +50,7 @@ const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, 
                     </Popup>
                 </aside>
             </div>
-            <p className='item-status'>{itemStatus}</p>
+            <p className={itemStatus === 'FRESH' ? 'status-fresh' : itemStatus === 'EXPIRED' ? 'status-exp' : 'status-soon'}>{itemStatus}</p>
             <h3>Item Name:</h3>
             <p className='item-info'>{itemName}</p>
             <label>Amount: <br></br><input type='number' defaultValue={itemQuantity} min='0' className='item-input' style={{width:'80px'}}/></label><br></br>
@@ -71,7 +70,7 @@ const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, 
                 <p>Serving Size</p>
                 <p></p>
             </div>
-            <button className='close-button' onClick={() => {setContent(<Pantry />)}}><img src={x}></img></button>
+            <button className='close-button' onClick={handlePantry}><img src={x} alt='exit button'></img></button>
         </div>
     );
 
@@ -103,7 +102,7 @@ const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, 
                 <button className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
             </div>
             <button onClick={() => setContent(item)} className='save-button'>Save Item</button>
-            <button className='close-button' onClick={() => setContent(item)}><img src={x}></img></button>
+            <button className='close-button' onClick={() => setContent(item)}><img src={x} alt='exit button'></img></button>
         </div>
     );
 

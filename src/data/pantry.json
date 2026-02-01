@@ -152,31 +152,31 @@
     {
         "id": 16,
         "status": "EXPIRED",
-        "name": "Apples",
+        "name": "Plums",
         "quantity": "2",
         "purchDate": "01/01/2026",
         "expDate": "01/15/2026",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/9/92/95apple.jpeg",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Prunus_domestica_%27Reine_Victoria%27.jpg/960px-Prunus_domestica_%27Reine_Victoria%27.jpg",
         "category": "Produce"
     },
     {
         "id": 17,
         "status": "USE SOON - NEAR EXPIRATION",
-        "name": "Jam",
+        "name": "Basmati Rice",
         "quantity": "1",
         "purchDate": "01/01/2026",
         "expDate": "02/10/2026",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Homemade_marmalade%2C_England.jpg/500px-Homemade_marmalade%2C_England.jpg",
-        "category": "Condiments"
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Rice_in_Electric_Cooker.jpg/960px-Rice_in_Electric_Cooker.jpg",
+        "category": "Grains"
     },
     {
         "id": 18,
         "status": "FRESH",
-        "name": "Popcorn",
+        "name": "Gummy Bears",
         "quantity": "3",
         "purchDate": "02/01/2026",
         "expDate": "08/01/2026",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Popcorn_up_close_salted_and_air_popped.jpg/960px-Popcorn_up_close_salted_and_air_popped.jpg",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Oursons_g%C3%A9latine_march%C3%A9_Rouffignac.jpg/960px-Oursons_g%C3%A9latine_march%C3%A9_Rouffignac.jpg",
         "category": "Snacks"
     }
 ]

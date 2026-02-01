@@ -282,18 +282,27 @@ option {
 }
 
 /*pantry styling*/
+.pantry {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 12px;
+}
+
 .pantry-header {
   position: absolute;
   top: 0;
+  left: 0;
   margin-top: 40px;
-  width: 353px;
+  margin-left: 5px;
+  width: 358px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
 .search-bar {
-  width: 240px;
+  width: 230px;
   height: 34px;
   padding-left: 10px;
   font-family: figtree;
@@ -312,9 +321,9 @@ option {
   display: inline-block;
   overflow-x: scroll;
   white-space: nowrap;
-  width: 353px;
+  width: 363px;
   height: 34px;
-  margin-top: 105px;
+  margin-top: 110px;
   margin-bottom: -10px;
   border-radius: 10px;
   background-color: var(--lime);
@@ -363,7 +372,65 @@ option {
   margin-left: 2.5px;
   margin-right: 2.5px;
   margin-bottom: 5px;
-  box-shadow: 0px 0px 10px var(--pink); /*temp - needs to be conditional*/
+  box-shadow: 0px 0px 10px var(--pink);
+}
+
+.pantry-fresh {
+  width: 110px;
+  height: 110px;
+  border-radius: 20px;
+  margin-left: 2.5px;
+  margin-right: 2.5px;
+  margin-bottom: 5px;
+}
+
+.pantry-fresh2 {
+  width: 149px;
+  height: 149px;
+  border-radius: 20px;
+  margin-left: 2.5px;
+  margin-right: 2.5px;
+  margin-bottom: 5px;
+}
+
+.pantry-soon {
+  width: 110px;
+  height: 110px;
+  border-radius: 20px;
+  margin-left: 2.5px;
+  margin-right: 2.5px;
+  margin-bottom: 5px;
+  box-shadow: 0px 0px 10px var(--yellow);
+}
+
+.pantry-soon2 {
+  width: 149px;
+  height: 149px;
+  border-radius: 20px;
+  margin-left: 2.5px;
+  margin-right: 2.5px;
+  margin-bottom: 5px;
+  box-shadow: 0px 0px 10px var(--yellow);
+}
+
+.pantry-exp {
+  width: 110px;
+  height: 110px;
+  border-radius: 20px;
+  margin-left: 2.5px;
+  margin-right: 2.5px;
+  margin-bottom: 5px;
+  box-shadow: 0px 0px 10px var(--pink);
+}
+
+.pantry-exp2 {
+  width: 149px;
+  height: 149px;
+  border-radius: 20px;
+  margin-left: 2.5px;
+  margin-right: 2.5px;
+  margin-bottom: 5px;
+  box-shadow: 0px 0px 10px var(--pink);
 }
 
 .pantry-button {
@@ -405,13 +472,6 @@ option {
   justify-content: space-between;
 }
 
-.item-image {
-  width: 149px;
-  height: 149px;
-  border-radius: 20px;
-  box-shadow: 0px 0px 10px var(--pink); /*temp - needs to be conditional*/
-}
-
 .item-column {
   height: 149px;
   float: right;
@@ -434,10 +494,28 @@ option {
   height: 45px;
 }
 
-.item-status {
+.status-fresh {
   font-family: figtree;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 600;
+  color: var(--green);
+  margin-top: 100px;
+  margin-bottom: 0px;
+}
+
+.status-soon {
+  font-family: figtree;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--yellow);
+  margin-top: 100px;
+  margin-bottom: 0px;
+}
+
+.status-exp {
+  font-family: figtree;
+  font-size: 18px;
+  font-weight: 600;
   color: var(--pink);
   margin-top: 100px;
   margin-bottom: 0px;
@@ -471,7 +549,7 @@ option {
   height: 100px;
   margin-bottom: 0px;
   border-radius: 20px;
-  box-shadow: 0px 0px 10px var(--black); /*temp - needs to be conditional*/
+  box-shadow: 0px 0px 10px var(--black);
 }
 
 .image-input {
