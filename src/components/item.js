@@ -20,10 +20,10 @@ const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, 
                             close => (
                                 <div className='modal'>
                                     <div className='content'>
-                                        <p>Are you sure you want to trash this item?</p>
+                                        <p className='popup-text'>Are you sure you want to trash this item?</p>
                                     </div>
                                 <div>
-                                    <button onClick={handlePantry}>Confirm</button>
+                                    <button onClick={handlePantry} className='green-button'>Confirm</button>
                                 </div>
                             </div>
                             )
@@ -38,11 +38,11 @@ const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, 
                             close => (
                                 <div className='modal'>
                                     <div className='content'>
-                                        <p>What quantity would you like to add?</p>
-                                        <label>Amount: <input type='number' /></label>
+                                        <p className='popup-text2'>What quantity would you like to add?</p>
+                                        <label className='popup-label'>Amount: <input className='item-input' type='number' min={0} style={{width:'50px'}}/></label>
                                     </div>
                                 <div>
-                                    <button onClick={() => {close()}}>Confirm</button>
+                                    <button onClick={() => {close()}} className='green-button'>Confirm</button>
                                 </div>
                             </div>
                             )
@@ -70,7 +70,7 @@ const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, 
                 <p>Serving Size</p>
                 <p></p>
             </div>
-            <button className='close-button' onClick={handlePantry}><img src={x} alt='exit button'></img></button>
+            <button className='close-button' onClick={handlePantry}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
     );
 
@@ -79,11 +79,11 @@ const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, 
     let itemEdit = (
         <div className='item-page'>
             <h1>Pantry Edit</h1>
-            <label>Item Name: <br></br><input type='text' defaultValue={itemName} className='item-input'/></label><br></br>
-            <label>Amount: <br></br><input type='number' defaultValue={itemQuantity} min='0' className='item-input' style={{width:'80px'}}/></label><br></br>
-            <label>Date Purchased: <br></br><input type='text' defaultValue={itemPurch} className='item-input'/></label><br></br>
-            <label>Expiration Date: <br></br><input type='text' defaultValue={itemExp} className='item-input'/></label><br></br>
-            <label>Item Type: <br></br><select name='type'>
+            <label className='label2'>Item Name: <br></br><input type='text' defaultValue={itemName} className='item-input'/></label><br></br>
+            <label className='label2'>Amount: <br></br><input type='number' defaultValue={itemQuantity} min='0' className='item-input' style={{width:'80px'}}/></label><br></br>
+            <label className='label2'>Date Purchased: <br></br><input type='text' defaultValue={itemPurch} className='item-input'/></label><br></br>
+            <label className='label2'>Expiration Date: <br></br><input type='text' defaultValue={itemExp} className='item-input'/></label><br></br>
+            <label className='label2'>Item Type: <br></br><select name='type'>
                 <option value='produce'>Produce</option>
                 <option value='proteins'>Proteins</option>
                 <option value='dairy'>Dairy</option>
@@ -95,14 +95,14 @@ const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, 
                 <option value='snacks'>Snacks</option>
                 <option value='other'>Other</option>
             </select></label><br></br>
-            <h3>Image:</h3>
+            <p className='label2'>Image:</p>
             <img className='edit-image' src={itemImg} alt={itemName}></img><br></br>
             <div className='image-opts'>
                 <input type='file' id='file' className='upload'></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
                 <button className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
             </div>
             <button onClick={() => setContent(item)} className='save-button'>Save Item</button>
-            <button className='close-button' onClick={() => setContent(item)}><img src={x} alt='exit button'></img></button>
+            <button className='close-button' onClick={() => setContent(item)}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
     );
 
