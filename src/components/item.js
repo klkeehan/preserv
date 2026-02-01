@@ -5,9 +5,11 @@ import 'reactjs-popup/dist/index.css';
 import x from '../assets/close.svg';
 import camera from '../assets/camera-icon.svg';
 import upload from '../assets/upload-icon.svg';
+import arrow from '../assets/arrow.svg';
 
 const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, itemCat, handlePantry}) => {
     let item = (
+        <div>
         <div className='item-page'>
             <div className='item-header'>
                 <img className={itemStatus === 'FRESH' ? 'pantry-fresh2' : itemStatus === 'EXPIRED' ? 'pantry-exp2' : 'pantry-soon2'} src={itemImg} alt={itemName}></img>
@@ -61,14 +63,52 @@ const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, 
             <h3>Category:</h3>
             <p className='item-info'>{itemCat}</p>
             <div className='nf-dropdown'>
-                <h3>Nutrition Facts</h3>
-                <svg className='arrow' width="100%" height="auto" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4.12125 0H44.8787C48.5435 0 50.3759 4.03113 47.79 6.38132L27.4112 24.9027C25.8015 26.3658 23.1985 26.3658 21.6059 24.9027L1.21 6.38132C-1.37588 4.03113 0.456498 0 4.12125 0Z" fill="var(--green)"/>
-                </svg>
+                <div className='nf-toggle'>
+                    <h3>Nutrition Facts</h3>
+                    <img src={arrow} style={{width:'15px'}} alt='arrow'></img>
+                </div>
+                <div id='nfBlock' className='nf-block'>
+                    <div className='nf-row'>
+                        <p className='nf-header'>Serving Size</p>
+                        <p className='nf-quant'>30g</p>
+                    </div>
+                    <div className='nf-row'>
+                        <p className='nf-header'>Amount Per Serving</p>
+                        <p className='nf-quant'>4</p>
+                    </div>
+                    <div className='nf-row'>
+                        <h3>Calories</h3>
+                        <h3 style={{color:'var(--black)'}}>100</h3>
+                    </div>
+                    <div className='nf-row'>
+                        <p className='nf-header'></p>
+                        <p className='nf-quant'>% Daily Value</p>
+                    </div>
+                    <div className='nf-row'>
+                        <p className='nf-header'>Total Fat 0g</p>
+                        <p className='nf-quant'>0%</p>
+                    </div>
+                    <div className='nf-row'>
+                        <p className='nf-header'>Cholesterol 0mg</p>
+                        <p className='nf-quant'>0%</p>
+                    </div>
+                    <div className='nf-row'>
+                        <p className='nf-header'>Sodium 0mg</p>
+                        <p className='nf-quant'>0%</p>
+                    </div>
+                    <div className='nf-row'>
+                        <p className='nf-header'>Total Carbohydrate 5g</p>
+                        <p className='nf-quant'>3%</p>
+                    </div>
+                    <div className='nf-row'>
+                        <p className='nf-header'>Protein 0g</p>
+                        <p className='nf-quant'>0%</p>
+                    </div>
+                    <div className='nf-line'></div>
+                    <p className='nf-small'>The % Daily Value (DV) tells you how much a nutrient in a serving of food contributes to a daily diet. 2,000 calories a day is used for general nutrition advice.</p>
+                    <div className='spacer' style={{height:'30px'}}></div>
+                </div>
             </div>
-            <div className='nf-block'>
-                <p>Serving Size</p>
-                <p></p>
             </div>
             <button className='close-button' onClick={handlePantry}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
@@ -77,8 +117,10 @@ const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, 
     let [content, setContent] = useState(item);
 
     let itemEdit = (
+        <div>
         <div className='item-page'>
             <h1>Pantry Edit</h1>
+            <div className='spacer' style={{height:'120px'}}></div>
             <label className='label2'>Item Name: <br></br><input type='text' defaultValue={itemName} className='item-input'/></label><br></br>
             <label className='label2'>Amount: <br></br><input type='number' defaultValue={itemQuantity} min='0' className='item-input' style={{width:'80px'}}/></label><br></br>
             <label className='label2'>Date Purchased: <br></br><input type='text' defaultValue={itemPurch} className='item-input'/></label><br></br>
@@ -102,7 +144,8 @@ const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, 
                 <button className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
             </div>
             <button onClick={() => setContent(item)} className='save-button'>Save Item</button>
-            <button className='close-button' onClick={() => setContent(item)}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
+        </div>
+        <button className='close-button' onClick={() => setContent(item)}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
     );
 

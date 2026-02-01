@@ -59,7 +59,6 @@ h1 {
   top: 0;
   left: 0;
   margin-top: 60px;
-  margin-left: 20px;
   margin-bottom: 0px;
 }
 
@@ -394,7 +393,7 @@ video {
   width: 149px;
   height: 149px;
   border-radius: 20px;
-  margin-left: 2.5px;
+  margin-left: 7px;
   margin-right: 2.5px;
   margin-bottom: 5px;
 }
@@ -413,7 +412,7 @@ video {
   width: 149px;
   height: 149px;
   border-radius: 20px;
-  margin-left: 2.5px;
+  margin-left: 7px;
   margin-right: 2.5px;
   margin-bottom: 5px;
   box-shadow: 0px 0px 10px var(--yellow);
@@ -433,7 +432,7 @@ video {
   width: 149px;
   height: 149px;
   border-radius: 20px;
-  margin-left: 2.5px;
+  margin-left: 7px;
   margin-right: 2.5px;
   margin-bottom: 5px;
   box-shadow: 0px 0px 10px var(--pink);
@@ -465,9 +464,15 @@ video {
 }
 
 .item-page {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 20px;
   text-align: left;
-  width: 353px;
+  width: 363px;
+  height: 800px;
   margin-top: 0px;
+  overflow-y: scroll;
 }
 
 .item-header {
@@ -475,7 +480,6 @@ video {
   top: 0;
   left: 0;
   margin-top: 60px;
-  margin-left: 20px;
   width: 353px;
   display: flex;
   justify-content: space-between;
@@ -508,7 +512,7 @@ video {
   font-size: 18px;
   font-weight: 600;
   color: var(--green);
-  margin-top: 100px;
+  margin-top: 230px;
   margin-bottom: 0px;
 }
 
@@ -517,7 +521,7 @@ video {
   font-size: 18px;
   font-weight: 600;
   color: var(--yellow);
-  margin-top: 100px;
+  margin-top: 230px;
   margin-bottom: 0px;
 }
 
@@ -526,7 +530,7 @@ video {
   font-size: 18px;
   font-weight: 600;
   color: var(--pink);
-  margin-top: 100px;
+  margin-top: 230px;
   margin-bottom: 0px;
 }
 
@@ -558,6 +562,7 @@ video {
   height: 100px;
   margin-top: 10px;
   margin-bottom: 0px;
+  margin-left: 7px;
   border-radius: 20px;
   box-shadow: 0px 0px 10px var(--black);
 }
@@ -591,7 +596,70 @@ video {
 
 .nf-dropdown {
   display: flex;
+  flex-direction: column;
+}
+
+.nf-toggle {
+  width: 353px;
+  display: flex;
   justify-content: space-between;
+}
+
+.nf-block {
+  display: none;
+  width: 343px;
+  margin-top: 40px;
+  position: absolute;
+  overflow: scroll;
+  overflow-x: hidden;
+  margin-right: 0px;
+}
+
+.nf-dropdown:hover .nf-block {
+  display: block;
+}
+
+.nf-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 30px;
+}
+
+.nf-header {
+  font-family: manrope;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--green);
+  margin-top: 0px;
+  margin-bottom: 3px;
+  float: left;
+}
+
+.nf-text {
+  font-family: manrope;
+  font-size: 16px;
+  font-weight: 200;
+}
+
+.nf-quant {
+  font-family: manrope;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--black);
+}
+
+.nf-line {
+  width: 373px;
+  height: 2px;
+  background-color: var(--green);
+}
+
+.nf-small {
+  font-family: manrope;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--black);
 }
 
 .arrow {
@@ -607,7 +675,7 @@ video {
   position: absolute;
   bottom: 0;
   right: 0;
-  margin-bottom: 120px;
+  margin-bottom: 90px;
   margin-right: 20px;
   background-color: var(--green);
   border: 0px none;
