@@ -30,13 +30,13 @@ const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
                     modal nested>
                     {
                         close => (
-                            <div className='modal'>
+                            <div className='shopping-remove-popup'>
                                 <div className='content'>
                                     <p>Remove items from shopping list?</p>
                                 </div>
                                 <div>
-                                    <button onClick={() => close()}>Remove</button>
-                                    <button onClick={() => close()}>Cancel</button>
+                                    <button className='remove-confirm' onClick={() => close()}>Remove</button>
+                                    <button className='remove-cancel' onClick={() => close()}>Cancel</button>
                                 </div>
                             </div>
                         )
@@ -47,13 +47,13 @@ const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
                     modal nested>
                     {
                         close => (
-                            <div className='modal'>
+                            <div className='shopping-add-popup'>
                                 <div className='content'>
                                     <label>Item Name: <input type='text' /></label>
                                     <label>Amount: <input type='number' /></label>
                                 </div>
                                 <div>
-                                    <button onClick={() => close()}>Confirm</button>
+                                    <button className='add-confirm' onClick={() => close()}>Confirm</button>
                                 </div>
                             </div>
                         )

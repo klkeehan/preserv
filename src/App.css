@@ -967,14 +967,14 @@ textarea {
 }
 
 .shopping-info h4 {
-  font-family: figtree;
+  font-family: 'figtree';
   font-size: 18px;
   font-weight: 650;
 }
 
 .shopping-info p {
   margin-top: 0;
-  font-family: figtree;
+  font-family: 'figtree';
   font-size: 16px;
   font-weight: 500;
 }
@@ -995,7 +995,7 @@ textarea {
   border: 0;
   border-radius: 12px;
   padding: 8px 14px;
-  font-family: figtree;
+  font-family: 'figtree';
   font-size: 18px;
   font-weight: 500;
 }
@@ -1037,4 +1037,107 @@ textarea {
   top: 0;
   left: 0;
   margin-top: 120px;
+}
+
+.shopping-remove-popup {
+  width: 273px;
+  height: 191px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.shopping-remove-popup p {
+  font-family: 'manrope';
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.remove-confirm {
+  background-color: var(--pink);
+  color: var(--white);
+  border: 0;
+  border-radius: 20px;
+  width: 125px;
+  height: 43px;
+  font-family: 'figtree';
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.remove-cancel {
+  background-color: transparent;
+  color: var(--pink);
+  border: 2px var(--pink) solid;
+  border-radius: 20px;
+  width: 125px;
+  height: 43px;
+  font-family: 'figtree';
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.shopping-add-popup {
+  width: 273px;
+  min-height: 191px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: left;
+  padding: 16px;
+  border-radius: 20px;
+  background-color: var(--white);
+  border: 0;
+}
+
+.shopping-add-popup label {
+  font-family: 'figtree';
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--black);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.shopping-add-popup input[type='text'] {
+  width: 222px;
+  height: 33px;
+  border-radius: 12px;
+  border: 0;
+  padding-left: 10px;
+  font-family: 'figtree';
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #e3e3e3;
+  color: #595858;
+  margin-bottom: 8px;
+}
+
+.shopping-add-popup input[type='number'] {
+  width: 71px;
+  height: 33px;
+  border-radius: 12px;
+  border: 0;
+  padding-left: 10px;
+  font-family: 'figtree';
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #e3e3e3;
+  color: #595858;
+}
+
+.add-confirm {
+  background-color: var(--green);
+  color: var(--white);
+  border: 0;
+  border-radius: 12px;
+  width: 87px;
+  height: 37px;
+  font-family: 'figtree';
+  font-size: 18px;
+  font-weight: 500;
+  margin: 14px;
 }
