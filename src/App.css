@@ -88,10 +88,6 @@ h3 {
   margin-bottom: 19px;
   margin-left: auto;
   margin-right: auto;
-<<<<<<< HEAD
-=======
-
->>>>>>> 18f3602 (Styled account page: profile layout and notifications)
   background-color: var(--green);
 }
 
@@ -543,7 +539,6 @@ textarea {
   margin-left: 2.5px;
   margin-right: 2.5px;
   margin-bottom: 5px;
-<<<<<<< HEAD
 }
 
 .pantry-fresh2 {
@@ -593,10 +588,6 @@ textarea {
   margin-right: 2.5px;
   margin-bottom: 5px;
   box-shadow: 0px 0px 10px var(--pink);
-=======
-  box-shadow: 0px 0px 10px var(--pink);
-  /*temp - needs to be conditional*/
->>>>>>> 18f3602 (Styled account page: profile layout and notifications)
 }
 
 .pantry-button {
@@ -624,7 +615,6 @@ textarea {
   color: var(--white);
 }
 
-<<<<<<< HEAD
 .item-page {
   position: absolute;
   top: 0;
@@ -639,6 +629,7 @@ textarea {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 .item-page::-webkit-scrollbar {
   display: none;
 }
@@ -651,14 +642,6 @@ textarea {
   width: 353px;
   display: flex;
   justify-content: space-between;
-=======
-.item-image {
-  width: 149px;
-  height: 149px;
-  border-radius: 20px;
-  box-shadow: 0px 0px 10px var(--pink);
-  /*temp - needs to be conditional*/
->>>>>>> 18f3602 (Styled account page: profile layout and notifications)
 }
 
 .item-column {
@@ -1061,7 +1044,6 @@ textarea {
   background-color: #a0a0a0;
 }
 
-<<<<<<< HEAD
 .shopping-header {
   position: absolute;
   top: 0;
@@ -1186,7 +1168,8 @@ textarea {
   font-weight: 500;
   margin-top: 0px;
   margin: 14px;
-=======
+}
+
 /* account styling*/
 .profile-pic {
   width: 100px;
@@ -1224,5 +1207,4 @@ textarea {
   display: inline-block;
   width: 30px;
   height: 20px;
->>>>>>> 18f3602 (Styled account page: profile layout and notifications)
 }
