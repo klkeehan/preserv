@@ -327,6 +327,12 @@ textarea {
   column-count: 2;
   column-gap: 0px;
   overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.recipes-grid::-webkit-scrollbar {
+  display: none;
 }
 
 .recipes-overlay {
@@ -464,7 +470,10 @@ textarea {
   position: absolute;
   top: 0;
   display: inline-block;
-  overflow-x: auto;
+  overflow-y: hidden;
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: thin;
   white-space: nowrap;
   width: 363px;
   height: 34px;
@@ -472,6 +481,10 @@ textarea {
   margin-bottom: -10px;
   border-radius: 10px;
   background-color: var(--lime);
+}
+
+.cat-bar::-webkit-scrollbar {
+  display: none;
 }
 
 .cat-button {
@@ -504,7 +517,15 @@ textarea {
   height: 600px;
   display: flex;
   flex-wrap: wrap;
+  column-count: 3;
+  column-gap: 0px;
   overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.pantry-grid::-webkit-scrollbar {
+  display: none;
 }
 
 .pantry-item {
@@ -512,8 +533,8 @@ textarea {
 }
 
 .pantry-fresh {
-  width: 110px;
-  height: 110px;
+  width: 105px;
+  height: 105px;
   border-radius: 20px;
   margin-left: 2.5px;
   margin-right: 2.5px;
@@ -530,8 +551,8 @@ textarea {
 }
 
 .pantry-soon {
-  width: 110px;
-  height: 110px;
+  width: 105px;
+  height: 105px;
   border-radius: 20px;
   margin-left: 2.5px;
   margin-right: 2.5px;
@@ -550,8 +571,8 @@ textarea {
 }
 
 .pantry-exp {
-  width: 110px;
-  height: 110px;
+  width: 105px;
+  height: 105px;
   border-radius: 20px;
   margin-left: 2.5px;
   margin-right: 2.5px;
@@ -589,7 +610,7 @@ textarea {
   font-size: 12px;
   font-weight: 200px;
   height: 25px;
-  width: 90px;
+  width: 85px;
   background-color: rgb(8, 8, 8, 0.75);
   color: var(--white);
 }
@@ -603,7 +624,13 @@ textarea {
   width: 363px;
   height: 800px;
   margin-top: 0px;
-  overflow-y: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.item-page::-webkit-scrollbar {
+  display: none;
 }
 
 .item-header {
@@ -741,8 +768,7 @@ textarea {
   width: 343px;
   margin-top: 40px;
   position: absolute;
-  overflow: scroll;
-  overflow-x: hidden;
+  overflow: hidden;
   margin-right: 0px;
 }
 
@@ -1139,5 +1165,6 @@ textarea {
   font-family: 'figtree';
   font-size: 18px;
   font-weight: 500;
+  margin-top: 0px;
   margin: 14px;
 }
