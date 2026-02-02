@@ -18,8 +18,7 @@ const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, 
                     <Popup trigger=
                         {<button className='item-button'>Trash</button>}
                         modal nested>
-                        {
-                            close => (
+                        {close => (
                                 <div className='modal'>
                                     <div className='content'>
                                         <p className='popup-text'>Are you sure you want to trash this item?</p>
