@@ -4,11 +4,13 @@ import Navbar from './navbar';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 
-const Shopping = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
+const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
     let shoppingPage = (
         <div className='layout'>
-            <h1>My Shopping List</h1>
-            <div>
+            <div className='shopping-header'>
+                <h1>My Shopping List</h1>
+            </div>
+            <div className='shopping-list'>
                 {itemSet.map((item) => (
                     <div key={item.id}>
                         <div className='shopping-item'>
@@ -18,7 +20,7 @@ const Shopping = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                             </aside>
                             <input type="checkbox" />
                         </div>
-                    <div className='divider'></div>
+                        <div className='divider'></div>
                     </div>
                 ))}
             </div>
@@ -56,8 +58,8 @@ const Shopping = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                             </div>
                         )
                     }
-                    </Popup>
-                </div>
+                </Popup>
+            </div>
             <Navbar pantryLoad={pantryLoad} shoppingLoad={shoppingLoad} recipeLoad={recipeLoad} accountLoad={accountLoad} />
         </div>
     )

@@ -945,22 +945,96 @@ textarea {
   padding-right: 40px;
 }
 
+.shopping-item input[type="checkbox"] {
+  appearance: none;
+  width: 35px;
+  height: 35px;
+  align-self: center;
+  background: url('assets/checkbox-unselected.png');
+}
+
+.shopping-item input[type="checkbox"]:checked {
+  background-image: url('assets/checkbox-selected.png');
+}
+
 .shopping-info {
   text-align: left;
   width: 150px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   line-height: 0;
 }
 
+.shopping-info h4 {
+  font-family: figtree;
+  font-size: 18px;
+  font-weight: 650;
+}
+
+.shopping-info p {
+  margin-top: 0;
+  font-family: figtree;
+  font-size: 16px;
+  font-weight: 500;
+}
+
 .button-bar {
-  width: 393px;
+  position: absolute;
+  bottom: 112px;
+  left: 20px;
+  right: 20px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.button-bar button {
+  background-color: var(--green);
+  color: var(--white);
+  border: 0;
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-family: figtree;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.button-bar button+button {
+  width: 48px;
+  height: 48px;
+  background: transparent;
+  background-image: url('assets/add-icon.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 42px 42px;
+  color: transparent;
 }
 
 .divider {
   height: 1px;
   width: 393px;
   background-color: #a0a0a0;
+}
+
+.shopping-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 63px;
+  display: flex;
+  align-items: center;
+}
+
+.shopping-header h1 {
+  position: static;
+  margin: 0;
+  padding-left: 20px;
+}
+
+.shopping-list {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 120px;
 }
