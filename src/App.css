@@ -1172,16 +1172,33 @@ textarea {
 
 /* account styling*/
 .profile-pic {
-  width: 100px;
-  height: 100px;
+  width: 137px;
+  height: 137px;
   border-radius: 50px;
   object-fit: cover;
   float: left;
+  margin-right: 20px;
 }
 
 .profile-settings {
-  margin-left: 120px;
+  margin-left: 150px;
   text-align: left;
+  font-size: 15px;
+  font-family: figtree;
+}
+
+/*Users Name*/
+.profile-settings h2 {
+  font-size: 15px;
+  font-style: italic;
+  font-family: figtree;
+}
+
+/*Logout Text*/
+.accountpage-logout {
+  color: #FF006A;
+  font-weight: bold;
+  font-family: figtree;
 }
 
 .account-notifications {
@@ -1189,12 +1206,20 @@ textarea {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  margin-right: 20px;
+  margin-left: 0px;
+  font-family: figtree;
+}
+
+/*Notification title*/
+.account-notifications h3 {
+  text-align: left;
 }
 
 .notification-item {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: left;
 }
 
 .notification-item p {
@@ -1202,57 +1227,60 @@ textarea {
   font-size: 14px;
 }
 
-/*.toggle {
-  position: relative;
-  display: inline-block;
-  width: 30px;
-  height: 20px;
-} */
+/*Account Title*/
+.app h1 {
+  margin-left: 30px;
+  margin-bottom: 20px;
+}
 
 
 /* SLIDER TECHNOLOGY!!!!!!!!!*/
 .toggle {
-    position: relative;
+  position: relative;
 }
 
 .toggle input {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
+
 .slider {
-    position: relative;
-    display: block;
-    cursor: pointer;
-    background-color: #e6e0e9;
-    transition: 0.4s;
-    width: 48px;
-    height: 28px;
-    border-radius: 32px;
-    border: 2px solid #79747E;
+  position: relative;
+  display: block;
+  cursor: pointer;
+  background-color: #e6e0e9;
+  transition: 0.4s;
+  width: 48px;
+  height: 28px;
+  border-radius: 32px;
+  border: 2px solid #79747E;
 }
+
 .slider:before {
-    content: "";
-    position: absolute;
-    height: 16px;
-    width: 16px;
-    background-color: #79747E;
-    transition: 0.4s;
-    top: 6px;
-    left: 6px;   
-    border-radius: 60px;
+  content: "";
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  background-color: #79747E;
+  transition: 0.4s;
+  top: 6px;
+  left: 6px;
+  border-radius: 60px;
 }
-input:checked + .slider {
-    background-color: #080808;
-    border-color: #080808;
+
+input:checked+.slider {
+  background-color: #080808;
+  border-color: #080808;
 
 }
-input:checked + .slider:before {
-    width: 24px;
-    height: 24px;
-    transform: translateX(18px);
-    top: 2px;
-    left: 2px;
-    background-color: #FFFFFF;
+
+input:checked+.slider:before {
+  width: 24px;
+  height: 24px;
+  transform: translateX(18px);
+  top: 2px;
+  left: 2px;
+  background-color: #FFFFFF;
 }
