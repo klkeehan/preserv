@@ -2,7 +2,7 @@
   "Owner": {
     "id": 4,
     "name": "Membrother",
-    "image": "https://upload.wikimedia.org/wikipedia/en/0/07/Default_Miis.jpeg",
+    "image": "https://raw.githubusercontent.com/klkeehan/preserv/refs/heads/main/src/assets/profile-green.png",
     "paccess": "edit",
     "slaccess": "edit",
     "role": "Owner"
@@ -11,7 +11,7 @@
     {
       "id": 2,
       "name": "Memberman",
-      "image": "https://upload.wikimedia.org/wikipedia/en/0/07/Default_Miis.jpeg",
+      "image": "https://raw.githubusercontent.com/klkeehan/preserv/refs/heads/main/src/assets/profile-yellow.png",
       "paccess": "view",
       "slaccess": "view",
       "role": "Member"
@@ -19,7 +19,7 @@
     {
       "id": 3,
       "name": "Fellowmember",
-      "image": "https://upload.wikimedia.org/wikipedia/en/0/07/Default_Miis.jpeg",
+      "image": "https://raw.githubusercontent.com/klkeehan/preserv/refs/heads/main/src/assets/profile-pink.png",
       "paccess": "view",
       "slaccess": "edit",
       "role": "Member"
@@ -27,7 +27,7 @@
     {
       "id": 1,
       "name": "Alexboi777",
-      "image": "https://upload.wikimedia.org/wikipedia/en/0/07/Default_Miis.jpeg",
+      "image": "https://raw.githubusercontent.com/klkeehan/preserv/refs/heads/main/src/assets/profile-lime.png",
       "paccess": "edit",
       "slaccess": "edit",
       "role": "Member"
@@ -35,7 +35,7 @@
     {
       "id": 5,
       "name": "Memberperson",
-      "image": "https://upload.wikimedia.org/wikipedia/en/0/07/Default_Miis.jpeg",
+      "image": "https://raw.githubusercontent.com/klkeehan/preserv/refs/heads/main/src/assets/profile-black.png",
       "paccess": "view",
       "slaccess": "view",
       "role": "Member"
