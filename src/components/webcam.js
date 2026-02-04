@@ -1,6 +1,4 @@
-import React from "react";
 import { useRef, useState, useEffect } from 'react';
-import Webcam from "react-webcam";
 
 const WebcamCapture = () => {
     const videoRef = useRef(null);
