@@ -60,6 +60,7 @@ h1 {
   left: 0;
   margin-top: 60px;
   margin-bottom: 0px;
+  margin-left: 0px;
 }
 
 h2 {
@@ -195,15 +196,17 @@ textarea {
   margin-bottom: auto;
 }
 
-.nav-button:hover {
+.nav-button-active {
   background-color: var(--white);
   height: 58px;
+  border: 0px none;
   border-radius: 40px;
   padding-left: 15px;
   padding-right: 15px;
+  margin-top: 10px;
 }
 
-.nav-button:hover svg {
+.nav-button-active svg {
   width: 31px;
   height: 31px;
   fill: var(--green);
@@ -454,14 +457,14 @@ textarea {
 
 .search-bar {
   width: 230px;
-  height: 34px;
+  height: 28px;
   padding-left: 10px;
   font-family: figtree;
   font-size: 14px;
   font-weight: 700;
   background-color: #e3e3e3;
   border-color: var(--green);
-  border-width: 3px;
+  border-width: 2px;
   border-radius: 20px;
   color: var(--black);
 }
@@ -513,6 +516,7 @@ textarea {
   top: 0;
   margin-top: 150px;
   padding-top: 5px;
+  margin-bottom: 100px;
   width: 373px;
   height: 600px;
   display: flex;
@@ -522,6 +526,8 @@ textarea {
   overflow: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  mask: linear-gradient(black, black, black, black, black, black, black, black, black, black, black, black, black, black, black, black, transparent);
+  backdrop-filter: blur(8px);
 }
 
 .pantry-grid::-webkit-scrollbar {
@@ -1048,15 +1054,13 @@ textarea {
   position: absolute;
   top: 0;
   left: 0;
+  margin-left: 0px;
   margin-top: 63px;
-  display: flex;
-  align-items: center;
 }
 
 .shopping-header h1 {
   position: static;
   margin: 0;
-  padding-left: 20px;
 }
 
 .shopping-list {
