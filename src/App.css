@@ -1187,7 +1187,7 @@ textarea {
   margin-left: 30px;
   font-size: 15px;
   font-family: figtree;
-  line-height: 12px;
+  line-height: 30px;
   margin-top: 0px;
 }
 
@@ -1196,7 +1196,13 @@ textarea {
   font-size: 15px;
   font-style: italic;
   font-family: figtree;
+  font-weight: 600;
   margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.profile-settings p {
+  margin: 0px;
 }
 
 /*Logout Text*/
@@ -1216,13 +1222,13 @@ textarea {
 /*Notification title*/
 .account-notifications h4 {
   text-align: left;
-  margin-bottom: 7px;
+  margin-bottom: 0px;
 }
 
 .notification-item {
   display: flex;
   justify-content: space-between;
-  align-items: left;
+  align-items: center;
 }
 
 .notification-item p {
@@ -1295,4 +1301,5 @@ input:checked+.slider:before {
   margin-top: -470px;
   width: 353px;
   display: flex;
+  align-items: center;
 }
