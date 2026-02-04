@@ -37,6 +37,7 @@
   flex-direction: column;
 
   border: black 2px solid;
+  background-color: var(--white);
 }
 
 /*basic layout structuree*/
@@ -1178,17 +1179,16 @@ textarea {
 .profile-pic {
   width: 137px;
   height: 137px;
-  border-radius: 50px;
-  object-fit: cover;
-  float: left;
-  margin-right: 20px;
+  margin-top: 0px;
 }
 
 .profile-settings {
-  margin-left: 150px;
   text-align: left;
+  margin-left: 30px;
   font-size: 15px;
   font-family: figtree;
+  line-height: 12px;
+  margin-top: 0px;
 }
 
 /*Users Name*/
@@ -1196,6 +1196,7 @@ textarea {
   font-size: 15px;
   font-style: italic;
   font-family: figtree;
+  margin-top: 0px;
 }
 
 /*Logout Text*/
@@ -1206,18 +1207,16 @@ textarea {
 }
 
 .account-notifications {
-  margin-top: 50px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  margin-right: 20px;
-  margin-left: 0px;
+  gap: 12px;
   font-family: figtree;
 }
 
 /*Notification title*/
-.account-notifications h3 {
+.account-notifications h4 {
   text-align: left;
+  margin-bottom: 7px;
 }
 
 .notification-item {
@@ -1227,14 +1226,16 @@ textarea {
 }
 
 .notification-item p {
+  width: 300px;
   margin: 0;
   font-size: 14px;
+  display: flex;
+  justify-content: space-between;
 }
 
 /*Account Title*/
 .app h1 {
   margin-left: 30px;
-  margin-bottom: 20px;
 }
 
 
@@ -1287,4 +1288,11 @@ input:checked+.slider:before {
   top: 2px;
   left: 2px;
   background-color: #FFFFFF;
+}
+
+.account-personal {
+  position: absolute;
+  margin-top: -470px;
+  width: 353px;
+  display: flex;
 }

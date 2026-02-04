@@ -1,5 +1,5 @@
 import '../App.css';
-import profileLime from '../assets/profilelime.png'
+import profileYellow from '../assets/profile-yellow.png';
 import householdOwner from '../data/household.json';
 import householdMember from '../data/householdtwo.json';
 import Popup from 'reactjs-popup';
@@ -109,10 +109,10 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
 
     //ACTUAL HTML CONTENT STUFF
     let accountPage = (
-        <div className='app'>
+        <div className='layout'>
             <h1>Account</h1>
             <div className="account-personal">
-                <img className="profile-pic" src={profileLime} alt="User's Profile Picture"/>
+                <img className="profile-pic" src={profileYellow} alt="User's Profile Picture"></img>
                 <div className="profile-settings">
                     <h2>Alex</h2>
                     <p onClick={skiptoHousehold}>Household Settings</p>
@@ -137,7 +137,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                         }
                     </Popup> 
                     <Popup trigger=
-                        {<p className="accountpage-logout">Logout...</p>}
+                        {<p className="accountpage-logout">Log Out...</p>}
                         modal nested>
                         {
                             close => (
@@ -156,7 +156,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 </div>
             </div>
             <div className="account-notifications">
-                <h3>Notifications</h3>
+                <h4>Notifications</h4>
                 <div className="notification-item">
                     <p>Push Notifications</p>
                     <label className='toggle'>
@@ -337,7 +337,6 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
             {page === "created" && householdCreated}
             {page === "profile" && householdProfilePage}
             {page === "add" && householdAdd}
-
         </div>   
     );
 }
