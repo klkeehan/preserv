@@ -1151,3 +1151,48 @@ input:checked+.slider:before {
   display: flex;
   align-items: center;
 }
+
+/*Household settings*/
+.householdBox {
+  background-color: #DEF27C;
+  border-radius: 25px;
+  margin-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  width: 250px;
+  padding: 40px 20px;
+  margin: 0 auto 100px auto;
+}
+
+.householdBox p {
+  border-bottom: 1px solid var(--black);
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+/*Join household button*/
+.householdBox button:first-of-type {
+  background-color: #084723;
+  color: white;
+  border-radius: 50px;
+  font-size: 20px;
+  width: 100%;
+  height: 73px;
+  font-weight: bold;
+  border: 5px solid #084723;
+}
+
+/*Create Household Button*/
+.householdBox button:last-of-type {
+  background-color: #DEF27C;
+  color: #084723;
+  border-radius: 50px;
+  font-size: 20px;
+  width: 100%;
+  height: 73px;
+  font-weight: bold;
+  border:
+    5px solid #084723;
+}
