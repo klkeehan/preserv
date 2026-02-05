@@ -212,12 +212,12 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
     );
     //Create or Join
     let householdPage = (
-        <div className='app'>
+        <div className='layout'>
             <h1>Household</h1>
             <div className="householdBox">
                 <p>Keep your household in sync with one shared pantry where everyone can add, update, and plan to shop together.</p>
-                <button onClick={() => getPage("join")}>Join Household</button>
-                <button onClick={isOwner}>Create Household</button>
+                <button className='green-solid' onClick={() => getPage("join")}>Join Household</button>
+                <button className='green-hollow' onClick={isOwner}>Create Household</button>
             </div>
             <button className="close-button" onClick={() => getPage("account")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
@@ -230,7 +230,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
             <div className="householdBox">
                 <p>Enter the 9-digit code provided by your household owner to join.</p>
                 <input type="text" placeholder="000 000 000"/>
-                <button onClick={isMember}>Join Household</button>
+                <button className='green-solid' style={{marginTop:'10px'}} onClick={isMember}>Join Household</button>
             </div>
             <button className="close-button" onClick={() => getPage("household")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>

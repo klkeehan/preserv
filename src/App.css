@@ -1245,47 +1245,51 @@ input:checked+.slider:before {
 
 /*Household settings*/
 .householdBox {
+  position: absolute;
+  top: 0;
+  margin-top: 120px;
   background-color: #DEF27C;
   border-radius: 25px;
   margin-bottom: 100px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
   align-items: center;
-  width: 250px;
+  width: 303px;
+  height: 270px;
   padding: 40px 20px;
-  margin: 0 auto 100px auto;
+  font-family: figtree;
+  font-size: 16px;
+  font-weight: 500;
 }
-
 .householdBox p {
   border-bottom: 1px solid var(--black);
-  padding-bottom: 8px;
-  margin-bottom: 12px;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
 }
-
-/*Join household button*/
-.householdBox button:first-of-type {
-  background-color: #084723;
-  color: white;
-  border-radius: 50px;
+/*join household button*/
+.green-solid {
+  font-family: figtree;
   font-size: 20px;
+  font-weight: 600;
+  background-color: #084723;
+  color: var(--white);
+  border-radius: 50px;
   width: 100%;
   height: 73px;
-  font-weight: bold;
   border: 5px solid #084723;
+  margin-bottom: 20px;
 }
-
-/*Create Household Button*/
-.householdBox button:last-of-type {
+/*create Household Button*/
+.green-hollow {
+  font-family: figtree;
+  font-size: 20px;
+  font-weight: 600;
   background-color: #DEF27C;
   color: #084723;
   border-radius: 50px;
-  font-size: 20px;
   width: 100%;
   height: 73px;
-  font-weight: bold;
-  border:
-    5px solid #084723;
+  border: 5px solid #084723;
 }
 
 /*CODE TO JOIN HOUSEHOLD INPUT*/
