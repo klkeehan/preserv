@@ -1348,3 +1348,60 @@ input:checked+.slider:before {
   border:
     5px solid #084723;
 }
+
+/*Household Members*/
+
+/*the three dots*/
+.tripledots {
+  background: transparent;
+  border: none;
+  font-size: 100px;
+  cursor: pointer;
+  color: var(--black);
+}
+
+/*Change Passsword*/
+
+/*popup box*/
+.popup-content {
+  width: 10px;
+  height: 199px;
+}
+
+/*text input*/
+.popup-input {
+  border-radius: 12px;
+  border: 0px none;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  text-indent: 10px;
+
+  font-family: figtree;
+  font-size: 18px;
+  font-weight: 600;
+
+  background-color: #e3e3e3;
+  color: #595858;
+
+}
+
+/*Submit Button*/
+.pop-up-buttons button {
+  background-color: var(--green);
+  color: var(--white);
+  border: 0;
+  border-radius: 12px;
+  width: 87px;
+  height: 37px;
+  font-family: 'figtree';
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 0px;
+}
+
+/*stacking the input and labels*/
+.popup-content .modal .content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

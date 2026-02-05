@@ -5,11 +5,12 @@ import householdMember from '../data/householdtwo.json';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import { useState } from 'react';
+import x from '../assets/close.svg';
 
 const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
 
     let [page, getPage] = useState("account")
-    
+
     let [selectedUser, setSelectedUser] = useState(null);
 
     // Can delete this later when implementing server side schtuff
@@ -39,7 +40,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                             </div>
                             )
                         }
-                        </Popup> 
+                        </Popup>
                 // <button className="kick-leave-button" onClick={() => {setInHousehold(false); getPage("household");}}>Leave Household</button>
             } else {
                 return <Popup trigger=
@@ -58,7 +59,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                             </div>
                             )
                         }
-                        </Popup> 
+                        </Popup>
                 // <button className="kick-leave-button">Remove From Household</button>
             }
         }
@@ -79,7 +80,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                             </div>
                             )
                         }
-                    </Popup> 
+                    </Popup>
             //<button className="kick-leave-button" onClick={() => {setInHousehold(false); getPage("household");}}>Leave Household</button>
         }
         return null;
@@ -101,7 +102,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     let [inHousehold, setInHousehold] = useState(false);
     function skiptoHousehold () {
         if (inHousehold) {
-            getPage("created"); 
+            getPage("created");
         } else {
             getPage("household");
         }
@@ -135,7 +136,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                             </div>
                             )
                         }
-                    </Popup> 
+                    </Popup>
                     <Popup trigger=
                         {<p className="accountpage-logout">Log Out...</p>}
                         modal nested>
@@ -152,7 +153,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                             </div>
                             )
                         }
-                    </Popup> 
+                    </Popup>
                 </div>
             </div>
             <div className="account-notifications">
@@ -225,9 +226,9 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 <button onClick={() => getPage("join")}>Join Household</button>
                 <button onClick={isOwner}>Create Household</button>
             </div>
-            <button onClick={() => getPage("account")}>Exit</button>
+            <button className="close-button" onClick={() => getPage("account")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
-        
+
     );
     // Join Page
     let householdJoin = (
@@ -238,7 +239,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 <input type="text" placeholder="000 000 000"/>
                 <button onClick={isMember}>Join Household</button>
             </div>
-            <button onClick={() => getPage("household")}>Exit</button>
+            <button className="close-button" onClick={() => getPage("household")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
     );
     // View Member Page
@@ -270,7 +271,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                     </li>
                 ))}
             </ul>
-            <button onClick={() => getPage("account")}>Exit</button>
+            <button className="close-button" onClick={() => getPage("account")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
     );
 
@@ -280,7 +281,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
             <h1 className="member-name">{selectedUser.name}</h1>
             <h2 className="member-role">{selectedUser.role}</h2>
             <h2 className="">Household Permissions</h2>
-            <ul classname="permissions-list"> 
+            <ul classname="permissions-list">
                 <li className="permission-item">
                     <p className="permission-text">Pantry Access</p>
                     <select className="permission-ddown" value="" name="paccess">
@@ -337,7 +338,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
             {page === "created" && householdCreated}
             {page === "profile" && householdProfilePage}
             {page === "add" && householdAdd}
-        </div>   
+        </div>
     );
 }
 
