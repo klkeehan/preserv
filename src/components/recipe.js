@@ -118,7 +118,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     let recipeNew = (
         <div>
         <div class='item-page'>
-            <h1>New Recipe</h1>
+            <h2>New Recipe</h2>
             <div className='spacer' style={{height:'120px'}}></div>
             <label className='label2'>Recipe Name:<input type="text" className='item-input'/></label>< br/>
             <label className='label2'>Ingredients:<textarea></textarea></label>< br/>
@@ -128,7 +128,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                     <input type='file' id='file' className='upload'></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
                     <button className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
                 </div>
-            <button onClick={() => getPage("home")} className='save-button'>Save</button>
+            <button onClick={() => getPage("home")} className='save-button'>Save Recipe</button>
             </div>
             <button className='close-button' onClick={() => getPage("home")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
