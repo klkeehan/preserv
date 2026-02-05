@@ -7,15 +7,18 @@
   --white: #FCFAFA;
   --black: #080808;
 }
+
 /*font declarations*/
 @font-face {
   font-family: 'manrope';
   src: url('fonts/Manrope-VariableFont_wght.ttf');
 }
+
 @font-face {
   font-family: 'figtree';
   src: url('fonts/Figtree-VariableFont_wght.ttf');
 }
+
 .app {
   /*mobile screen dimensions*/
   width: 393px;
@@ -32,6 +35,7 @@
   border: black 2px solid;
   background-color: var(--white);
 }
+
 /*basic layout structure*/
 .layout {
   width: 393px;
@@ -41,6 +45,7 @@
   display: flex;
   flex-direction: column;
 }
+
 /*heading for 4 main component pages*/
 h1 {
   font-family: manrope;
@@ -54,6 +59,7 @@ h1 {
   margin-left: 30px;
   margin-right: 0px;
 }
+
 /*heading for add/edit pages*/
 h2 {
   font-family: manrope;
@@ -64,6 +70,7 @@ h2 {
   left: 0;
   margin-top: 60px;
 }
+
 /*item page labels*/
 h3 {
   font-family: figtree;
@@ -73,6 +80,7 @@ h3 {
   margin-top: 10px;
   margin-bottom: 5px;
 }
+
 /*shopping item names and recipe subheadings*/
 h4 {
   font-family: figtree;
@@ -80,6 +88,7 @@ h4 {
   font-weight: 650;
   margin-bottom: 5px;
 }
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -96,21 +105,25 @@ h4 {
   background-color: var(--green);
   z-index: 3;
 }
+
 /*navbar icon styling*/
 svg {
   width: 31px;
   height: 31px;
   fill: var(--lime);
 }
+
 input:focus {
   outline: none;
 }
+
 label {
   font-family: figtree;
   font-size: 20px;
   font-weight: 700;
   color: var(--green);
 }
+
 .label2 {
   font-family: figtree;
   font-size: 18px;
@@ -119,6 +132,7 @@ label {
   margin-top: 0px;
   margin-bottom: 0px;
 }
+
 /*select dropdowns*/
 select {
   width: 200px;
@@ -135,20 +149,24 @@ select {
   background-color: #e3e3e3;
   color: #595858;
 }
+
 video {
   width: 100%;
   height: 600px;
 }
+
 /*recipe list styling*/
 ul {
   list-style-position: inside;
   list-style-type: circle;
   margin: 0;
 }
+
 li {
   display: flex;
   align-items: center;
 }
+
 /*recipe add/edit textarea*/
 textarea {
   width: 333px;
@@ -164,6 +182,7 @@ textarea {
   background-color: #e3e3e3;
   color: #595858;
 }
+
 .nav-button {
   background-color: transparent;
   border: 0px none;
@@ -172,6 +191,7 @@ textarea {
   margin-top: auto;
   margin-bottom: auto;
 }
+
 /*class for selected nav button*/
 .nav-button-active {
   background-color: var(--white);
@@ -182,22 +202,26 @@ textarea {
   padding-right: 15px;
   margin-top: 10px;
 }
+
 .nav-button-active svg {
   width: 31px;
   height: 31px;
   fill: var(--green);
 }
+
 .logotype {
   width: 230px;
   position: absolute;
   top: 0;
   margin-top: 150px;
 }
+
 /*div class for blocking space with inline height*/
 .spacer {
   margin-top: 0;
   margin-bottom: 0;
 }
+
 /*onbaording elements*/
 .solid-button {
   width: 312px;
@@ -211,6 +235,7 @@ textarea {
   background-color: var(--black);
   color: var(--pink);
 }
+
 .hollow-button {
   width: 312px;
   height: 73px;
@@ -222,6 +247,7 @@ textarea {
   background-color: transparent;
   color: var(--black);
 }
+
 .back-arrow {
   position: fixed;
   top: 0;
@@ -231,6 +257,7 @@ textarea {
   background-color: transparent;
   border: 0px none;
 }
+
 .input {
   width: 312px;
   height: 66px;
@@ -244,6 +271,7 @@ textarea {
   background-color: #B1AFAF;
   color: #595858;
 }
+
 .pw-forgot {
   border: 0px none;
   background-color: transparent;
@@ -253,6 +281,7 @@ textarea {
   font-size: 16px;
   color: #595858;
 }
+
 /*password reset page*/
 .pw-header {
   font-family: figtree;
@@ -260,11 +289,13 @@ textarea {
   font-weight: 700;
   margin-bottom: 15px;
 }
+
 .body-text {
   font-family: figtree;
   font-size: 16px;
   margin-top: 0;
 }
+
 /*global green button*/
 .green-button {
   font-family: figtree;
@@ -276,6 +307,7 @@ textarea {
   color: var(--white);
   padding: 10px;
 }
+
 /*global close button*/
 .close-button {
   position: absolute;
@@ -297,6 +329,7 @@ textarea {
   left: 0;
   margin-left: 12px;
 }
+
 .pantry-header {
   position: absolute;
   top: 0;
@@ -307,6 +340,7 @@ textarea {
   justify-content: space-between;
   align-items: center;
 }
+
 .search-bar {
   position: absolute;
   top: 0;
@@ -323,6 +357,7 @@ textarea {
   border-radius: 20px;
   color: var(--black);
 }
+
 /*category bar*/
 .cat-bar {
   position: absolute;
@@ -340,9 +375,11 @@ textarea {
   border-radius: 10px;
   background-color: var(--lime);
 }
+
 .cat-bar::-webkit-scrollbar {
   display: none;
 }
+
 .cat-button {
   font-family: figtree;
   font-size: 14px;
@@ -353,6 +390,7 @@ textarea {
   padding-left: 8px;
   padding-right: 8px;
 }
+
 .cat-button:focus {
   background-color: var(--green);
   color: var(--white);
@@ -361,6 +399,7 @@ textarea {
   padding-right: 8px;
   border-radius: 10px;
 }
+
 .pantry-grid {
   position: absolute;
   top: 0;
@@ -377,9 +416,11 @@ textarea {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 .pantry-grid::-webkit-scrollbar {
   display: none;
 }
+
 /*for gradient blur transition*/
 .blurred {
   position: absolute;
@@ -390,9 +431,11 @@ textarea {
   filter: blur(20px);
   background-color: white;
 }
+
 .pantry-item {
   position: relative;
 }
+
 /*item images by status*/
 .pantry-fresh {
   width: 105px;
@@ -402,6 +445,7 @@ textarea {
   margin-right: 2.5px;
   margin-bottom: 5px;
 }
+
 .pantry-fresh2 {
   width: 149px;
   height: 149px;
@@ -410,6 +454,7 @@ textarea {
   margin-right: 2.5px;
   margin-bottom: 5px;
 }
+
 .pantry-soon {
   width: 105px;
   height: 105px;
@@ -419,6 +464,7 @@ textarea {
   margin-bottom: 5px;
   box-shadow: 0px 0px 10px var(--yellow);
 }
+
 .pantry-soon2 {
   width: 149px;
   height: 149px;
@@ -428,6 +474,7 @@ textarea {
   margin-bottom: 5px;
   box-shadow: 0px 0px 10px var(--yellow);
 }
+
 .pantry-exp {
   width: 105px;
   height: 105px;
@@ -437,6 +484,7 @@ textarea {
   margin-bottom: 5px;
   box-shadow: 0px 0px 10px var(--pink);
 }
+
 .pantry-exp2 {
   width: 149px;
   height: 149px;
@@ -446,6 +494,7 @@ textarea {
   margin-bottom: 5px;
   box-shadow: 0px 0px 10px var(--pink);
 }
+
 /*styling of image+overlay label as button*/
 .pantry-button {
   border: 0px none;
@@ -453,6 +502,7 @@ textarea {
   margin-top: 0px;
   margin-bottom: 0px;
 }
+
 .pantry-overlay {
   position: absolute;
   top: 0;
@@ -470,6 +520,7 @@ textarea {
   background-color: rgb(8, 8, 8, 0.75);
   color: var(--white);
 }
+
 /*item/recipe page layout*/
 .item-page {
   position: absolute;
@@ -485,9 +536,11 @@ textarea {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 .item-page::-webkit-scrollbar {
   display: none;
 }
+
 /*div containing item image and button column*/
 .item-header {
   position: absolute;
@@ -498,6 +551,7 @@ textarea {
   display: flex;
   justify-content: space-between;
 }
+
 .item-column {
   height: 149px;
   float: right;
@@ -505,6 +559,7 @@ textarea {
   flex-direction: column;
   justify-content: space-between;
 }
+
 .item-button {
   font-family: figtree;
   font-size: 20px;
@@ -518,6 +573,7 @@ textarea {
   padding-right: 15px;
   height: 45px;
 }
+
 /*text status styles*/
 .status-fresh {
   font-family: figtree;
@@ -527,6 +583,7 @@ textarea {
   margin-top: 230px;
   margin-bottom: 0px;
 }
+
 .status-soon {
   font-family: figtree;
   font-size: 18px;
@@ -535,6 +592,7 @@ textarea {
   margin-top: 230px;
   margin-bottom: 0px;
 }
+
 .status-exp {
   font-family: figtree;
   font-size: 18px;
@@ -543,12 +601,14 @@ textarea {
   margin-top: 230px;
   margin-bottom: 0px;
 }
+
 /*item information*/
 .item-info {
   font-family: figtree;
   font-size: 18px;
   margin-top: 0px;
 }
+
 /*input fields*/
 .item-input {
   width: 250px;
@@ -564,6 +624,7 @@ textarea {
   background-color: #e3e3e3;
   color: #595858;
 }
+
 /*small image for item edit page*/
 .edit-image {
   width: 100px;
@@ -574,6 +635,7 @@ textarea {
   border-radius: 20px;
   box-shadow: 0px 0px 10px var(--black);
 }
+
 /*camera and upload buttons*/
 .image-input {
   justify-content: center;
@@ -592,27 +654,32 @@ textarea {
   background-color: #e3e3e3;
   color: var(--black);
 }
+
 /*clears default file upload styling and text*/
 .upload {
   opacity: 0;
   width: 0.1px;
 }
+
 .image-opts {
   display: block;
   width: 200px;
   margin-top: 0px;
   height: 20px;
 }
+
 /*nutrition facts styling*/
 .nf-dropdown {
   display: flex;
   flex-direction: column;
 }
+
 .nf-toggle {
   width: 353px;
   display: flex;
   justify-content: space-between;
 }
+
 .nf-block {
   display: none;
   width: 343px;
@@ -621,15 +688,18 @@ textarea {
   overflow: hidden;
   margin-right: 0px;
 }
+
 .nf-dropdown:hover .nf-block {
   display: block;
 }
+
 .nf-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 30px;
 }
+
 .nf-header {
   font-family: manrope;
   font-size: 16px;
@@ -639,31 +709,37 @@ textarea {
   margin-bottom: 3px;
   float: left;
 }
+
 .nf-text {
   font-family: manrope;
   font-size: 16px;
   font-weight: 200;
 }
+
 .nf-quant {
   font-family: manrope;
   font-size: 16px;
   font-weight: 400;
   color: var(--black);
 }
+
 .nf-line {
   width: 373px;
   height: 2px;
   background-color: var(--green);
 }
+
 .nf-small {
   font-family: manrope;
   font-size: 12px;
   font-weight: 400;
   color: var(--black);
 }
+
 .arrow {
   margin-top: 13px;
 }
+
 .save-button {
   position: absolute;
   bottom: 0;
@@ -679,6 +755,7 @@ textarea {
   font-weight: 600;
   padding: 10px;
 }
+
 .add-button {
   position: absolute;
   bottom: 0;
@@ -689,6 +766,7 @@ textarea {
   margin-right: 19px;
   z-index: 10;
 }
+
 /*manual vs scan inpur*/
 .mode-bar {
   position: absolute;
@@ -701,6 +779,7 @@ textarea {
   background-color: var(--lime);
   border-radius: 10px;
 }
+
 .mode-button {
   width: 176.5px;
   height: 34px;
@@ -712,6 +791,7 @@ textarea {
   font-size: 18px;
   font-weight: 600;
 }
+
 .mode-button2 {
   width: 176.5px;
   height: 34px;
@@ -741,6 +821,7 @@ textarea {
   background-color: pink;
   border: 0px none;
 }
+
 .popup-text {
   font-family: figtree;
   font-size: 20px;
@@ -750,6 +831,7 @@ textarea {
   padding-right: 35px;
   padding-bottom: 5px;
 }
+
 .popup-text2 {
   font-family: figtree;
   font-size: 20px;
@@ -760,12 +842,14 @@ textarea {
   padding-bottom: 0px;
   margin-bottom: 5px;
 }
+
 .popup-text3 {
   font-family: figtree;
   font-size: 20px;
   font-weight: 400;
   padding: 35px;
 }
+
 .popup-label {
   font-family: figtree;
   font-size: 16px;
@@ -792,15 +876,18 @@ textarea {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 .recipes-grid::-webkit-scrollbar {
   display: none;
 }
+
 .recipes-image {
   width: 163px;
   height: 163px;
   border-radius: 20px;
   margin-bottom: 0px;
 }
+
 .recipes-overlay {
   position: absolute;
   top: 0;
@@ -817,9 +904,11 @@ textarea {
   background-color: rgb(8, 8, 8, 0.75);
   color: var(--white);
 }
+
 .recipes-card {
   position: relative;
 }
+
 .recipe-button {
   background-color: transparent;
   border: 0px none;
@@ -828,6 +917,7 @@ textarea {
   margin-top: 7px;
   margin-bottom: 7px;
 }
+
 /*image for recipe page*/
 .recipes-image2 {
   width: 163px;
@@ -835,6 +925,7 @@ textarea {
   border-radius: 20px;
   margin-top: 160px;
 }
+
 /*recipe name and buttons*/
 .recipe-header {
   position: absolute;
@@ -847,29 +938,35 @@ textarea {
   justify-content: space-between;
   height: 60px;
 }
+
 .recipe-buttons {
   display: flex;
 }
+
 .recipe-name {
   font-family: manrope;
   font-size: 28px;
   font-weight: 700;
 }
+
 /*style for 'ingredients' and 'instructions'*/
 .recipe-label {
   font-family: figtree;
   font-size: 16px;
   font-weight: 600;
 }
+
 .recipe-block {
   display: inline-flex;
   align-items: top;
 }
+
 .ing-list {
   width: 220px;
   margin-top: 140px;
   margin-left: -25px;
 }
+
 /*pink dot to indicate missing ingredient*/
 .missing-icon {
   width: 7px;
@@ -896,6 +993,7 @@ textarea {
   padding-left: 30px;
   padding-right: 40px;
 }
+
 .shopping-item input[type="checkbox"] {
   appearance: none;
   width: 35px;
@@ -903,9 +1001,11 @@ textarea {
   align-self: center;
   background: url('assets/checkbox-unselected.png');
 }
+
 .shopping-item input[type="checkbox"]:checked {
   background-image: url('assets/checkbox-selected.png');
 }
+
 /*includes name and quantity*/
 .shopping-info {
   text-align: left;
@@ -913,6 +1013,7 @@ textarea {
   display: flex;
   flex-direction: column;
 }
+
 .button-bar {
   position: absolute;
   bottom: 112px;
@@ -922,6 +1023,7 @@ textarea {
   justify-content: space-between;
   align-items: center;
 }
+
 .button-bar button {
   background-color: var(--green);
   color: var(--white);
@@ -932,6 +1034,7 @@ textarea {
   font-size: 18px;
   font-weight: 500;
 }
+
 .button-bar button+button {
   width: 48px;
   height: 48px;
@@ -942,12 +1045,14 @@ textarea {
   background-size: 42px 42px;
   color: transparent;
 }
+
 /*line between items*/
 .divider {
   height: 1px;
   width: 393px;
   background-color: #a0a0a0;
 }
+
 .shopping-list {
   position: absolute;
   top: 0;
@@ -992,6 +1097,7 @@ textarea {
   font-weight: 500;
   margin-top: 10px;
 }
+
 /*pink hollow*/
 .pink-hollow {
   background-color: transparent;
@@ -1049,6 +1155,8 @@ textarea {
   margin-left: 165px;
   margin-bottom: 30px;
 }
+
+
 .profile-settings p {
   margin: 0px;
 }
@@ -1179,6 +1287,26 @@ input:checked+.slider:before {
   border:
     5px solid #084723;
 }
+
+/*CODE TO JOIN HOUSEHOLD INPUT*/
+.householdBox input[type="text"] {
+  background-color: #DEF27C;
+  color: #084723;
+  border-radius: 50px;
+  font-size: 20px;
+  width: 100%;
+  height: 60px;
+  text-align: center;
+  font-weight: bold;
+  border:
+    5px solid #084723;
+}
+
+/*the 0000*/
+.householdBox input::placeholder {
+  color: #084723;
+}
+
 
 /*Household Members*/
 
