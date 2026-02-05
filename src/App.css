@@ -642,15 +642,12 @@ textarea {
   justify-content: space-between;
 }
 .nf-block {
-  display: none;
+  display: block;
   width: 343px;
   margin-top: 40px;
   position: absolute;
   overflow: hidden;
   margin-right: 0px;
-}
-.nf-dropdown:hover .nf-block {
-  display: block;
 }
 .nf-row {
   display: flex;

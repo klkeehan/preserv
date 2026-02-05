@@ -11,76 +11,6 @@
     },
     {
         "id": 2,
-        "status": "USE SOON - NEAR EXPIRATION",
-        "name": "Jam",
-        "quantity": "1",
-        "purchDate": "01/01/2026",
-        "expDate": "02/10/2026",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Homemade_marmalade%2C_England.jpg/500px-Homemade_marmalade%2C_England.jpg",
-        "category": "Condiments"
-    },
-    {
-        "id": 3,
-        "status": "FRESH",
-        "name": "Popcorn",
-        "quantity": "3",
-        "purchDate": "02/01/2026",
-        "expDate": "08/01/2026",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Popcorn_up_close_salted_and_air_popped.jpg/960px-Popcorn_up_close_salted_and_air_popped.jpg",
-        "category": "Snacks"
-    },
-    {
-        "id": 4,
-        "status": "FRESH",
-        "name": "Almonds",
-        "quantity": "5",
-        "purchDate": "02/01/2026",
-        "expDate": "08/01/2026",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Almonds.png/960px-Almonds.png",
-        "category": "Snacks"
-    },
-    {
-        "id": 5,
-        "status": "FRESH",
-        "name": "Eggs",
-        "quantity": "6",
-        "purchDate": "02/01/2026",
-        "expDate": "02/15/2026",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/6-Pack-Chicken-Eggs.jpg/960px-6-Pack-Chicken-Eggs.jpg",
-        "category": "Dairy"
-    },
-    {
-        "id": 6,
-        "status": "FRESH",
-        "name": "Pasta",
-        "quantity": "6",
-        "purchDate": "02/01/2026",
-        "expDate": "02/01/2027",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/A_better_homemade_pasta.jpg/960px-A_better_homemade_pasta.jpg",
-        "category": "Grains"
-    },
-        {
-        "id": 7,
-        "status": "FRESH",
-        "name": "Orange Juice",
-        "quantity": "1",
-        "purchDate": "02/01/2026",
-        "expDate": "05/14/2026",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Oranges_and_orange_juice.jpg/500px-Oranges_and_orange_juice.jpg",
-        "category": "Beverages"
-    },
-    {
-        "id": 8,
-        "status": "FRESH",
-        "name": "Ice Cream Sandwiches",
-        "quantity": "10",
-        "purchDate": "02/01/2026",
-        "expDate": "05/14/2026",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/6/69/IceCreamSandwich.jpg",
-        "category": "Frozen"
-    },
-    {
-        "id": 9,
         "status": "EXPIRED",
         "name": "Baking Soda",
         "quantity": "1",
@@ -90,7 +20,7 @@
         "category": "Other"
     },
     {
-        "id": 10,
+        "id": 3,
         "status": "EXPIRED",
         "name": "Peas",
         "quantity": "3",
@@ -100,7 +30,7 @@
         "category": "Canned"
     },
     {
-        "id": 11,
+        "id": 4,
         "status": "EXPIRED",
         "name": "Tofu",
         "quantity": "1",
@@ -110,47 +40,7 @@
         "category": "Proteins"
     },
     {
-        "id": 12,
-        "status": "USE SOON - NEAR EXPIRATION",
-        "name": "Oat Milk",
-        "quantity": "1",
-        "purchDate": "02/01/2025",
-        "expDate": "02/14/2025",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Oat_milk_glass_and_bottles.jpg/960px-Oat_milk_glass_and_bottles.jpg",
-        "category": "Beverages"
-    },
-    {
-        "id": 13,
-        "status": "USE SOON - NEAR EXPIRATION",
-        "name": "Olive Oil",
-        "quantity": "1",
-        "purchDate": "02/01/2025",
-        "expDate": "02/14/2025",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Oliven_V1.jpg/960px-Oliven_V1.jpg",
-        "category": "Condiments"
-    },
-    {
-        "id": 14,
-        "status": "FRESH",
-        "name": "Red Lentils",
-        "quantity": "1",
-        "purchDate": "02/01/2025",
-        "expDate": "02/01/2027",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Split_Red_Lentil.jpg/960px-Split_Red_Lentil.jpg",
-        "category": "Other"
-    },
-    {
-        "id": 15,
-        "status": "FRESH",
-        "name": "Peanut Butter",
-        "quantity": "1",
-        "purchDate": "02/01/2025",
-        "expDate": "02/01/2027",
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/2020-03-24_20_57_22_An_open_jar_of_Skippy_Creamy_Peanut_Butter_in_the_Dulles_section_of_Sterling%2C_Loudoun_County%2C_Virginia.jpg/960px-2020-03-24_20_57_22_An_open_jar_of_Skippy_Creamy_Peanut_Butter_in_the_Dulles_section_of_Sterling%2C_Loudoun_County%2C_Virginia.jpg",
-        "category": "Condiments"
-    },
-    {
-        "id": 16,
+        "id": 5,
         "status": "EXPIRED",
         "name": "Plums",
         "quantity": "2",
@@ -160,7 +50,37 @@
         "category": "Produce"
     },
     {
-        "id": 17,
+        "id": 6,
+        "status": "USE SOON - NEAR EXPIRATION",
+        "name": "Jam",
+        "quantity": "1",
+        "purchDate": "01/01/2026",
+        "expDate": "02/10/2026",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Homemade_marmalade%2C_England.jpg/500px-Homemade_marmalade%2C_England.jpg",
+        "category": "Condiments"
+    },
+    {
+        "id": 7,
+        "status": "USE SOON - NEAR EXPIRATION",
+        "name": "Oat Milk",
+        "quantity": "1",
+        "purchDate": "02/01/2025",
+        "expDate": "02/14/2025",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Oat_milk_glass_and_bottles.jpg/960px-Oat_milk_glass_and_bottles.jpg",
+        "category": "Beverages"
+    },
+    {
+        "id": 8,
+        "status": "USE SOON - NEAR EXPIRATION",
+        "name": "Olive Oil",
+        "quantity": "1",
+        "purchDate": "02/01/2025",
+        "expDate": "02/14/2025",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Oliven_V1.jpg/960px-Oliven_V1.jpg",
+        "category": "Condiments"
+    },
+    {
+        "id": 9,
         "status": "USE SOON - NEAR EXPIRATION",
         "name": "Basmati Rice",
         "quantity": "1",
@@ -168,6 +88,86 @@
         "expDate": "02/10/2026",
         "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Rice_in_Electric_Cooker.jpg/960px-Rice_in_Electric_Cooker.jpg",
         "category": "Grains"
+    },
+    {
+        "id": 10,
+        "status": "FRESH",
+        "name": "Popcorn",
+        "quantity": "3",
+        "purchDate": "02/01/2026",
+        "expDate": "08/01/2026",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Popcorn_up_close_salted_and_air_popped.jpg/960px-Popcorn_up_close_salted_and_air_popped.jpg",
+        "category": "Snacks"
+    },
+    {
+        "id": 11,
+        "status": "FRESH",
+        "name": "Almonds",
+        "quantity": "5",
+        "purchDate": "02/01/2026",
+        "expDate": "08/01/2026",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Almonds.png/960px-Almonds.png",
+        "category": "Snacks"
+    },
+    {
+        "id": 12,
+        "status": "FRESH",
+        "name": "Eggs",
+        "quantity": "6",
+        "purchDate": "02/01/2026",
+        "expDate": "02/15/2026",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/6-Pack-Chicken-Eggs.jpg/960px-6-Pack-Chicken-Eggs.jpg",
+        "category": "Dairy"
+    },
+    {
+        "id": 13,
+        "status": "FRESH",
+        "name": "Pasta",
+        "quantity": "6",
+        "purchDate": "02/01/2026",
+        "expDate": "02/01/2027",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/A_better_homemade_pasta.jpg/960px-A_better_homemade_pasta.jpg",
+        "category": "Grains"
+    },
+    {
+        "id": 14,
+        "status": "FRESH",
+        "name": "Orange Juice",
+        "quantity": "1",
+        "purchDate": "02/01/2026",
+        "expDate": "05/14/2026",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Oranges_and_orange_juice.jpg/500px-Oranges_and_orange_juice.jpg",
+        "category": "Beverages"
+    },
+    {
+        "id": 15,
+        "status": "FRESH",
+        "name": "Ice Cream Sandwiches",
+        "quantity": "10",
+        "purchDate": "02/01/2026",
+        "expDate": "05/14/2026",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/6/69/IceCreamSandwich.jpg",
+        "category": "Frozen"
+    },
+    {
+        "id": 16,
+        "status": "FRESH",
+        "name": "Red Lentils",
+        "quantity": "1",
+        "purchDate": "02/01/2025",
+        "expDate": "02/01/2027",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Split_Red_Lentil.jpg/960px-Split_Red_Lentil.jpg",
+        "category": "Other"
+    },
+    {
+        "id": 17,
+        "status": "FRESH",
+        "name": "Peanut Butter",
+        "quantity": "1",
+        "purchDate": "02/01/2025",
+        "expDate": "02/01/2027",
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/2020-03-24_20_57_22_An_open_jar_of_Skippy_Creamy_Peanut_Butter_in_the_Dulles_section_of_Sterling%2C_Loudoun_County%2C_Virginia.jpg/960px-2020-03-24_20_57_22_An_open_jar_of_Skippy_Creamy_Peanut_Butter_in_the_Dulles_section_of_Sterling%2C_Loudoun_County%2C_Virginia.jpg",
+        "category": "Condiments"
     },
     {
         "id": 18,
