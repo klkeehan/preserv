@@ -91,7 +91,7 @@ function App() {
   }
 
   function loadAccount() {
-    setContent(<Account pantryLoad={loadPantry} shoppingLoad={loadShopping} recipeLoad={loadRecipe} accountLoad={loadAccount} />);
+    setContent(<Account pantryLoad={loadPantry} shoppingLoad={loadShopping} recipeLoad={loadRecipe} accountLoad={loadAccount} loginLoad={loadLogin}/>);
   }
 
   return (

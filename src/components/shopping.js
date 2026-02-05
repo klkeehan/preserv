@@ -22,15 +22,15 @@ const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
                 ))}
             </div>
             <div className='button-bar'>
-                <Popup contentStyle={{width:'273px', height:'220px'}} trigger={<button className='green-button'>Remove</button>}modal nested>
+                <Popup contentStyle={{width:'273px', height:'210px'}} trigger={<button className='green-button'>Remove</button>}modal nested>
                     {close => (
                         <div>
                             <div className='content'>
                                 <p className='popup-text2'>Remove items from shopping list?</p>
                             </div>
                             <div>
-                                <button className='remove-confirm' onClick={() => close()}>Remove</button><br></br>
-                                <button className='remove-cancel' onClick={() => close()}>Cancel</button>
+                                <button className='pink-solid' onClick={() => close()}>Remove</button><br></br>
+                                <button className='pink-hollow' onClick={() => close()}>Cancel</button>
                             </div>
                         </div>
                     )}

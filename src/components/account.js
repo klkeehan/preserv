@@ -7,7 +7,7 @@ import 'reactjs-popup/dist/index.css';
 import { useState } from 'react';
 import x from '../assets/close.svg';
 
-const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
+const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad}) => {
 
     let [page, getPage] = useState("account")
 
@@ -118,41 +118,34 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                     <h2>Alex</h2>
                     <p onClick={skiptoHousehold}>Household Settings</p>
                     <p>Change Profile Picture...</p>
-                    <Popup trigger=
-                        {<p>Change Password...</p>}
-                        modal nested>
-                        {
-                            close => (
-                                <div className='modal'>
-                                    <div className='content'>
-                                        <label className="popup-label">New Password:</label>
-                                        <input className="popup-input" type="text" name="newpassword"/>
-                                        <label className="popup-label">Confirm Password:</label>
-                                        <input className="popup-input" type="text" name="confirmpassword"/>
+                    <Popup contentStyle={{width:'273px', height:'260px'}} trigger={<p>Change Password...</p>}modal nested>
+                        {close => (
+                            <div className='modal'>
+                                <div className='content'>
+                                    <div className='spacer' style={{height:'10px'}}></div>
+                                    <label className="label2" style={{textAlign:'left', marginLeft:'15px'}}>New Password:</label>
+                                    <input className="item-input" style={{width:'200px',  marginLeft:'10px'}} type="text" name="newpassword"/>
+                                    <label className="label2" style={{textAlign:'left', marginLeft:'15px', marginTop:'-10px'}}>Confirm Password:</label>
+                                    <input className="item-input" style={{width:'200px',  marginLeft:'10px'}} type="text" name="confirmpassword"/>
                                     </div>
                                 <div className="pop-up-buttons">
                                     <button onClick={() => {close()}}>Submit</button>
                                 </div>
                             </div>
-                            )
-                        }
+                            )}
                     </Popup>
-                    <Popup trigger=
-                        {<p className="accountpage-logout">Log Out...</p>}
-                        modal nested>
-                        {
-                            close => (
-                                <div className='modal'>
-                                    <div className='content'>
-                                        <p>Log out of your account?</p>
-                                    </div>
-                                <div className="pop-up-buttons">
-                                    <button>Log Out</button>
-                                    <button onClick={() => {close()}}>Cancel</button>
+                    <Popup contentStyle={{width:'273px', height:'210px'}} trigger={<p className="accountpage-logout">Log Out...</p>}modal nested>
+                        {close => (
+                            <div className='modal'>
+                                <div className='content'>
+                                    <p className='popup-text2'>Log out of your account?</p>
+                                </div>
+                                <div>
+                                    <button className='pink-solid' onClick={() => loginLoad}>Log Out</button><br></br>
+                                    <button className='pink-hollow' onClick={() => {close()}}>Cancel</button>
                                 </div>
                             </div>
-                            )
-                        }
+                        )}
                     </Popup>
                 </div>
             </div>
@@ -227,7 +220,6 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 <button onClick={isOwner}>Create Household</button>
             </div>
             <button className="close-button" onClick={() => getPage("account")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
-            <button onClick={() => getPage("account")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
 
     );

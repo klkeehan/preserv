@@ -51,7 +51,7 @@ h1 {
   left: 0;
   margin-top: 60px;
   margin-bottom: 0px;
-  margin-left: 0px;
+  margin-left: 30px;
   margin-right: 0px;
 }
 /*heading for add/edit pages*/
@@ -980,7 +980,7 @@ textarea {
 
 
 /*pink solid*/
-.remove-confirm {
+.pink-solid {
   background-color: var(--pink);
   color: var(--white);
   border: 0;
@@ -993,7 +993,7 @@ textarea {
   margin-top: 10px;
 }
 /*pink hollow*/
-.remove-cancel {
+.pink-hollow {
   background-color: transparent;
   color: var(--pink);
   border: 2px var(--pink) solid;
@@ -1005,6 +1005,9 @@ textarea {
   font-weight: 500;
   margin-top: 10px;
 }
+
+
+
 
 .shopping-add-popup {
   width: 273px;
@@ -1027,18 +1030,15 @@ textarea {
 .profile-pic {
   width: 137px;
   height: 137px;
-  margin-top: 0px;
 }
-
 .profile-settings {
   text-align: left;
   margin-left: 30px;
   font-size: 15px;
   font-family: figtree;
   line-height: 30px;
-  margin-top: 0px;
+  margin-top: 30px;
 }
-
 /*Users Name*/
 .profile-settings h2 {
   font-size: 15px;
@@ -1046,39 +1046,34 @@ textarea {
   font-family: figtree;
   font-weight: 600;
   margin-top: 0px;
-  margin-bottom: 0px;
+  margin-left: 165px;
+  margin-bottom: 30px;
 }
-
 .profile-settings p {
   margin: 0px;
 }
-
 /*Logout Text*/
 .accountpage-logout {
   color: #FF006A;
   font-weight: bold;
   font-family: figtree;
 }
-
 .account-notifications {
   display: flex;
   flex-direction: column;
   gap: 12px;
   font-family: figtree;
 }
-
 /*Notification title*/
 .account-notifications h4 {
   text-align: left;
   margin-bottom: 0px;
 }
-
 .notification-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
 .notification-item p {
   width: 300px;
   margin: 0;
@@ -1086,25 +1081,16 @@ textarea {
   display: flex;
   justify-content: space-between;
 }
-
-/*Account Title*/
-.app h1 {
-  margin-left: 30px;
-}
-
-
 /* SLIDER TECHNOLOGY!!!!!!!!!*/
 .toggle {
   position: relative;
 }
-
 .toggle input {
   position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
 }
-
 .slider {
   position: relative;
   display: block;
@@ -1116,7 +1102,6 @@ textarea {
   border-radius: 32px;
   border: 2px solid #79747E;
 }
-
 .slider:before {
   content: "";
   position: absolute;
@@ -1128,13 +1113,10 @@ textarea {
   left: 6px;
   border-radius: 60px;
 }
-
 input:checked+.slider {
   background-color: #080808;
   border-color: #080808;
-
 }
-
 input:checked+.slider:before {
   width: 24px;
   height: 24px;
@@ -1143,7 +1125,6 @@ input:checked+.slider:before {
   left: 2px;
   background-color: #FFFFFF;
 }
-
 .account-personal {
   position: absolute;
   margin-top: -470px;
@@ -1151,6 +1132,8 @@ input:checked+.slider:before {
   display: flex;
   align-items: center;
 }
+
+
 
 /*Household settings*/
 .householdBox {
