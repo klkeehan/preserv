@@ -53,7 +53,7 @@ function App() {
       <button className='back-arrow' onClick={loadLogin}><img src={backArrow} style={{width:'28px'}} alt='back arrow'></img></button>
       <img src={logotype} className='logotype' alt='preserv logotype'/>
       <div className='spacer' style={{height:'50px'}}></div>
-      <p className='small-header'>Password Reset</p>
+      <p className='pw-header'>Password Reset</p>
       <p className='body-text'>Enter your email address and we will send you instructions to reset your password.</p>
       <div className='spacer' style={{height:'20px'}}></div>
       <input name='email' placeholder='Email' className='input'/>

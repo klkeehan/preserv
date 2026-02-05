@@ -18,8 +18,8 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     let pantryHome = (
         <div className='layout'>
             <Grid handleItem={handleItem} handlePantry={() => setContent(pantryHome)}/>
-            <button className='add-button' onClick={() => setContent(pantryAdd)}><img src={add} alt='add button' style={{width:'42px'}}></img></button>
-            <div class='navbar'>
+            <button className='add-button' onClick={() => setContent(pantryAdd)}><img src={add} alt='add button' style={{width:'42px', height:'43px'}}></img></button>
+            <div className='navbar'>
                 <button className='nav-button-active' onClick={pantryLoad}><svg width="48" height="59" viewBox="0 0 48 59" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M23.9885 1.75172C24.0808 2.29332 25.8462 12.6413 25.8462 16.5939C25.8462 22.6206 22.6385 26.9188 17.8962 28.6474L19.3846 56.0846C19.4654 57.6633 18.2077 59 16.6154 59H9.23077C7.65 59 6.38077 57.6748 6.46154 56.0846L7.95 28.6474C3.19615 26.9188 0 22.6091 0 16.5939C0 12.6298 1.76538 2.29332 1.85769 1.75172C2.22692 -0.587529 7.08462 -0.622099 7.38462 1.87848V18.1495C7.53462 18.5413 9.12692 18.5183 9.23077 18.1495C9.39231 15.2341 10.1423 2.10895 10.1538 1.80934C10.5346 -0.587529 15.3115 -0.587529 15.6808 1.80934C15.7038 2.12047 16.4423 15.2341 16.6038 18.1495C16.7077 18.5183 18.3115 18.5413 18.45 18.1495V1.87848C18.75 -0.610576 23.6192 -0.587529 23.9885 1.75172ZM37.7423 34.6741L36.0115 56.0039C35.8731 57.6172 37.1538 59 38.7692 59H45.2308C46.7654 59 48 57.767 48 56.2344V2.76578C48 1.24469 46.7654 0.000164712 45.2308 0.000164712C35.7115 0.000164712 19.6846 20.5694 37.7423 34.6741Z"/>
                 </svg></button>
@@ -33,6 +33,7 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 <path d="M29.5 33.1875C38.6611 33.1875 46.0938 25.7549 46.0938 16.5938C46.0938 7.43262 38.6611 0 29.5 0C20.3389 0 12.9062 7.43262 12.9062 16.5938C12.9062 25.7549 20.3389 33.1875 29.5 33.1875ZM44.25 36.875H37.9006C35.3424 38.0504 32.4961 38.7188 29.5 38.7188C26.5039 38.7188 23.6691 38.0504 21.0994 36.875H14.75C6.60293 36.875 0 43.4779 0 51.625V53.4688C0 56.5225 2.47754 59 5.53125 59H53.4688C56.5225 59 59 56.5225 59 53.4688V51.625C59 43.4779 52.3971 36.875 44.25 36.875Z"/>
                 </svg></button>
             </div>
+            <div className='blurred'></div>
         </div>
     );
 
@@ -41,7 +42,7 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     let pantryAdd = (
         <div>
         <div className='item-page'>
-            <h1>Pantry Add</h1>
+            <h2>Pantry Add</h2>
             <div className='mode-bar'>
                 <button className='mode-button2'>Manual Mode</button>
                 <button className='mode-button' onClick={() => setContent(pantryScan)}><svg width="79" height="60" viewBox="0 0 79 60" fill="none" xmlns="http://www.w3.org/2000/svg">

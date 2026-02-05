@@ -38,7 +38,7 @@ const Grid = ({handleItem}) => {
     return (
         <div className='pantry'>
             <div className='pantry-header'>
-                <h2>Pantry</h2>
+                <h1>Pantry</h1>
                 <input type="text" value={search} onChange={handleSearch} placeholder='Search' className='search-bar' />
             </div>
             <div className='cat-bar'>
@@ -62,6 +62,7 @@ const Grid = ({handleItem}) => {
                         </button>
                     </div>
                 ))}
+                <div className='spacer' style={{height:'210px'}}></div>
             </div>
         </div>
     )

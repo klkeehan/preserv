@@ -13,7 +13,7 @@ const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
                         <div className='shopping-item'>
                             <aside className='shopping-info'>
                                 <h4>{item.name}</h4>
-                                <p>Quantity: {item.quantity}</p>
+                                <p className='body-text'>Quantity: {item.quantity}</p>
                             </aside>
                             <input type="checkbox" />
                         </div>
@@ -22,39 +22,32 @@ const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
                 ))}
             </div>
             <div className='button-bar'>
-                <Popup trigger=
-                    {<button>Remove</button>}
-                    modal nested>
-                    {
-                        close => (
-                            <div className='shopping-remove-popup'>
-                                <div className='content'>
-                                    <p>Remove items from shopping list?</p>
-                                </div>
-                                <div>
-                                    <button className='remove-confirm' onClick={() => close()}>Remove</button>
-                                    <button className='remove-cancel' onClick={() => close()}>Cancel</button>
-                                </div>
+                <Popup contentStyle={{width:'273px', height:'220px'}} trigger={<button className='green-button'>Remove</button>}modal nested>
+                    {close => (
+                        <div>
+                            <div className='content'>
+                                <p className='popup-text2'>Remove items from shopping list?</p>
                             </div>
-                        )
-                    }
+                            <div>
+                                <button className='remove-confirm' onClick={() => close()}>Remove</button><br></br>
+                                <button className='remove-cancel' onClick={() => close()}>Cancel</button>
+                            </div>
+                        </div>
+                    )}
                 </Popup>
-                <Popup trigger=
-                    {<button>add</button>}
-                    modal nested>
-                    {
-                        close => (
-                            <div className='shopping-add-popup'>
-                                <div className='content'>
-                                    <label>Item Name: <input type='text' /></label>
-                                    <label>Amount: <input type='number' /></label>
-                                </div>
-                                <div>
-                                    <button className='add-confirm' onClick={() => close()}>Confirm</button>
-                                </div>
+                <Popup contentStyle={{width:'273px', height:'240px'}} trigger={<button>add</button>}modal nested>
+                    {close => (
+                         <div>
+                            <div className='content' style={{textAlign:'left', marginLeft:'35px'}}>
+                                <div className='spacer' style={{height:'20px'}}></div>
+                                <label className='label2'>Item Name: <input type='text' className='item-input' style={{width:'200px'}}/></label>
+                                <label className='label2'>Amount:<br></br><input type='number' className='item-input' style={{width:'80px'}}/></label>
                             </div>
-                        )
-                    }
+                            <div>
+                                <button className='green-button' onClick={() => close()}>Confirm</button>
+                            </div>
+                        </div>
+                    )}
                 </Popup>
             </div>
             <div class='navbar'>

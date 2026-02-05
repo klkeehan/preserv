@@ -227,6 +227,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 <button onClick={isOwner}>Create Household</button>
             </div>
             <button className="close-button" onClick={() => getPage("account")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
+            <button onClick={() => getPage("account")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
 
     );

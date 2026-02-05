@@ -15,39 +15,33 @@ const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, 
                 <img className={itemStatus === 'FRESH' ? 'pantry-fresh2' : itemStatus === 'EXPIRED' ? 'pantry-exp2' : 'pantry-soon2'} src={itemImg} alt={itemName}></img>
                 <aside className='item-column'>
                     <button className='item-button' onClick={() => setContent(itemEdit)}>Edit</button>
-                    <Popup trigger=
-                        {<button className='item-button'>Trash</button>}
-                        modal nested>
+                    <Popup contentStyle={{width:'273px'}} trigger={<button className='item-button'>Trash</button>}modal nested>
                         {close => (
-                                <div className='modal'>
-                                    <div className='content'>
-                                        <p className='popup-text'>Are you sure you want to trash this item?</p>
-                                    </div>
-                                <div>
-                                    <button onClick={handlePantry} className='green-button'>Confirm</button>
+                            <div className='modal'>
+                                <div className='content'>
+                                    <p className='popup-text'>Are you sure you want to trash this item?</p>
                                 </div>
+                            <div>
+                                <button onClick={handlePantry} className='green-button'>Confirm</button>
                             </div>
-                            )
-                        }
+                        </div>
+                        )}
                     </Popup>
-                    <Popup trigger=
-                        {<button className='item-button'><svg width="100%" height="auto" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <Popup contentStyle={{width:'273px'}} trigger={<button className='item-button'><svg width="100%" height="auto" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M59.5969 34.7223L64.9315 10.7536C65.3167 9.02297 64.0285 7.375 62.2906 7.375H17.9662L16.9318 2.21135C16.6741 0.924295 15.565 0 14.2784 0H2.70833C1.21254 0 0 1.23819 0 2.76562V4.60938C0 6.13681 1.21254 7.375 2.70833 7.375H10.5944L18.5217 46.9505C16.6252 48.0643 15.3472 50.1525 15.3472 52.5469C15.3472 56.1108 18.1765 59 21.6667 59C25.1568 59 27.9861 56.1108 27.9861 52.5469C27.9861 50.7407 27.2586 49.1089 26.0876 47.9375H49.7457C48.5748 49.1089 47.8472 50.7407 47.8472 52.5469C47.8472 56.1108 50.6765 59 54.1667 59C57.6568 59 60.4861 56.1108 60.4861 52.5469C60.4861 49.9919 59.0317 47.784 56.9225 46.7385L57.5451 43.9411C57.9302 42.2105 56.6421 40.5625 54.9041 40.5625H24.6139L23.8753 36.875H56.9559C58.2205 36.875 59.3167 35.9815 59.5969 34.7223Z" fill="var(--white)"/>
                         </svg></button>}
                         modal nested>
-                        {
-                            close => (
-                                <div className='modal'>
-                                    <div className='content'>
-                                        <p className='popup-text2'>What quantity would you like to add?</p>
-                                        <label className='popup-label'>Amount: <input className='item-input' type='number' min={0} style={{width:'50px'}}/></label>
-                                    </div>
-                                <div>
-                                    <button onClick={() => {close()}} className='green-button'>Confirm</button>
+                        {close => (
+                            <div className='modal'>
+                                <div className='content'>
+                                    <p className='popup-text2'>What quantity would you like to add?</p>
+                                    <label className='popup-label'>Amount: <input className='item-input' type='number' min={0} style={{width:'80px'}}/></label>
                                 </div>
+                            <div>
+                                <button onClick={() => {close()}} className='green-button'>Confirm</button>
                             </div>
-                            )
-                        }
+                        </div>
+                        )}
                     </Popup>
                 </aside>
             </div>
@@ -118,7 +112,7 @@ const Item = ({itemImg, itemStatus, itemName, itemQuantity, itemPurch, itemExp, 
     let itemEdit = (
         <div>
         <div className='item-page'>
-            <h1>Pantry Edit</h1>
+            <h2>Pantry Edit</h2>
             <div className='spacer' style={{height:'120px'}}></div>
             <label className='label2'>Item Name: <br></br><input type='text' defaultValue={itemName} className='item-input'/></label><br></br>
             <label className='label2'>Amount: <br></br><input type='number' defaultValue={itemQuantity} min='0' className='item-input' style={{width:'80px'}}/></label><br></br>
