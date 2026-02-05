@@ -62,7 +62,7 @@ const Grid = ({handleItem}) => {
                         </button>
                     </div>
                 ))}
-                <div className='spacer' style={{height:'210px'}}></div>
+                <div className='spacer' style={{height:'225px'}}></div>
             </div>
         </div>
     )

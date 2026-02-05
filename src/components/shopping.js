@@ -12,7 +12,7 @@ const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
                     <div key={item.id}>
                         <div className='shopping-item'>
                             <aside className='shopping-info'>
-                                <h4>{item.name}</h4>
+                                <h4>{item.name}</h4><br></br>
                                 <p className='body-text'>Quantity: {item.quantity}</p>
                             </aside>
                             <input type="checkbox" />

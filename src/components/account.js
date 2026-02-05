@@ -24,41 +24,33 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
     function leaveremoveButton () {
         if (alexboiOwner) {
             if (theOwner) {
-                return <Popup trigger=
-                        {<button className="kick-leave-button">Leave Household</button>}
-                        modal nested>
-                        {
-                            close => (
-                                <div className='modal'>
-                                    <div className='content'>
-                                        <p>Leave your current household?</p>
-                                    </div>
-                                <div className="pop-up-buttons">
-                                    <button onClick={() => {setInHousehold(false); getPage("household"); close();}}>Leave Household</button>
-                                    <button onClick={() => {close()}}>Cancel</button>
-                                </div>
+                return <Popup contentStyle={{width:'273px', height:'210px'}} trigger={<button className="green-button" style={{marginTop:'10px'}}>Leave Household</button>}modal nested>
+                    {close => (
+                        <div className='modal'>
+                            <div className='content'>
+                                <p className='popup-text2'>Leave your current household?</p>
                             </div>
-                            )
-                        }
-                        </Popup>
+                            <div>
+                                <button className='pink-solid' onClick={() => {setInHousehold(false); getPage("household"); close();}}>Leave Household</button><br></br>
+                                <button className='pink-hollow' onClick={() => {close()}}>Cancel</button>
+                            </div>
+                        </div>
+                        )}
+                     </Popup>
                 // <button className="kick-leave-button" onClick={() => {setInHousehold(false); getPage("household");}}>Leave Household</button>
             } else {
-                return <Popup trigger=
-                        {<button className="kick-leave-button">Remove From Household</button>}
-                        modal nested>
-                        {
-                            close => (
-                                <div className='modal'>
-                                    <div className='content'>
-                                        <p>Remove member from household?</p>
-                                    </div>
-                                <div className="pop-up-buttons">
-                                    <button onClick={() => {getPage("created"); close();}}>Remove</button>
-                                    <button onClick={() => {close()}}>Cancel</button>
+                return <Popup contentStyle={{width:'273px', height:'210px'}} trigger={<button className="green-button" style={{marginTop:'10px'}}>Remove From Household</button>}modal nested>
+                        {close => (
+                            <div className='modal'>
+                                <div className='content'>
+                                    <p className='popup-text2'>Remove member from household?</p>
                                 </div>
+                            <div>
+                                <button className='pink-solid' onClick={() => {getPage("created"); close();}}>Remove</button><br></br>
+                                <button className='pink-hollow' onClick={() => {close()}}>Cancel</button>
                             </div>
-                            )
-                        }
+                        </div>
+                        )}
                         </Popup>
                 // <button className="kick-leave-button">Remove From Household</button>
             }
@@ -118,19 +110,17 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
                     <h2>Alex</h2>
                     <p onClick={skiptoHousehold}>Household Settings</p>
                     <p>Change Profile Picture...</p>
-                    <Popup contentStyle={{width:'273px', height:'260px'}} trigger={<p>Change Password...</p>}modal nested>
+                    <Popup contentStyle={{width:'273px', height:'240px'}} trigger={<p>Change Password...</p>}modal nested>
                         {close => (
                             <div className='modal'>
-                                <div className='content'>
+                                <div className='content' style={{textAlign:'left', marginLeft:'35px'}}>
                                     <div className='spacer' style={{height:'10px'}}></div>
-                                    <label className="label2" style={{textAlign:'left', marginLeft:'15px'}}>New Password:</label>
-                                    <input className="item-input" style={{width:'200px',  marginLeft:'10px'}} type="text" name="newpassword"/>
-                                    <label className="label2" style={{textAlign:'left', marginLeft:'15px', marginTop:'-10px'}}>Confirm Password:</label>
-                                    <input className="item-input" style={{width:'200px',  marginLeft:'10px'}} type="text" name="confirmpassword"/>
+                                    <label className="label2">New Password:</label>
+                                    <input className="item-input" style={{width:'200px'}} type="text" name="newpassword"/>
+                                    <label className="label2">Confirm Password:</label>
+                                    <input className="item-input" style={{width:'200px'}} type="text" name="confirmpassword"/>
                                     </div>
-                                <div className="pop-up-buttons">
-                                    <button onClick={() => {close()}}>Submit</button>
-                                </div>
+                                    <button className='green-button' onClick={() => {close()}}>Submit</button>
                             </div>
                             )}
                     </Popup>
@@ -225,7 +215,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
     );
     // Join Page
     let householdJoin = (
-        <div className='app'>
+        <div className='layout'>
             <h1>Household</h1>
             <div className="householdBox">
                 <p>Enter the 9-digit code provided by your household owner to join.</p>
@@ -237,91 +227,78 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
     );
     // View Member Page
     let householdCreated = (
-        <div className='app'>
+        <div>
             <h1>Household</h1>
-            {permission === "owner" && (
-                <button className="add-member" onClick={() => getPage("add")}>Add Member</button>
-            )}
-            <h2>Owner</h2>
-            <ul className="member-list">
-                <li className="member-item">
-                    <div className="left-side">
-                        <img src={householdData.Owner.image} alt={householdData.Owner.name + "'s profile picture"} className="household-profile-pic"/>
-                        <p>{householdData.Owner.name}</p>
+            <div className='household-contents'>
+                <h4 style={{textAlign:'left'}}>Owner</h4>
+                <div className="member-list">
+                    <div className="member-item">
+                        <aside>
+                            <img src={householdData.Owner.image} alt={householdData.Owner.name + "'s profile picture"} className="household-profile-pic"/>
+                            <p className='body-text' style={{marginTop:'10px'}}>{householdData.Owner.name}</p>
+                        </aside>
+                        <button className="tripledots" onClick={() => {setSelectedUser(householdData.Owner); getPage("profile")}}>...</button>
                     </div>
-                    <button className="tripledots" onClick={() => {setSelectedUser(householdData.Owner); getPage("profile")}}>...</button>
-                </li>
-            </ul>
-            <h2>Members</h2>
-            <ul className="member-list">
-                {householdData.Members.map((member) =>(
-                    <li key={member.id} className="member-item">
-                        <div className="left-side">
-                            <img src={member.image} alt={member.name + "'s profile picture"} className="household-profile"/>
-                            <p>{member.name}</p>
+                </div>
+                <h4>Members</h4>
+                <div className="member-list">
+                    {householdData.Members.map((member) =>(
+                        <div key={member.id} className="member-item">
+                            <aside>
+                                <img src={member.image} alt={member.name + "'s profile picture"} className="household-profile-pic"/>
+                                <p className='body-text' style={{marginTop:'10px'}}>{member.name}</p>
+                            </aside>
+                            <button className="tripledots" onClick={() => {setSelectedUser(member); getPage("profile")}}>...</button>
                         </div>
-                        <button className="tripledots" onClick={() => {setSelectedUser(member); getPage("profile")}}>...</button>
-                    </li>
-                ))}
-            </ul>
+                    ))}
+                </div>
+                {permission === "owner" && (
+                    <button className="green-button" onClick={() => getPage("add")}>Add Member</button>
+                )}
+            </div>
             <button className="close-button" onClick={() => getPage("account")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
     );
 
     let householdProfilePage = selectedUser && (
-        <div className="app">
-            <img src={selectedUser.image} alt={selectedUser.name + "'s profile picture"} className="permissions-profile-pic"/>
-            <h1 className="member-name">{selectedUser.name}</h1>
-            <h2 className="member-role">{selectedUser.role}</h2>
-            <h2 className="">Household Permissions</h2>
-            <ul classname="permissions-list">
-                <li className="permission-item">
-                    <p className="permission-text">Pantry Access</p>
-                    <select className="permission-ddown" value="" name="paccess">
-                        <option value="view">View</option>
-                        <option value="Edit">Edit</option>
+        <div>
+        <div className="member-profile">
+            <img src={selectedUser.image} alt={selectedUser.name + "'s profile picture"} className="profile-pic"/>
+            <p className="member-name">{selectedUser.name}</p>
+            <h4 style={{marginTop:'0px', textAlign:'center'}}>{selectedUser.role}</h4>
+            <div classname="permissions-list">
+                <h4 style={{textAlign:'left'}}>Household Permissions</h4>
+                <div className="permission-item">
+                    <p className="body-text" style={{marginBottom:'0px'}}>Pantry Access</p>
+                    <select style={{width:'100px'}} value="" name="paccess">
+                        <option value="view">view</option>
+                        <option value="Edit">edit</option>
                     </select>
-                </li>
-                <li className="permission-item">
-                    <p className="permission-text">Shopping List Access</p>
-                    <select className="permission-ddown" value="" name="slaccess">
-                        <option value="view">View</option>
-                        <option value="Edit">Edit</option>
+                </div>
+                <div className="permission-item">
+                    <p className="body-text" style={{marginBottom:'0px'}}>Shopping List Access</p>
+                    <select style={{width:'100px'}} value="" name="slaccess">
+                        <option value="view">view</option>
+                        <option value="Edit">edit</option>
                     </select>
-                </li>
-            </ul>
+                </div>
+            </div>
             {leaveremoveButton()}
-            <button onClick={() => getPage("created")}>Exit</button>
+            </div>
+            <button className='close-button' onClick={() => getPage("created")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
     )
     let householdAdd = (
-        <div className='app'>
+        <div className='layout'>
             <h1>Household</h1>
             <div className="householdBox">
                 <p>Create a unique 9-digit code to invite others to your household. Share this code only with people you trust, as anyone with the code will be able to join.</p>
                 <input type="text" placeholder="000 000 000"/>
-                <button>Generate Code</button>
+                <button className='green-solid' style={{marginTop:'10px'}}>Generate Code</button>
             </div>
             <button onClick={() => getPage("created")}>Exit</button>
         </div>
     );
-    /* let [content, setContent] = useState(accountPage);
-    let [selectedUser, setSelectedUser] = useState(null);
-
-    function aPage () {
-        setContent(accountPage)
-    }
-
-    function hhPage () {
-        setContent(householdPage)
-    }
-
-    function hhpageJoin () {
-        setContent(householdJoin)
-    }
-    function hhMenu () {
-        setContent (householdCreated)
-    } */
 
     return (
         <div>
