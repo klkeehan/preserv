@@ -5,6 +5,7 @@ import householdMember from '../data/householdtwo.json';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import { useState } from 'react';
+import x from '../assets/close.svg';
 
 const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
 
@@ -225,7 +226,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 <button onClick={() => getPage("join")}>Join Household</button>
                 <button onClick={isOwner}>Create Household</button>
             </div>
-            <button onClick={() => getPage("account")}>Exit</button>
+            <button onClick={() => getPage("account")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
         
     );
