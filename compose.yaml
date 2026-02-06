@@ -1,5 +1,5 @@
 services:
     frontend:
-        image: preserv
+        image: kari2a/preserv
         ports:
             - '8080:8080'
