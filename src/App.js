@@ -6,6 +6,7 @@ import Recipe from './components/recipe';
 import Account from './components/account';
 import logotype from './assets/logotype.svg';
 import backArrow from './assets/back.svg';
+import $ from "jquery";
 
 function App() {
   //home page
