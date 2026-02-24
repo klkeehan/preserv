@@ -1,12 +1,11 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Pantry from './components/pantry';
 import Shopping from './components/shopping';
 import Recipe from './components/recipe';
 import Account from './components/account';
 import logotype from './assets/logotype.svg';
 import backArrow from './assets/back.svg';
-import axios from 'axios';
 
 function App() {
   //home page
@@ -22,18 +21,6 @@ function App() {
   let [content, setContent] = useState(defaultContent);
 
   //sign up page
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/db_users.php');
-        setUsers(response.data);
-      } catch (error) {console.error('Error fetching users:', error);}
-    };
-    fetchUsers();
-  }, []);
-
   let signUp = (
     <div className='layout' style={{backgroundColor:'var(--white)'}}>
       <button className='back-arrow' onClick={loadHome}><img src={backArrow} style={{width:'28px'}} alt='back arrow'></img></button>
@@ -43,16 +30,6 @@ function App() {
       <input name='email' placeholder='Email' className='input'/>
       <input name='username' placeholder='Username' className='input'/>
       <input name='password' placeholder='Password' className='input'/>
-      <table>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.username}>
-              <td>{user.username}</td>
-              <td>{user.email}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
       <button className='solid-button' style={{color:'var(--white)'}} onClick={loadPantry}>GET STARTED</button>
     </div>
   );

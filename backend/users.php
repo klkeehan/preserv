@@ -4,10 +4,12 @@
       print "Error connecting! Message:" . $mysqli->error;
     }
 
+  header('Access-Control-Allow-Origin: *');
+  
   $query = 'SELECT * FROM users';
   $result = $mysqli->query($query);
-  if ($mysqli->error) {print 'Query failed: ' . $mysqli->error;}
-  echo json_encode($result);
+  $data = $result->fetch_assoc();
+  echo json_encode($data);
 
   /*
   $method = $_SERVER['REQUEST_METHOD'];
@@ -31,12 +33,5 @@
   }
   */
 ?>
-
-<!DOCTYPE html>
-<html lang='en'>
-  <body>
-    <h1>hello</h1>
-  </body>
-</html>
 
 <?php $mysqli->close(); ?>
