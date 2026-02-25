@@ -17,9 +17,6 @@ const Grid = ({handleItem}) => {
     fetchItems();
   }, []);
 
-  console.log(items);
-  console.log(display);
-
   //search bar functionality
   const [search, setSearch] = useState('');
   
