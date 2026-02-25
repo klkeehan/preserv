@@ -4,19 +4,20 @@ import axios from 'axios';
 
 const Grid = ({handleItem}) => {
   const [items, setItems] = useState([]);
+  const [display, setDisplay] = useState([]);
   
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/pantry.php');
+        const response = await axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php');
         setItems(response.data);
+        setDisplay(response.data);
       } catch (error) {console.error('Error fetching items:', error);}
     };
     fetchItems();
   }, []);
 
   console.log(items);
-  const [display, setDisplay] = useState([items]);
   console.log(display);
 
   //search bar functionality
@@ -31,10 +32,10 @@ const Grid = ({handleItem}) => {
       item.name.toLowerCase().includes(search.toLowerCase())
       );
 
-      setItems(newItems)
+      setDisplay(newItems)
     } else {
       setSearch('');
-      setItems(items);
+      setDisplay(items);
     }
   };
 
@@ -57,22 +58,22 @@ const Grid = ({handleItem}) => {
         <input type="text" value={search} onChange={handleSearch} placeholder='Search' className='search-bar' />
       </div>
       <div className='cat-bar'>
-        <button onClick={() => setItems(display)} className='cat-button'>All</button>
-        <button onClick={() => setItems(prodData)} className='cat-button'>Produce</button>
-        <button onClick={() => setItems(proData)} className='cat-button'>Proteins</button>
-        <button onClick={() => setItems(dairyData)} className='cat-button'>Dairy</button>
-        <button onClick={() => setItems(grainData)} className='cat-button'>Grains</button>
-        <button onClick={() => setItems(cannedData)} className='cat-button'>Canned</button>
-        <button onClick={() => setItems(condData)} className='cat-button'>Condiments</button>
-        <button onClick={() => setItems(bevData)} className='cat-button'>Beverages</button>
-        <button onClick={() => setItems(frozData)} className='cat-button'>Frozen</button>
-        <button onClick={() => setItems(snackData)} className='cat-button'>Snacks</button>
-        <button onClick={() => setItems(otherData)} className='cat-button'>Other</button>
+        <button onClick={() => setDisplay(items)} className='cat-button'>All</button>
+        <button onClick={() => setDisplay(prodData)} className='cat-button'>Produce</button>
+        <button onClick={() => setDisplay(proData)} className='cat-button'>Proteins</button>
+        <button onClick={() => setDisplay(dairyData)} className='cat-button'>Dairy</button>
+        <button onClick={() => setDisplay(grainData)} className='cat-button'>Grains</button>
+        <button onClick={() => setDisplay(cannedData)} className='cat-button'>Canned</button>
+        <button onClick={() => setDisplay(condData)} className='cat-button'>Condiments</button>
+        <button onClick={() => setDisplay(bevData)} className='cat-button'>Beverages</button>
+        <button onClick={() => setDisplay(frozData)} className='cat-button'>Frozen</button>
+        <button onClick={() => setDisplay(snackData)} className='cat-button'>Snacks</button>
+        <button onClick={() => setDisplay(otherData)} className='cat-button'>Other</button>
       </div>
       <div className='pantry-grid'>
-        {items.map((item) => (
+        {display.map((item) => (
           <div key={item.id} className='pantry-item'>
-            <button onClick={() => handleItem(item)} className='pantry-button'><img src={item.image} className={item.status === 'FRESH' ? 'pantry-fresh' : item.status === 'EXPIRED' ? 'pantry-exp' : 'pantry-soon'} alt={item.name}></img>
+            <button onClick={() => handleItem(item)} className='pantry-button'><img src={item.image} className={item.item_status === 'FRESH' ? 'pantry-fresh' : item.item_status === 'EXPIRED' ? 'pantry-exp' : 'pantry-soon'} alt={item.name}></img>
             <p className='pantry-overlay'>{item.name}</p>
             </button>
           </div>
