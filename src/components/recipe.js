@@ -1,15 +1,27 @@
 import '../App.css';
-import recipesSet from '../data/recipes.json';
+//import recipesSet from '../data/recipes.json';
 import Popup from 'reactjs-popup';
-import { useState } from 'react';
+import { useState, useEffect, use } from 'react';
 import add from '../assets/add-icon.png';
 import x from '../assets/close.svg';
 import camera from '../assets/camera-icon.svg';
 import upload from '../assets/upload-icon.svg';
+import axios from 'axios';
 
 const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     const [page, getPage] = useState("home");
     const [selectedRecipe, getSelectedRecipe] = useState(null);
+    const  [recipesSet, setRecipesSet] = useState([]);
+
+    useEffect(() => {
+        const fetchRecipes = async () => {
+            try {
+                const response = await axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/recipes.php');
+                setRecipesSet(response.data);
+            } catch (error) {console.error('Error fetching recipes:', error);}
+        };
+        fetchRecipes();
+        }, []);
     //recipe home page, using map to generate recipe cards pulling from recipes.json until we get the backend set up
     let recipeHome = (
         <div className='layout'>
@@ -80,9 +92,9 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                     {/*This generates a list of ingredients based on the JSON data, adds a Missing text when it gets a 0 from the availablity section in the JSON file per each item*/}
                     <ul className='body-text'>{selectedRecipe.ingredients.map((item,index) =>(
                         <li key={index}>{item.trim()}
-                        {selectedRecipe.available[index] === "0" && (
+                        {/*{selectedRecipe.available[index] === "0" && (
                             <div className='missing-icon'></div>
-                        )}</li>
+                        )}FOR THE LOVE OF GOD AND DAN NOVATNAK REMEMBER TO WRITE LOGIC FOR AVAILABILITY OF THE INGREDIENTS*/}</li>
                     ))}</ul>
                 </div>
             </div>
