@@ -12,6 +12,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     const [page, getPage] = useState("home");
     const [selectedRecipe, getSelectedRecipe] = useState(null);
     const  [recipesSet, setRecipesSet] = useState([]);
+    const [pantry, checkPantry] = useState([]);
 
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -22,6 +23,17 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
         };
         fetchRecipes();
         }, []);
+
+
+  useEffect(() => {
+    const pantryStuff = async () => {
+      try {
+        const response = await axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php');
+        checkPantry(response.data);
+      } catch (error) {console.error('Error fetching pantry:', error);}
+    };
+    pantryStuff();
+  }, []);
     //recipe home page, using map to generate recipe cards pulling from recipes.json until we get the backend set up
     let recipeHome = (
         <div className='layout'>
@@ -90,7 +102,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 <div className='ing-list'>
                     <h4 style={{textIndent:'40px'}}>Ingredients</h4>
                     {/*This generates a list of ingredients based on the JSON data, adds a Missing text when it gets a 0 from the availablity section in the JSON file per each item*/}
-                    <ul className='body-text'>{selectedRecipe.ingredients.map((item,index) =>(
+                    <ul className='body-text'>{selectedRecipe.ingredients.split(',').map((item,index) =>(
                         <li key={index}>{item.trim()}
                         {/*{selectedRecipe.available[index] === "0" && (
                             <div className='missing-icon'></div>
