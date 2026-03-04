@@ -72,6 +72,7 @@ function App() {
 
   function loadLogin() {
     setContent(login);
+    console.log('aaa');
   }
 
   function loadPWReset() {

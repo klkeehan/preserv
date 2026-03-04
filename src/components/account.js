@@ -182,7 +182,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
                                     <p className='popup-text2'>Log out of your account?</p>
                                 </div>
                                 <div>
-                                    <button className='pink-solid' onClick={() => loginLoad}>Log Out</button><br></br>
+                                    <button className='pink-solid' onClick={loginLoad}>Log Out</button><br></br>
                                     <button className='pink-hollow' onClick={() => {close()}}>Cancel</button>
                                 </div>
                             </div>
