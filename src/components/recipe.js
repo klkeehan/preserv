@@ -101,12 +101,10 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 <img className="recipes-image2" src={selectedRecipe.image} alt={selectedRecipe.name} />
                 <div className='ing-list'>
                     <h4 style={{textIndent:'40px'}}>Ingredients</h4>
-                    {/*This generates a list of ingredients based on the JSON data, adds a Missing text when it gets a 0 from the availablity section in the JSON file per each item*/}
+                    {/*This generates a list of ingredients based on the JSON data, adds a Missing text when it gets a 0 from the availablity section in the JSON file per each item-Not anymore, now it check if any of the ingredients in the pantry show up in each instance of ingredient*/}
                     <ul className='body-text'>{selectedRecipe.ingredients.split(',').map((item,index) =>(
                         <li key={index}>{item.trim()}
-                        {/*{selectedRecipe.available[index] === "0" && (
-                            <div className='missing-icon'></div>
-                        )}FOR THE LOVE OF GOD AND DAN NOVATNAK REMEMBER TO WRITE LOGIC FOR AVAILABILITY OF THE INGREDIENTS*/}</li>
+                        {!pantry.some(pantryItem => item.toLowerCase().includes(pantryItem.name.toLowerCase()) ) && (<div className='missing-icon'></div>)}</li>
                     ))}</ul>
                 </div>
             </div>
