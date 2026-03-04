@@ -393,33 +393,26 @@ textarea {
   top: 0;
   margin-top: 145px;
   padding-top: 4px;
-  margin-left: 3px;
   width: 373px;
-  height: 700px;
-  display: flex;
-  flex-wrap: wrap;
-  column-count: 3;
-  column-gap: 0px;
+  max-height: 700px;
+  display: grid;
+  grid-template-columns: auto auto auto;
   overflow: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  mask: linear-gradient(black 77%, transparent);
 }
 .pantry-grid::-webkit-scrollbar {
   display: none;
 }
 /*for gradient blur transition*/
 .blurred {
-  position: absolute;
-  bottom: 0;
-  margin-bottom: -40px;
-  width: 393px;
-  height: 100px;
-  filter: blur(20px);
-  background-color: white;
+  mask: linear-gradient(black 77%, transparent);
 }
 .pantry-item {
   position: relative;
+  height: 115px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 /*item images by status*/
 .pantry-fresh {
@@ -428,7 +421,7 @@ textarea {
   border-radius: 20px;
   margin-left: 2.5px;
   margin-right: 2.5px;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
 }
 .pantry-fresh2 {
   width: 149px;
@@ -444,7 +437,7 @@ textarea {
   border-radius: 20px;
   margin-left: 2.5px;
   margin-right: 2.5px;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
   box-shadow: 0px 0px 10px var(--yellow);
 }
 .pantry-soon2 {
@@ -462,7 +455,7 @@ textarea {
   border-radius: 20px;
   margin-left: 2.5px;
   margin-right: 2.5px;
-  margin-bottom: 5px;
+  margin-bottom: 0px;
   box-shadow: 0px 0px 10px var(--pink);
 }
 .pantry-exp2 {
@@ -479,13 +472,13 @@ textarea {
   border: 0px none;
   background-color: transparent;
   margin-top: 0px;
-  margin-bottom: 0px;
 }
 .pantry-overlay {
   position: absolute;
   top: 0;
   margin-top: 71px;
   margin-left: 2px;
+  margin-bottom: 0px;
   border-radius: 0px 0px 20px 20px;
   text-align: left;
   padding: 10px;

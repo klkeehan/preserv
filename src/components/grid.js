@@ -70,12 +70,12 @@ const Grid = ({handleItem}) => {
       <div className='pantry-grid'>
         {display.map((item) => (
           <div key={item.id} className='pantry-item'>
-            <button onClick={() => handleItem(item)} className='pantry-button'><img src={item.image} className={item.item_status === 'FRESH' ? 'pantry-fresh' : item.item_status === 'EXPIRED' ? 'pantry-exp' : 'pantry-soon'} alt={item.name}></img>
+            <button onClick={() => handleItem(item)} className='pantry-button'><img src={item.image} className={item.item_status === '3' ? 'pantry-fresh' : item.item_status === '1' ? 'pantry-exp' : 'pantry-soon'} alt={item.name}></img>
             <p className='pantry-overlay'>{item.name}</p>
             </button>
           </div>
         ))}
-        <div className='spacer' style={{height:'225px'}}></div>
+        <div className='blurred'></div>
       </div>
     </div>
   )
