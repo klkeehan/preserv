@@ -1,11 +1,13 @@
 import '../App.css';
 import profileYellow from '../assets/profile-yellow.png';
-import householdOwner from '../data/household.json';
-import householdMember from '../data/householdtwo.json';
+// import householdOwner from '../data/household.json';
+// import householdMember from '../data/householdtwo.json';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import { useState } from 'react';
+import { useEffect } from 'react';
 import x from '../assets/close.svg';
+import axios from 'axios';
 
 const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad}) => {
 
@@ -14,14 +16,63 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
     let [selectedUser, setSelectedUser] = useState(null);
 
     // Can delete this later when implementing server side schtuff
-    let [householdData, setHouseholdData] = useState(householdOwner);
-    let [permission, setPermission] = useState("owner");
+    let [householdData, setHouseholdData] = useState(null);
+    let [permission, setPermission] = useState(null);
+    let [inHousehold, setInHousehold] = useState(false);
+
+
+    useEffect (() => {
+        const fetchHousehold = async () => {
+            try {
+                const response = await axios.get('http://localhost/dig4172/test/reacttest.php');
+                setHouseholdData(response.data);
+                // Replace with Session Variable or LocalStorage ----------------------
+                if (response.data.owner.user_id === "1") {
+                    setPermission("owner");
+                } else {
+                    setPermission("member");
+                }
+                setInHousehold(true);
+            } catch (error) {console.error('Household fetch error', error); }
+        };
+        fetchHousehold();
+    }, [page]);
+
     // Some borderline uneccessary profile viewing shenanigans
-    let theOwner = selectedUser && selectedUser.id === householdData.Owner.id;
+    let theOwner = selectedUser && householdData && selectedUser.user_id === householdData.owner.user_id;
     let alexboiOwner = permission === "owner";
-    let alexboiselfReflection = selectedUser && selectedUser.name === "Alexboi777";
+    //Replace with localstorage or session later -------------------------
+    let isSelf = selectedUser && selectedUser.user_id === "1";
+
+    //REMOVE MEMBER / LEAVE BACKEND
+    function leaveHousehold() {
+    const formData = new FormData();
+    formData.append("user_id", 1);
+    axios.post("http://localhost/dig4172/test/deletemember.php", formData)
+        .then(() => {
+            setInHousehold(false);
+            setHouseholdData(null);
+            getPage("household");
+        })
+        .catch((error) => {console.error("Leave error:", error);});
+}
+
+    function removeMember(userId) {
+    const formData = new FormData();
+    formData.append("user_id", userId);
+    axios.post("http://localhost/dig4172/test/deletemember.php", formData)
+        .then(() => {
+            getPage("created");
+        })
+        .catch((error) => {console.error("Remove error:", error);});
+}
 
     function leaveremoveButton () {
+        // console.log("permission:", permission);
+        // console.log("alexboiOwner:", alexboiOwner);
+        // console.log("theOwner:", theOwner);
+        // console.log("isSelf:", isSelf);
+        // console.log("selectedUser:", selectedUser);
         if (alexboiOwner) {
             if (theOwner) {
                 return <Popup contentStyle={{width:'273px', height:'210px'}} trigger={<button className="green-button" style={{marginTop:'10px'}}>Leave Household</button>}modal nested>
@@ -31,7 +82,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
                                 <p className='popup-text2'>Leave your current household?</p>
                             </div>
                             <div>
-                                <button className='pink-solid' onClick={() => {setInHousehold(false); getPage("household"); close();}}>Leave Household</button><br></br>
+                                <button className='pink-solid' onClick={() => {leaveHousehold(); close();}}>Leave Household</button><br></br>
                                 <button className='pink-hollow' onClick={() => {close()}}>Cancel</button>
                             </div>
                         </div>
@@ -46,7 +97,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
                                     <p className='popup-text2'>Remove member from household?</p>
                                 </div>
                             <div>
-                                <button className='pink-solid' onClick={() => {getPage("created"); close();}}>Remove</button><br></br>
+                                <button className='pink-solid' onClick={() => {removeMember(selectedUser.user_id); close();}}>Remove</button><br></br>
                                 <button className='pink-hollow' onClick={() => {close()}}>Cancel</button>
                             </div>
                         </div>
@@ -55,7 +106,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
                 // <button className="kick-leave-button">Remove From Household</button>
             }
         }
-        if (!alexboiOwner && alexboiselfReflection) {
+        if (!alexboiOwner && isSelf) {
             return <Popup trigger=
                         {<button className="kick-leave-button">Leave Household</button>}
                         modal nested>
@@ -66,7 +117,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
                                         <p>Leave your current household?</p>
                                     </div>
                                 <div className="pop-up-buttons">
-                                    <button onClick={() => {setInHousehold(false); getPage("household"); close();}}>Leave Household</button>
+                                    <button onClick={() => {leaveHousehold(); close();}}>Leave Household</button>
                                     <button onClick={() => {close()}}>Cancel</button>
                                 </div>
                             </div>
@@ -78,7 +129,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
         return null;
     }
 
-    function isOwner () {
+    /* function isOwner () {
         setHouseholdData(householdOwner);
         setPermission("owner");
         setInHousehold (true);
@@ -89,9 +140,9 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
         setPermission("member");
         setInHousehold(true);
         getPage("created");
-    }
+    } */
+
      // Some borderline neccessary household navigation tactics
-    let [inHousehold, setInHousehold] = useState(false);
     function skiptoHousehold () {
         if (inHousehold) {
             getPage("created");
@@ -207,7 +258,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
             <div className="householdBox">
                 <p>Keep your household in sync with one shared pantry where everyone can add, update, and plan to shop together.</p>
                 <button className='green-solid' onClick={() => getPage("join")}>Join Household</button>
-                <button className='green-hollow' onClick={isOwner}>Create Household</button>
+                <button className='green-hollow' onClick={() => getPage("created")}>Create Household</button>
             </div>
             <button className="close-button" onClick={() => getPage("account")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
@@ -220,7 +271,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
             <div className="householdBox">
                 <p>Enter the 9-digit code provided by your household owner to join.</p>
                 <input type="text" placeholder="000 000 000"/>
-                <button className='green-solid' style={{marginTop:'10px'}} onClick={isMember}>Join Household</button>
+                <button className='green-solid' style={{marginTop:'10px'}} onClick={() => getPage("created")}>Join Household</button>
             </div>
             <button className="close-button" onClick={() => getPage("household")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
@@ -229,21 +280,23 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
     let householdCreated = (
         <div>
             <h1>Household</h1>
+            {!householdData && <p>Loading...</p>}
+            {householdData && (
             <div className='household-contents'>
                 <h4 style={{textAlign:'left'}}>Owner</h4>
                 <div className="member-list">
                     <div className="member-item">
                         <aside>
-                            <img src={householdData.Owner.image} alt={householdData.Owner.name + "'s profile picture"} className="household-profile-pic"/>
-                            <p className='body-text' style={{marginTop:'10px'}}>{householdData.Owner.name}</p>
+                            <img src={householdData.owner.image} alt={householdData.owner.name + "'s profile picture"} className="household-profile-pic"/>
+                            <p className='body-text' style={{marginTop:'10px'}}>{householdData.owner.name}</p>
                         </aside>
-                        <button className="tripledots" onClick={() => {setSelectedUser(householdData.Owner); getPage("profile")}}>...</button>
+                        <button className="tripledots" onClick={() => {setSelectedUser(householdData.owner); getPage("profile")}}>...</button>
                     </div>
                 </div>
                 <h4>Members</h4>
                 <div className="member-list">
-                    {householdData.Members.map((member) =>(
-                        <div key={member.id} className="member-item">
+                    {householdData.members.map((member) =>(
+                        <div key={member.user_id} className="member-item">
                             <aside>
                                 <img src={member.image} alt={member.name + "'s profile picture"} className="household-profile-pic"/>
                                 <p className='body-text' style={{marginTop:'10px'}}>{member.name}</p>
@@ -256,8 +309,10 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
                     <button className="green-button" onClick={() => getPage("add")}>Add Member</button>
                 )}
             </div>
+            )}
             <button className="close-button" onClick={() => getPage("account")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
+        
     );
 
     let householdProfilePage = selectedUser && (
