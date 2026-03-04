@@ -389,14 +389,16 @@ textarea {
   border-radius: 10px;
 }
 .pantry-grid {
+  border: 1px red solid;
   position: absolute;
   top: 0;
   margin-top: 145px;
   padding-top: 4px;
+  margin-bottom: 120px;
   width: 373px;
   max-height: 700px;
-  display: grid;
-  grid-template-columns: auto auto auto;
+  display: flex;
+  flex-wrap: wrap;
   overflow: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -407,6 +409,8 @@ textarea {
 /*for gradient blur transition*/
 .blurred {
   mask: linear-gradient(black 77%, transparent);
+  position: absolute;
+  bottom: 0;
 }
 .pantry-item {
   position: relative;

@@ -42,7 +42,7 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
 
     const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', formValues);
     console.log(response);
-  }
+  };
 
   let pantryHome = (
     <div className='layout'>

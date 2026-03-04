@@ -6,8 +6,37 @@ import Recipe from './components/recipe';
 import Account from './components/account';
 import logotype from './assets/logotype.svg';
 import backArrow from './assets/back.svg';
+import axios from 'axios';
 
 function App() {
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const formValues = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      username: formData.get('username'),
+      password: formData.get('password')
+    };
+
+    const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/signup.php', formValues);
+    console.log(response);
+    loadPantry();
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const formValues = {
+      username: formData.get('username'),
+      password: formData.get('password')
+    };
+
+    const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/login.php', formValues);
+    console.log(response);
+    loadPantry();
+  };
+
   //home page
   let defaultContent = (
     <div className='layout' style={{backgroundColor:'var(--pink)'}}>
@@ -26,11 +55,13 @@ function App() {
       <button className='back-arrow' onClick={loadHome}><img src={backArrow} style={{width:'28px'}} alt='back arrow'></img></button>
       <img src={logotype} className='logotype' alt='preserv logotype'/>
       <div className='spacer' style={{height:'150px'}}></div>
-      <input name='fName' placeholder='First Name' className='input'/>
-      <input name='email' placeholder='Email' className='input'/>
-      <input name='username' placeholder='Username' className='input'/>
-      <input name='password' placeholder='Password' className='input'/>
-      <button className='solid-button' style={{color:'var(--white)'}} onClick={loadPantry}>GET STARTED</button>
+      <form onSubmit={handleSignup}>
+        <input name='name' placeholder='First Name' className='input'/>
+        <input name='email' placeholder='Email' className='input'/>
+        <input name='username' placeholder='Username' className='input'/>
+        <input name='password' placeholder='Password' className='input'/>
+        <button type='submit' className='solid-button' style={{color:'var(--white)'}}>GET STARTED</button>
+      </form>
     </div>
   );
 
@@ -40,10 +71,12 @@ function App() {
       <button className='back-arrow' onClick={loadHome}><img src={backArrow} style={{width:'28px'}} alt='back arrow'></img></button>
       <img src={logotype} className='logotype' alt='preserv logotype' />
       <div className='spacer' style={{height:'50px'}}></div>
-      <input name='username' placeholder='Username' className='input' />
-      <input name='password' placeholder='Password' className='input' style={{marginBottom:'0px'}} />
-      <button className='pw-forgot' onClick={loadPWReset}>Forgot Password?</button>
-      <button className='solid-button' style={{color:'var(--white)'}} onClick={loadPantry}>LOG IN</button>
+      <form onSubmit={handleLogin}>
+        <input name='username' placeholder='Username' className='input' />
+        <input name='password' placeholder='Password' className='input' style={{marginBottom:'0px'}} />
+        <button className='pw-forgot' onClick={loadPWReset}>Forgot Password?</button>
+        <button type='submit' className='solid-button' style={{color:'var(--white)'}}>LOG IN</button>
+      </form>
     </div>
   );
 
@@ -72,7 +105,6 @@ function App() {
 
   function loadLogin() {
     setContent(login);
-    console.log('aaa');
   }
 
   function loadPWReset() {

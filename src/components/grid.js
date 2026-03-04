@@ -75,7 +75,6 @@ const Grid = ({handleItem}) => {
             </button>
           </div>
         ))}
-        <div className='blurred'></div>
       </div>
     </div>
   )
