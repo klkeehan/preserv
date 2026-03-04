@@ -66,6 +66,7 @@
       ];
       echo json_encode($response);
       $query = "DELETE FROM pantry WHERE id='$id'";
+      $mysqli->query($query);
       break;
 
     default:

@@ -24,18 +24,34 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
 
     const response = await axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', formValues);
     console.log(response);
-    setContent(item);
+    handlePantry();
   };
 
   const handleDelete = async (e) => {
     e.preventDefault();
-    const data = {
-      id: itemID
+    const deleteData = {
+      id: itemID,
+      name: itemName
     };
 
-    const response = await axios.delete('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', data);
+    console.log(deleteData);
+
+    const response = await axios.delete('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', deleteData);
     console.log(response);
     handlePantry();
+  };
+  
+  //needs php
+  const handleQuant = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const formValues = {
+      id: itemID,
+      quant: formData.get('add-quant')
+    };
+
+    const response = await axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', formValues);
+    console.log(response);
   };
 
   let item = (
@@ -63,13 +79,15 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
               modal nested>
               {close => (
                 <div className='modal'>
+                  <form onSubmit={handleQuant}>
                   <div className='content'>
                     <p className='popup-text2'>What quantity would you like to add?</p>
-                    <label className='popup-label'>Amount: <input className='item-input' type='number' min={0} style={{width:'80px'}}/></label>
+                    <label className='popup-label'>Amount: <input name='add-quant' className='item-input' type='number' min={0} style={{width:'80px'}}/></label>
                   </div>
                   <div>
                     <button onClick={() => {close()}} className='green-button'>Confirm</button>
                   </div>
+                  </form>
                 </div>
                 )}
               </Popup>
@@ -164,7 +182,7 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
             <p className='label2'>Image:</p>
             <img className='edit-image' src={itemImg} alt={itemName}></img><br></br>
             <div className='image-opts'>
-              <input name='image' type='file' id='file' className='upload'></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
+              <input name='image' type='file' id='file' accept='.jpg, .jpeg, .png' className='upload'></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
               <button className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
             </div>
             <button type='submit' className='save-button'>Save Item</button>
