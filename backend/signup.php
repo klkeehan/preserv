@@ -24,7 +24,7 @@
         $name = ucwords($data->name);
         $email = $data->email;
         $username = strtolower($data->username);
-        $password = $data->password;
+        $password = md5($data->password);
         $query = "INSERT INTO users (first_name, email, username, password) VALUES ('$name', '$email', '$username', '$password')";
         $mysqli->query($query);
         $_SESSION['logged_in_user'] = $username;

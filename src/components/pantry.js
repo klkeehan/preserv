@@ -40,6 +40,12 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
       category: formData.get('category')
     };
 
+    //regex form validation
+    const dateReg = /^\d{4}-\d{2}-\d{2}$/;
+    const pDateFlag = dateReg.test(formValues.date_purchase);
+    const eDateFlag = dateReg.test(formValues.date_expire);
+    console.log(formValues.date_purchase, 'passed result', pDateFlag, formValues.date_expire, 'passed result', eDateFlag);
+
     const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', formValues);
     console.log(response);
   };

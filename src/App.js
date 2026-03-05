@@ -19,6 +19,23 @@ function App() {
       password: formData.get('password')
     };
 
+    //regex form validation
+    const nameReg = /^[A-Za-z]{2,20}$/;
+    const nameFlag = nameReg.test(formValues.name);
+    console.log(formValues.name, 'passed result', nameFlag);
+
+    const emailReg = /^([A-Za-z0-9_.]+@[A-Za-z0-9]+\.[A-Za-z0-9.]).{2,50}$/;
+    const emailFlag = emailReg.test(formValues.email);
+    console.log(formValues.email, 'passed result', emailFlag);
+
+    const userReg = /^[A-Za-z]{4,16}$/;
+    const userFlag = userReg.test(formValues.username);
+    console.log(formValues.username, 'passed result', userFlag);
+
+    const passwordReg = /^(?=.*?[0-9])(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[^0-9A-Za-z]).{4,12}$/;
+    const passwordFlag = passwordReg.test(formValues.password);
+    console.log(formValues.password, 'passed result', passwordFlag);
+
     const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/signup.php', formValues);
     console.log(response);
     loadPantry();
@@ -59,7 +76,7 @@ function App() {
         <input name='name' placeholder='First Name' className='input'/>
         <input name='email' placeholder='Email' className='input'/>
         <input name='username' placeholder='Username' className='input'/>
-        <input name='password' placeholder='Password' className='input'/>
+        <input name='password' placeholder='Password' type='password' className='input'/>
         <button type='submit' className='solid-button' style={{color:'var(--white)'}}>GET STARTED</button>
       </form>
     </div>
@@ -73,7 +90,7 @@ function App() {
       <div className='spacer' style={{height:'50px'}}></div>
       <form onSubmit={handleLogin}>
         <input name='username' placeholder='Username' className='input' />
-        <input name='password' placeholder='Password' className='input' style={{marginBottom:'0px'}} />
+        <input name='password' placeholder='Password' type='password' className='input' style={{marginBottom:'0px'}} />
         <button className='pw-forgot' onClick={loadPWReset}>Forgot Password?</button>
         <button type='submit' className='solid-button' style={{color:'var(--white)'}}>LOG IN</button>
       </form>
