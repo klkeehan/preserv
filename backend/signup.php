@@ -1,12 +1,15 @@
 <?php
+  session_start();
+
   include('connect.php');
+  header('Cache-Control: public');
   header('Access-Control-Allow-Origin: *');
   header('Access-Control-Allow-Headers: Content-Type');
   header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
+  header('Access-Control-Allow-Credentials: true');
   header('Content-Type: application/json; charset=UTF-8');
 
   $method = $_SERVER['REQUEST_METHOD'];
-  session_start();
 
   switch ($method) {
     case 'GET':

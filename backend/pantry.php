@@ -1,8 +1,12 @@
 <?php
+  session_start();
+  
   include('connect.php');
+  header('Cache-Control: public');
   header('Access-Control-Allow-Origin: *');
   header('Access-Control-Allow-Headers: Content-Type');
   header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
+  header('Access-Control-Allow-Credentials: true');
   header('Content-Type: application/json; charset=UTF-8');
 
   $method = $_SERVER['REQUEST_METHOD'];
@@ -21,7 +25,7 @@
     case 'POST':
       $data = json_decode(file_get_contents('php://input'));
       //placeholder
-      $username = 'karissa';
+      $username = $_SESSION['logged_in_user'];
       $name = $data->name;
       $quantity = $data->quantity;
       $date_purchase = $data->date_purchase;
@@ -30,7 +34,7 @@
       $category = ucwords($data->category);
       $response = [
         'status' => 'success',
-        'message' => 'the item is ' . $name . ' from pantry.'
+        'message' => 'the item is ' . $name . ' from pantry added by user ' . $username
       ];
       echo json_encode($response);
       $query = "INSERT INTO pantry (username, name, quantity, date_purchase, date_expire, category) VALUES ('$username', '$name', '$quantity', '$date_purchase', '$date_expire', '$category')";
