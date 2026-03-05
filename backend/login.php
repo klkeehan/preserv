@@ -1,12 +1,16 @@
 <?php
+  session_start();
   include('connect.php');
-  header('Access-Control-Allow-Origin: *');
+  $http_origin = $_SERVER['HTTP_ORIGIN'];
+    if ($http_origin == "http://localhost:3000" || $http_origin == "http://localhost:8080") {
+        header("Access-Control-Allow-Origin: $http_origin");
+        header("Access-Control-Allow-Credentials: true");
+    }
   header('Access-Control-Allow-Headers: Content-Type');
   header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
   header('Content-Type: application/json; charset=UTF-8');
 
   $method = $_SERVER['REQUEST_METHOD'];
-  session_start();
 
   switch ($method) {
     case 'GET':
@@ -31,6 +35,7 @@
             $_SESSION['logged_in_user'] = $row->username;
             $_SESSION['logged_in_name'] = $row->first_name;
             $_SESSION['logged_in_household'] = $row->household;
+            $_SESSION['logged_in_user_id'] = $row->id;
             echo json_encode('logging in...');
           };
         }; 

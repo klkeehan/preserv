@@ -7,6 +7,7 @@ import Account from './components/account';
 import logotype from './assets/logotype.svg';
 import backArrow from './assets/back.svg';
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 function App() {
   const handleSignup = async (e) => {

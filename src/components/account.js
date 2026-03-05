@@ -15,19 +15,35 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
 
     let [selectedUser, setSelectedUser] = useState(null);
 
-    // Can delete this later when implementing server side schtuff
+    // Can delete this later when implementing server side schtuff ** THIS IS CAP DO NOT DELETE TRUST THE OLDER MESSAGE
     let [householdData, setHouseholdData] = useState(null);
     let [permission, setPermission] = useState(null);
     let [inHousehold, setInHousehold] = useState(false);
+    let [currentUser, setCurrentUser] = useState(null);
+    let [joinError, setJoinError] = useState('');
 
 
-    useEffect (() => {
+    // Grab Session user information
+    useEffect(() => {
+        axios.get('http://localhost/dig4172/test/session.php')
+            .then((response) => {
+                console.log("session response:", response.data);
+                console.log("in_household value:", response.data.in_household);
+                setCurrentUser(response.data);
+                if (response.data.in_household === "1") {
+                    setInHousehold(true);
+                }
+            })
+            .catch((error) => {console.error("Session grabbing error:", error);});
+    }, []);
+
+    /* useEffect (() => {
         const fetchHousehold = async () => {
             try {
-                const response = await axios.get('http://localhost/dig4172/test/reacttest.php');
+                const response = await axios.get('http://localhost/dig4172/test/household.php');
                 setHouseholdData(response.data);
                 // Replace with Session Variable or LocalStorage ----------------------
-                if (response.data.owner.user_id === "1") {
+                if (currentUser && response.data.owner.user_id === currentUser.user_id) {
                     setPermission("owner");
                 } else {
                     setPermission("member");
@@ -36,17 +52,66 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
             } catch (error) {console.error('Household fetch error', error); }
         };
         fetchHousehold();
-    }, [page]);
+    }, [page]);*/
+        useEffect(() => {
+        const fetchHousehold = async () => {
+            try {
+                const response = await axios.get('http://localhost/dig4172/test/household.php');
+                // Only set household data if owner exists
+                if (response.data.owner) {
+                    setHouseholdData(response.data);
+                    if (currentUser && response.data.owner.user_id === currentUser.user_id) {
+                        setPermission("owner");
+                    } else {
+                        setPermission("member");
+                    }
+                    setInHousehold(true);
+                }
+            } catch (error) {console.error('Household fetch error', error);}
+        };
+         if (currentUser) fetchHousehold();
+        }, [page, currentUser]);
 
     // Some borderline uneccessary profile viewing shenanigans
     let theOwner = selectedUser && householdData && selectedUser.user_id === householdData.owner.user_id;
     let alexboiOwner = permission === "owner";
     //Replace with localstorage or session later -------------------------
-    let isSelf = selectedUser && selectedUser.user_id === "1";
+    let isSelf = selectedUser && currentUser && selectedUser.user_id === currentUser.user_id;
+    //let isSelf = selectedUser && selectedUser.user_id === "1";
+
+    // CREATE HOUSEHOLD BACKEND
+    function createHousehold() {
+        axios.post("http://localhost/dig4172/test/household.php")
+            .then((response) => {
+                if (response.data.success === true) {
+                    getPage("created");
+                }
+            })
+            .catch((error) => {console.error("Create household error:", error);});
+    }
+    // JOIN HOUSEHOLD BACKEND
+     const handleJoin = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const inviteCode = formData.get('inviteCode');
+        joinHousehold(inviteCode);
+    }
+    function joinHousehold(inviteCode) {
+        axios.put('http://localhost/dig4172/test/household.php', {invite_code: inviteCode})
+            .then((response) => {
+                if (response.data.success === true) {
+                    getPage("created");
+                } else {
+                    setJoinError("Invalid invite code, please try again.")
+                    console.error("Invalid invite code:", response.data.error);
+                }
+            })
+            .catch ((error) => {console.error("Join household error:", error);}); 
+    }
 
     //REMOVE MEMBER / LEAVE BACKEND
     function leaveHousehold() {
-    const formData = new FormData();
+    /* const formData = new FormData();
     formData.append("user_id", 1);
     axios.post("http://localhost/dig4172/test/deletemember.php", formData)
         .then(() => {
@@ -54,17 +119,29 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
             setHouseholdData(null);
             getPage("household");
         })
-        .catch((error) => {console.error("Leave error:", error);});
+        .catch((error) => {console.error("Leave error:", error);}); */
+        axios.delete("http://localhost/dig4172/test/household.php", { data: { user_id: currentUser.user_id} /*replace with session storage*/ })
+            .then (() => {
+                setInHousehold (false);
+                setHouseholdData(null);
+                getPage("household");
+            })
+            .catch((error) => {console.log("Leave error:", error);});
 }
 
     function removeMember(userId) {
-    const formData = new FormData();
+    /* const formData = new FormData();
     formData.append("user_id", userId);
     axios.post("http://localhost/dig4172/test/deletemember.php", formData)
         .then(() => {
             getPage("created");
         })
-        .catch((error) => {console.error("Remove error:", error);});
+        .catch((error) => {console.error("Remove error:", error);}); */
+        axios.delete("http://localhost/dig4172/test/household.php", { data: {user_id: userId }})
+            .then (() => {
+                getPage("created");
+            })
+            .catch((error) => {console.error("Remove error:", error);})
 }
 
     function leaveremoveButton () {
@@ -144,6 +221,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
 
      // Some borderline neccessary household navigation tactics
     function skiptoHousehold () {
+        console.log("inHousehold:", inHousehold);
         if (inHousehold) {
             getPage("created");
         } else {
@@ -258,7 +336,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
             <div className="householdBox">
                 <p>Keep your household in sync with one shared pantry where everyone can add, update, and plan to shop together.</p>
                 <button className='green-solid' onClick={() => getPage("join")}>Join Household</button>
-                <button className='green-hollow' onClick={() => getPage("created")}>Create Household</button>
+                <button className='green-hollow' onClick={createHousehold}>Create Household</button>
             </div>
             <button className="close-button" onClick={() => getPage("account")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
@@ -270,8 +348,11 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
             <h1>Household</h1>
             <div className="householdBox">
                 <p>Enter the 9-digit code provided by your household owner to join.</p>
-                <input type="text" placeholder="000 000 000"/>
-                <button className='green-solid' style={{marginTop:'10px'}} onClick={() => getPage("created")}>Join Household</button>
+                <form onSubmit={handleJoin}>
+                <input type="text" name="inviteCode" placeholder="000 000 000"/>
+                {joinError !== "" && <p style={{color: 'red'}}>{joinError}</p>}
+                <button type="submit" className='green-solid' style={{marginTop:'10px'}}>Join Household</button>
+                </form>
             </div>
             <button className="close-button" onClick={() => getPage("household")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
@@ -351,7 +432,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
                 <input type="text" placeholder="000 000 000"/>
                 <button className='green-solid' style={{marginTop:'10px'}}>Generate Code</button>
             </div>
-            <button onClick={() => getPage("created")}>Exit</button>
+            <button className="close-button" onClick={() => getPage("created")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
     );
 
