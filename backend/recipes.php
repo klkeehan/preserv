@@ -2,7 +2,7 @@
   session_start();
   include('connect.php');
   header('Access-Control-Allow-Origin:*');
-  $username = $_SESSION['username'];
+  $username = $_SESSION['logged_in_user'];
 
   $method = $_SERVER['REQUEST_METHOD'];
 
