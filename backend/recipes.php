@@ -2,6 +2,9 @@
   session_start();
   include('connect.php');
   header('Access-Control-Allow-Origin:*');
+  header('Access-Control-Allow-Headers: Content-Type');
+  header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
+  header('Content-Type: application/json; charset=UTF-8');
   $username = $_SESSION['logged_in_user'];
 
   $method = $_SERVER['REQUEST_METHOD'];
