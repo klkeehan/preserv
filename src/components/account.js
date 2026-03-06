@@ -25,7 +25,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
 
     // Grab Session user information
     useEffect(() => {
-        axios.get('http://localhost/dig4172/test/session.php')
+        axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/session.php')
             .then((response) => {
                 console.log("session response:", response.data);
                 console.log("in_household value:", response.data.in_household);
@@ -56,7 +56,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
         useEffect(() => {
         const fetchHousehold = async () => {
             try {
-                const response = await axios.get('http://localhost/dig4172/test/household.php');
+                const response = await axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/household.php');
                 // Only set household data if owner exists
                 if (response.data.owner) {
                     setHouseholdData(response.data);
@@ -81,8 +81,9 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
 
     // CREATE HOUSEHOLD BACKEND
     function createHousehold() {
-        axios.post("http://localhost/dig4172/test/household.php")
+        axios.post("https://students.gaim.ucf.edu/~ka822136/preserv/backend/household.php")
             .then((response) => {
+                console.log("create household response:", response.data)
                 if (response.data.success === true) {
                     getPage("created");
                 }
@@ -97,7 +98,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
         joinHousehold(inviteCode);
     }
     function joinHousehold(inviteCode) {
-        axios.put('http://localhost/dig4172/test/household.php', {invite_code: inviteCode})
+        axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/household.php', {invite_code: inviteCode})
             .then((response) => {
                 if (response.data.success === true) {
                     getPage("created");
@@ -120,7 +121,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
             getPage("household");
         })
         .catch((error) => {console.error("Leave error:", error);}); */
-        axios.delete("http://localhost/dig4172/test/household.php", { data: { user_id: currentUser.user_id} /*replace with session storage*/ })
+        axios.delete("https://students.gaim.ucf.edu/~ka822136/preserv/backend/household.php", { data: { user_id: currentUser.user_id} /*replace with session storage*/ })
             .then (() => {
                 setInHousehold (false);
                 setHouseholdData(null);
@@ -137,7 +138,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
             getPage("created");
         })
         .catch((error) => {console.error("Remove error:", error);}); */
-        axios.delete("http://localhost/dig4172/test/household.php", { data: {user_id: userId }})
+        axios.delete("https://students.gaim.ucf.edu/~ka822136/preserv/backend/household.php", { data: {user_id: userId }})
             .then (() => {
                 getPage("created");
             })
