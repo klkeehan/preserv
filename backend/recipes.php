@@ -1,7 +1,7 @@
 <?php
     session_start();
     include('connect.php');
-    $http_origin = $_SERVER['HTTP_ORIGIN'];
+    $http_origin = $_SERVER['HTTP_ORIGIN'] ?? '';
     if ($http_origin == "http://localhost:3000" || $http_origin == "http://localhost:8080") {
         header("Access-Control-Allow-Origin: $http_origin");
         header("Access-Control-Allow-Credentials: true");
@@ -11,10 +11,11 @@
     header('Content-Type: application/json; charset=UTF-8');
 
   $method = $_SERVER['REQUEST_METHOD'];
+  $username = $_SESSION['logged_in_user'] ?? 'karissa';
 
   if ($method === 'GET') {
       // TODO: Add WHERE username = '$username' once sessions are implemented - is it resolved? Almost, need the login page to work and begin using sessions for this to work as intended...
-      $username = $_SESSION['logged_in_user'];
+      //$username = $_SESSION['logged_in_user'];
       $query = "SELECT * FROM recipe WHERE username = '$username'";
       $result = $mysqli->query($query);
       $rows = array();
