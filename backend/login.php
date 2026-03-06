@@ -10,7 +10,7 @@
   include('connect.php');
   if (isset($_SERVER['HTTP_ORIGIN'])) {
     $http_origin = $_SERVER['HTTP_ORIGIN'];
-    if ($http_origin == "http://localhost:3000" || $http_origin == "http://localhost:8080") {
+    if ($http_origin == "http://localhost:3000" || $http_origin == "http://localhost:8080" || $http_origin == "https://preserv-one.vercel.app/") {
       header("Access-Control-Allow-Origin: $http_origin");
       header("Access-Control-Allow-Credentials: true");
     }
