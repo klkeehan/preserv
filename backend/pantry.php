@@ -2,11 +2,14 @@
   session_start();
   
   include('connect.php');
-  header('Cache-Control: public');
-  header('Access-Control-Allow-Origin: *');
-  header('Access-Control-Allow-Headers: Content-Type');
-  header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
-  header('Access-Control-Allow-Credentials: true');
+  $http_origin = $_SERVER['HTTP_ORIGIN'];
+    if ($http_origin == "http://localhost:3000" || $http_origin == "http://localhost:8080") {
+        header("Access-Control-Allow-Origin: $http_origin");
+        header("Access-Control-Allow-Credentials: true");
+        header('Access-Control-Allow-Headers: Content-Type');
+        header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
+    }
+
   header('Content-Type: application/json; charset=UTF-8');
 
   $method = $_SERVER['REQUEST_METHOD'];
@@ -14,7 +17,8 @@
   switch ($method) {
     //done
     case 'GET':
-      $query = 'SELECT * FROM pantry ORDER BY item_status ASC';
+      $username = $_SESSION['logged_in_user'];
+      $query = "SELECT * FROM pantry WHERE username='$username' ORDER BY item_status ASC";
       $result = $mysqli->query($query);
       $rows = array();
       while ($row = $result->fetch_assoc()) {$rows[] = $row;}
@@ -24,7 +28,6 @@
     //wip  
     case 'POST':
       $data = json_decode(file_get_contents('php://input'));
-      //placeholder
       $username = $_SESSION['logged_in_user'];
       $name = $data->name;
       $quantity = $data->quantity;

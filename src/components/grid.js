@@ -5,17 +5,21 @@ import axios from 'axios';
 const Grid = ({handleItem}) => {
   const [items, setItems] = useState([]);
   const [display, setDisplay] = useState([]);
+  const [flag, setFlag] = useState(false);
   
   useEffect(() => {
     const fetchItems = async () => {
       try {
         const response = await axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php');
         setItems(response.data);
+        if(items !== null) {
+          setFlag(true);
+        }
         setDisplay(response.data);
       } catch (error) {console.error('Error fetching items:', error);}
     };
     fetchItems();
-  }, []);
+  }, [items]);
 
   //search bar functionality
   const [search, setSearch] = useState('');
@@ -76,6 +80,7 @@ const Grid = ({handleItem}) => {
           </div>
         ))}
       </div>
+      <h1 className={!flag ? 'h1' : 'hidden-txt'}>Add your first pantry item...</h1>
     </div>
   )
 }

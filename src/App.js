@@ -10,6 +10,7 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 function App() {
+  const [validFlag, setValidFlag] = useState(0);
   const handleSignup = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);

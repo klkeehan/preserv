@@ -711,7 +711,7 @@ textarea {
   margin-right: 19px;
   z-index: 10;
 }
-/*manual vs scan inpur*/
+/*manual vs scan input*/
 .mode-bar {
   position: absolute;
   top: 0;
@@ -744,6 +744,9 @@ textarea {
   font-family: figtree;
   font-size: 18px;
   font-weight: 600;
+}
+.hidden-txt {
+  visibility: hidden;
 }
 
 

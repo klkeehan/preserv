@@ -10,12 +10,11 @@
     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
     header('Content-Type: application/json; charset=UTF-8');
 
-  $username = $_SESSION['logged_in_user'];
-
   $method = $_SERVER['REQUEST_METHOD'];
 
   if ($method === 'GET') {
       // TODO: Add WHERE username = '$username' once sessions are implemented - is it resolved? Almost, need the login page to work and begin using sessions for this to work as intended...
+      $username = $_SESSION['logged_in_user'];
       $query = "SELECT * FROM recipe WHERE username = '$username'";
       $result = $mysqli->query($query);
       $rows = array();
