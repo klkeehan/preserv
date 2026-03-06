@@ -3,8 +3,11 @@ const WebcamCapture = () => {
   Quagga.init({
     inputStream: {
       type: 'LiveStream',
-      target: document.querySelector('#camera')
-      },
+      target: document.querySelector('#camera'),
+      constraints: {
+        facingMode: 'environment'
+      }
+    },
     decoder: {
       readers: ['upc_reader']
     }
