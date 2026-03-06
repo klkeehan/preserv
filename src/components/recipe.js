@@ -1,7 +1,7 @@
 import '../App.css';
 //import recipesSet from '../data/recipes.json';
 import Popup from 'reactjs-popup';
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect } from 'react';
 import add from '../assets/add-icon.png';
 import x from '../assets/close.svg';
 import camera from '../assets/camera-icon.svg';
@@ -13,11 +13,43 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     const [selectedRecipe, getSelectedRecipe] = useState(null);
     const  [recipesSet, setRecipesSet] = useState([]);
     const [pantry, checkPantry] = useState([]);
+    const [recipeName, setRecipeName] = useState('');
+    const [ingredients, setIngredients] = useState([
+        { name:'', quantity: '', measurement: ''}
+    ]);
+    const [instructions, setInstructions] = useState('');
+    const [image, setImage] = useState('');
+
+    const addIngredientRow = () => {
+        setIngredients([...ingredients, { name:'', quantity: '', measurement: ''}])
+    };
+    const updateIngredientRow = (index, field, value) => {
+        setIngredients(ingredients.map((ingredient, i) =>
+        i === index ? { ...ingredient, [field]: value } : ingredient));
+    };
+    //const handleImageUpload = async () => {};
+
+    const handleNewRecipe = async () => {
+        try {
+            const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/recipes.php', {
+                name: recipeName,
+                ingredients: ingredients.map(i => `${i.name}|${i.quantity}|${i.measurement}`).join(','),
+                instructions: instructions,
+                image: image
+            });
+            console.log(response.data);
+            setRecipesSet(response.data);
+            getPage("home");
+        } catch (error) {
+            console.error('Error creating recipe:', error);
+        }
+    }
 
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
                 const response = await axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/recipes.php');
+                console.log(response.data);
                 setRecipesSet(response.data);
             } catch (error) {console.error('Error fetching recipes:', error);}
         };
@@ -39,7 +71,10 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
         <div className='layout'>
             <h1>My Recipes</h1>
             <div className="recipes-grid">
-                {recipesSet.map((recipe) => (
+                {Array.isArray(recipesSet) && recipesSet.length === 0 && (
+                    <p>No recipes yet — add your first one!</p>
+                )}
+                {Array.isArray(recipesSet) && recipesSet.map((recipe) => (
                     <div className="recipes-card" key ={recipe.id}>
                         <button className='recipe-button' onClick={() => {
                             getSelectedRecipe(recipe);
@@ -102,10 +137,14 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 <div className='ing-list'>
                     <h4 style={{textIndent:'40px'}}>Ingredients</h4>
                     {/*This generates a list of ingredients based on the JSON data, adds a Missing text when it gets a 0 from the availablity section in the JSON file per each item-Not anymore, now it check if any of the ingredients in the pantry show up in each instance of ingredient*/}
-                    <ul className='body-text'>{selectedRecipe.ingredients.split(',').map((item,index) =>(
-                        <li key={index}>{item.trim()}
-                        {!pantry.some(pantryItem => item.toLowerCase().includes(pantryItem.name.toLowerCase()) ) && (<div className='missing-icon'></div>)}</li>
-                    ))}</ul>
+                    <ul className='body-text'>{selectedRecipe.ingredients.split(',').map((item,index) => {
+                        const [name, quantity, measurement] = item.split('|');
+                        return (
+                            <li key={index}>{quantity} {measurement} {name}
+                                {Array.isArray(pantry) && !pantry.some(pantryItem => name.toLowerCase().includes(pantryItem.name.toLowerCase()) ) && (<div className='missing-icon'></div>)}
+                            </li>
+                        );
+                    })}</ul>
                 </div>
             </div>
             <h4>Instructions</h4>
@@ -142,15 +181,83 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
         <div class='item-page'>
             <h2>New Recipe</h2>
             <div className='spacer' style={{height:'120px'}}></div>
-            <label className='label2'>Recipe Name:<input type="text" className='item-input'/></label>< br/>
-            <label className='label2'>Ingredients:<textarea></textarea></label>< br/>
-            <label className='label2'>Instructions:<textarea></textarea></label>< br/>
+            <label className='label2'>Recipe Name:<input type="text" className='item-input' value={recipeName} onChange={(e) => setRecipeName(e.target.value)}/></label>< br/>
+            {/*<label className='label2'>Ingredients:<textarea></textarea></label>*/}
+            {ingredients.map((ingredient,index) => (
+                <div key={index}>
+                    <input className='label2' value={ingredient.name} onChange={(e) => updateIngredientRow(index, 'name', e.target.value)} />
+                    <input className='label2' type='number' value={ingredient.quantity} onChange={(e) => updateIngredientRow(index, 'quantity',e.target.value)} />
+                    <select value={ingredient.measurement} onChange={(e) => updateIngredientRow(index, 'measurement', e.target.value)}>
+                        <option value='none'>none</option>
+                        {/*<!-- Volume -->*/}
+                        <option value='tsp'>tsp</option>
+                        <option value='tbsp'>tbsp</option>
+                        <option value='dsp'>dsp</option>
+                        <option value='fl_oz'>fl oz</option>
+                        <option value='cup'>cup</option>
+                        <option value='pint'>pint</option>
+                        <option value='quart'>quart</option>
+                        <option value='gallon'>gallon</option>
+                        <option value='ml'>mL</option>
+                        <option value='cl'>cL</option>
+                        <option value='dl'>dL</option>
+                        <option value='liter'>liter</option>
+
+                        {/*<!-- Weight -->*/}
+                        <option value='mg'>mg</option>
+                        <option value='g'>g</option>
+                        <option value='kg'>kg</option>
+                        <option value='oz'>oz</option>
+                        <option value='lb'>lb</option>
+
+                        {/*<!-- Count -->*/}
+                        <option value='piece'>piece</option>
+                        <option value='slice'>slice</option>
+                        <option value='clove'>clove</option>
+                        <option value='egg'>egg</option>
+                        <option value='stalk'>stalk</option>
+                        <option value='sprig'>sprig</option>
+                        <option value='leaf'>leaf</option>
+                        <option value='head'>head</option>
+                        <option value='bulb'>bulb</option>
+
+                        {/*<!-- Informal -->*/}
+                        <option value='pinch'>pinch</option>
+                        <option value='dash'>dash</option>
+                        <option value='smidgen'>smidgen</option>
+                        <option value='handful'>handful</option>
+                        <option value='scoop'>scoop</option>
+                        <option value='splash'>splash</option>
+                        <option value='drizzle'>drizzle</option>
+                        <option value='knob'>knob</option>
+                        <option value='pat'>pat</option>
+                        <option value='stick'>stick</option>
+
+                        {/*<!-- Package / container -->*/}
+                        <option value='bunch'>bunch</option>
+                        <option value='package'>package</option>
+                        <option value='can'>can</option>
+                        <option value='jar'>jar</option>
+                        <option value='bottle'>bottle</option>
+
+                        {/*<!-- Regional -->*/}
+                        <option value='gill'>gill</option>
+                        <option value='teacup'>teacup</option>
+                        <option value='coffee_cup'>coffee cup</option>
+                        <option value='wineglass'>wineglass</option>
+                        <option value='tumbler'>tumbler</option>
+                    </select>
+                </div>
+            ))}
+            <button onClick={addIngredientRow}>Add Ingredient</button>
+            < br/>
+            <label className='label2'>Instructions:<textarea value={instructions} onChange={(e) => setInstructions(e.target.value)}></textarea></label>< br/>
             <p className='label2'>Image:</p>
                 <div className='image-opts'>
                     <input type='file' id='file' className='upload'></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
                     <button className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
                 </div>
-            <button onClick={() => getPage("home")} className='save-button'>Save Recipe</button>
+            <button onClick={handleNewRecipe} className='save-button'>Save Recipe</button>
             </div>
             <button className='close-button' onClick={() => getPage("home")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
