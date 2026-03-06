@@ -12,7 +12,7 @@ const Grid = ({handleItem}) => {
       try {
         const response = await axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php');
         setItems(response.data);
-        if(items !== null) {
+        if(items) {
           setFlag(true);
         }
         setDisplay(response.data);
@@ -71,7 +71,7 @@ const Grid = ({handleItem}) => {
         <button onClick={() => setDisplay(snackData)} className='cat-button'>Snacks</button>
         <button onClick={() => setDisplay(otherData)} className='cat-button'>Other</button>
       </div>
-      <div className='pantry-grid'>
+      <div className={flag ? 'pantry-grid' : 'hidden-txt'}>
         {display.map((item) => (
           <div key={item.id} className='pantry-item'>
             <button onClick={() => handleItem(item)} className='pantry-button'><img src={item.image} className={item.item_status === '3' ? 'pantry-fresh' : item.item_status === '1' ? 'pantry-exp' : 'pantry-soon'} alt={item.name}></img>
@@ -80,7 +80,7 @@ const Grid = ({handleItem}) => {
           </div>
         ))}
       </div>
-      <h1 className={!flag ? 'h1' : 'hidden-txt'}>Add your first pantry item...</h1>
+      <h1 className={flag ? 'hidden-txt' : 'blank-txt'}>Add your first pantry item...</h1>
     </div>
   )
 }

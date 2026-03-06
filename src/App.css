@@ -82,6 +82,17 @@ h4 {
   margin-bottom: 5px;
   text-align: left;
 }
+/*regex mismatch text styling*/
+.err-txt {
+  font-family: figtree;
+  font-size: 14px;
+  color: var(--pink);
+  max-width: 300px;
+  margin-left: 45px;
+  margin-top: -20px;
+  margin-bottom: 5px;
+
+}
 /*nabar styling*/
 .navbar {
   display: flex;
@@ -239,7 +250,7 @@ textarea {
   height: 66px;
   border-radius: 100px;
   border: 0px none;
-  margin-bottom: 22px;
+  margin-bottom: 32px;
   text-indent: 20px;
   font-family: figtree;
   font-size: 18px;
@@ -389,7 +400,6 @@ textarea {
   border-radius: 10px;
 }
 .pantry-grid {
-  border: 1px red solid;
   position: absolute;
   top: 0;
   margin-top: 145px;
@@ -747,6 +757,12 @@ textarea {
 }
 .hidden-txt {
   visibility: hidden;
+}
+.blank-txt {
+  width: 300px;
+  margin-top: 160px;
+  margin-left: 20px;
+  text-align: left;
 }
 
 

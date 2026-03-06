@@ -10,8 +10,9 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 function App() {
-  const [validFlag, setValidFlag] = useState(0);
   const handleSignup = async (e) => {
+    let validFlag = 0;
+
     e.preventDefault();
     const formData = new FormData(e.target);
     const formValues = {
@@ -24,23 +25,35 @@ function App() {
     //regex form validation
     const nameReg = /^[A-Za-z]{2,20}$/;
     const nameFlag = nameReg.test(formValues.name);
-    console.log(formValues.name, 'passed result', nameFlag);
+    if (nameFlag) {validFlag++};
+    const nameTxt = document.querySelector('#nameMsg');
+    if (!nameFlag) {nameTxt.textContent = 'Enter a string of 2 to 20 letters'};
 
     const emailReg = /^([A-Za-z0-9_.]+@[A-Za-z0-9]+\.[A-Za-z0-9.]).{2,50}$/;
     const emailFlag = emailReg.test(formValues.email);
-    console.log(formValues.email, 'passed result', emailFlag);
+    if (emailFlag) {validFlag++};
+    const emailTxt = document.querySelector('#emailMsg');
+    if (!emailFlag) {emailTxt.textContent = 'Enter a valid email address'};
 
     const userReg = /^[A-Za-z]{4,16}$/;
     const userFlag = userReg.test(formValues.username);
-    console.log(formValues.username, 'passed result', userFlag);
+    if (userFlag) {validFlag++};
+    const userTxt = document.querySelector('#userMsg');
+    if (!userFlag) {userTxt.textContent = 'Enter a string of 4 to 16 letters'};
 
     const passwordReg = /^(?=.*?[0-9])(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[^0-9A-Za-z]).{4,12}$/;
     const passwordFlag = passwordReg.test(formValues.password);
-    console.log(formValues.password, 'passed result', passwordFlag);
+    const passTxt = document.querySelector('#passMsg');
+    if (!passwordFlag) {passTxt.textContent = 'Enter a string containing at least 1 number, 1 capital and 1 lowercase letter, and 1 symbol'}
+    else {validFlag++};
 
-    const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/signup.php', formValues);
-    console.log(response);
-    loadPantry();
+    console.log(validFlag);
+
+    if(validFlag === 4) {
+      const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/signup.php', formValues);
+      console.log(response);
+      loadPantry();
+    }
   };
 
   const handleLogin = async (e) => {
@@ -52,8 +65,13 @@ function App() {
     };
 
     const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/login.php', formValues);
-    console.log(response);
-    loadPantry();
+  
+    if (response.data === '') {
+      const loginTxt = document.querySelector('#loginMsg');
+      loginTxt.textContent = 'Enter a valid username and password'
+    } else {
+      loadPantry();
+    }
   };
 
   //home page
@@ -75,9 +93,13 @@ function App() {
       <img src={logotype} className='logotype' alt='preserv logotype'/>
       <div className='spacer' style={{height:'150px'}}></div>
       <form onSubmit={handleSignup}>
+        <p id='nameMsg' className='err-txt'></p>
         <input name='name' placeholder='First Name' className='input'/>
+        <p id='emailMsg' className='err-txt'></p>
         <input name='email' placeholder='Email' className='input'/>
+        <p id='userMsg' className='err-txt'></p>
         <input name='username' placeholder='Username' className='input'/>
+        <p id='passMsg' className='err-txt'></p>
         <input name='password' placeholder='Password' type='password' className='input'/>
         <button type='submit' className='solid-button' style={{color:'var(--white)'}}>GET STARTED</button>
       </form>
@@ -91,6 +113,7 @@ function App() {
       <img src={logotype} className='logotype' alt='preserv logotype' />
       <div className='spacer' style={{height:'50px'}}></div>
       <form onSubmit={handleLogin}>
+        <p id='loginMsg' className='err-txt'></p>
         <input name='username' placeholder='Username' className='input' />
         <input name='password' placeholder='Password' type='password' className='input' style={{marginBottom:'0px'}} />
         <button className='pw-forgot' onClick={loadPWReset}>Forgot Password?</button>
