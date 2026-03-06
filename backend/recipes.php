@@ -9,9 +9,8 @@
     header('Access-Control-Allow-Headers: Content-Type');
     header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
     header('Content-Type: application/json; charset=UTF-8');
-?>
-<?php
-  $username = $_SESSION['logged_in_user_id'];
+
+  $username = $_SESSION['logged_in_user'];
 
   $method = $_SERVER['REQUEST_METHOD'];
 
