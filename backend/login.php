@@ -1,4 +1,11 @@
 <?php
+  session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'secure' => true,
+    'httponly' => true,
+    'samesite' => 'None'
+]);
   session_start();
   include('connect.php');
   $http_origin = $_SERVER['HTTP_ORIGIN'];
@@ -38,13 +45,13 @@
             $_SESSION['logged_in_user_id'] = $row->id;
             echo json_encode('logging in...');
           };
-        }; 
+        };
       };
       $response = [
       'status' => 'success',
       'message' => 'user ' . $_SESSION['logged_in_user'] . ' has successfully logged in'
       ];
-      echo json_encode($response); 
+      echo json_encode($response);
       break;
   }
 
