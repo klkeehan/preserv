@@ -19,6 +19,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     ]);
     const [instructions, setInstructions] = useState('');
     const [image, setImage] = useState('');
+    //const [recipeId, setRecipeId] = useState(''); not needed
 
     const addIngredientRow = () => {
         setIngredients([...ingredients, { name:'', quantity: '', measurement: ''}])
@@ -42,6 +43,19 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
             getPage("home");
         } catch (error) {
             console.error('Error creating recipe:', error);
+        }
+    }
+
+    const handleDeleteRecipe = async () => {
+        try {
+            const response = await axios.delete('https://students.gaim.ucf.edu/~ka822136/preserv/backend/recipes.php', {
+                data: {id: selectedRecipe.id}
+            });
+            console.log(response.data);
+            setRecipesSet(response.data);
+            getPage("home");
+        } catch (error) {
+            console.error('Error deleting recipe:', error);
         }
     }
 
@@ -105,7 +119,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
         </div>
     );
 
-    //individual recipe page, create a class name to style, use popup class for styling that.
+    //individual recipe page, create a class name to style, use popup class for styling that. Delete button works BUT THE SHOPPING LIST ADDING IS NOT, NEED TO TWEAK THE SHOPPING LIST TO GET IT WORKING
     const recipePage = selectedRecipe && (
         <div>
         <div className='item-page'>
@@ -130,6 +144,19 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                             }}
                         </Popup>
                     <button className='item-button' onClick={() => getPage("edit")} style={{marginLeft:'10px'}}>Edit</button>
+                    <Popup  trigger={<button className="item-button"><p>Delete Recipe</p></button>}modal nested>
+                                            {close => (
+                                                <div className='modal'>
+                                                    <div className='content'>
+                                                        <p className='popup-text2'>Are you sure you want to delete this recipe?</p>
+                                                    </div>
+                                                    <div>
+                                                        <button className='pink-solid' onClick={handleDeleteRecipe}>Delete</button><br></br>
+                                                        <button className='pink-hollow' onClick={() => {close()}}>Cancel</button>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </Popup>
                 </div>
             </div>
             <div className='recipe-block'>
