@@ -1,4 +1,11 @@
 <?php
+    session_set_cookie_params([
+    'lifetime' => 0,
+    'path' => '/',
+    'secure' => true,
+    'httponly' => true,
+    'samesite' => 'None'
+    ]);
     session_start();
     $http_origin = $_SERVER['HTTP_ORIGIN'];
     if ($http_origin == "http://localhost:3000" || $http_origin == "http://localhost:8080") {
