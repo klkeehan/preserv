@@ -44,7 +44,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
 
     // ACCOUNT DATA GRABBING TECHNOLOGY
     useEffect(() => {
-        axios.get('http://localhost/dig4172/test/account.php')
+        axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/account.php')
             .then((response) => {
                 console.log("account data:", response.data);
                 setAccountData(response.data);
@@ -105,7 +105,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
         if (isOn) {
             trueorfalse = 1;
         }
-        axios.put('http://localhost/dig4172/test/account.php', { field: field, value: trueorfalse })
+        axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/account.php', { field: field, value: trueorfalse })
             .then((response) => {
                 console.log("Notification updated", response.data);
                 if (isOn) {
@@ -118,7 +118,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
     }
     // UPDATE PASSWORD SASQUATCH HAS BEEN SPOTTED IN NORTH PENNSYLVANIA
     function updatePassword(newPassword) {
-        axios.put('http://localhost/dig4172/test/account.php', { field: 'password', value: newPassword, isPassword: true })
+        axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/account.php', { field: 'password', value: newPassword, isPassword: true })
             .then((response) => {console.log("Password update:", response.data);})
             .catch((error) => {console.error("Password update error:", error);});
     }
