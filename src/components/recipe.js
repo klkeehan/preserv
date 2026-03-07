@@ -192,19 +192,15 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                         {/*<!-- Volume -->*/}
                         <option value='tsp'>tsp</option>
                         <option value='tbsp'>tbsp</option>
-                        <option value='dsp'>dsp</option>
                         <option value='fl_oz'>fl oz</option>
                         <option value='cup'>cup</option>
                         <option value='pint'>pint</option>
                         <option value='quart'>quart</option>
                         <option value='gallon'>gallon</option>
                         <option value='ml'>mL</option>
-                        <option value='cl'>cL</option>
-                        <option value='dl'>dL</option>
                         <option value='liter'>liter</option>
 
                         {/*<!-- Weight -->*/}
-                        <option value='mg'>mg</option>
                         <option value='g'>g</option>
                         <option value='kg'>kg</option>
                         <option value='oz'>oz</option>
@@ -214,7 +210,6 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                         <option value='piece'>piece</option>
                         <option value='slice'>slice</option>
                         <option value='clove'>clove</option>
-                        <option value='egg'>egg</option>
                         <option value='stalk'>stalk</option>
                         <option value='sprig'>sprig</option>
                         <option value='leaf'>leaf</option>
