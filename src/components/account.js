@@ -17,10 +17,15 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
 
     // Can delete this later when implementing server side schtuff ** THIS IS CAP DO NOT DELETE TRUST THE OLDER MESSAGE
     let [householdData, setHouseholdData] = useState(null);
+    let [accountData, setAccountData] = useState(null);
     let [permission, setPermission] = useState(null);
     let [inHousehold, setInHousehold] = useState(false);
     let [currentUser, setCurrentUser] = useState(null);
     let [joinError, setJoinError] = useState('');
+    let [newPassword, setNewPassword] = useState('');
+    let [confirmPassword, setConfirmPassword] = useState('');
+    let [passwordError, setPasswordError] = useState('');
+    
 
 
     // Grab Session user information
@@ -35,6 +40,16 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
                 }
             })
             .catch((error) => {console.error("Session grabbing error:", error);});
+    }, []);
+
+    // ACCOUNT DATA GRABBING TECHNOLOGY
+    useEffect(() => {
+        axios.get('http://localhost/dig4172/test/account.php')
+            .then((response) => {
+                console.log("account data:", response.data);
+                setAccountData(response.data);
+            })
+            .catch((error) => {console.error("Account fetch error:", error);});
     }, []);
 
     /* useEffect (() => {
@@ -78,6 +93,35 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
     //Replace with localstorage or session later -------------------------
     let isSelf = selectedUser && currentUser && selectedUser.user_id === currentUser.user_id;
     //let isSelf = selectedUser && selectedUser.user_id === "1";
+    //Profile Pic Swap
+    let profilePic = profileYellow;
+    if (accountData && accountData.profile_photo) {
+        profilePic = accountData.profile_photo;
+    }
+
+    // NOTIFICATIONS BACKEND TECHNOLOGY
+    function updateNotification(field, isOn) {
+        let trueorfalse = 0;
+        if (isOn) {
+            trueorfalse = 1;
+        }
+        axios.put('http://localhost/dig4172/test/account.php', { field: field, value: trueorfalse })
+            .then((response) => {
+                console.log("Notification updated", response.data);
+                if (isOn) {
+                    setAccountData({...accountData, [field]: "1"});
+                } else {
+                    setAccountData({...accountData, [field]: "0"});
+                }
+            })
+            .catch((error) => {console.error("Notification update error:", error);});
+    }
+    // UPDATE PASSWORD SASQUATCH HAS BEEN SPOTTED IN NORTH PENNSYLVANIA
+    function updatePassword(newPassword) {
+        axios.put('http://localhost/dig4172/test/account.php', { field: 'password', value: newPassword, isPassword: true })
+            .then((response) => {console.log("Password update:", response.data);})
+            .catch((error) => {console.error("Password update error:", error);});
+    }
 
     // CREATE HOUSEHOLD BACKEND
     function createHousehold() {
@@ -235,22 +279,31 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
         <div className='layout'>
             <h1>Account</h1>
             <div className="account-personal">
-                <img className="profile-pic" src={profileYellow} alt="User's Profile Picture"></img>
+                <img className="profile-pic" src={profilePic} alt="User's Profile Picture"></img>
                 <div className="profile-settings">
-                    <h2>Alex</h2>
+                    <h2>{accountData && accountData.first_name}</h2>
                     <p onClick={skiptoHousehold}>Household Settings</p>
                     <p>Change Profile Picture...</p>
-                    <Popup contentStyle={{width:'273px', height:'240px'}} trigger={<p>Change Password...</p>}modal nested>
+                    <Popup contentStyle={{width:'273px', height:'240px'}} trigger={<p>Change Password...</p>}modal nested onClose={() => setPasswordError('')}>
                         {close => (
                             <div className='modal'>
                                 <div className='content' style={{textAlign:'left', marginLeft:'35px'}}>
                                     <div className='spacer' style={{height:'10px'}}></div>
                                     <label className="label2">New Password:</label>
-                                    <input className="item-input" style={{width:'200px'}} type="text" name="newpassword"/>
+                                    <input className="item-input" style={{width:'200px'}} type="password" onChange={(e) => setNewPassword(e.target.value)}/>
                                     <label className="label2">Confirm Password:</label>
-                                    <input className="item-input" style={{width:'200px'}} type="text" name="confirmpassword"/>
+                                    <input className="item-input" style={{width:'200px'}} type="password" onChange={(e) => setConfirmPassword(e.target.value)}/>
+                                    {passwordError !== '' && <p style={{color:'red'}}>{passwordError}</p>}
                                     </div>
-                                    <button className='green-button' onClick={() => {close()}}>Submit</button>
+                                    <button className='green-button' onClick={() => {
+                                        if (newPassword === confirmPassword) {
+                                            updatePassword(newPassword);
+                                            setPasswordError('');
+                                            close();
+                                        } else {
+                                            setPasswordError("Passwords do not match.")
+                                        }
+                                    }}>Submit</button>
                             </div>
                             )}
                     </Popup>
@@ -274,42 +327,42 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
                 <div className="notification-item">
                     <p>Push Notifications</p>
                     <label className='toggle'>
-                        <input type="checkbox" name='pushNotification'/>
+                        <input type="checkbox" name='pushNotification' checked={accountData && accountData.push_notifs === "1"} onChange={(e) => updateNotification('push_notifs', e.target.checked)}/>
                         <span className="slider"></span>
                     </label>
                 </div>
                 <div className="notification-item">
                     <p>Near Expiration Date</p>
                     <label className='toggle'>
-                        <input type="checkbox" name='nearExpiration'/>
+                        <input type="checkbox" name='nearExpiration' checked={accountData && accountData.date_notifs === "1"} onChange={(e) => updateNotification('date_notifs', e.target.checked)}/>
                         <span className="slider"></span>
                     </label>
                 </div>
                 <div className="notification-item">
                     <p>Low-Stock</p>
                     <label className='toggle'>
-                        <input type="checkbox" name='lowStock'/>
+                        <input type="checkbox" name='lowStock' checked={accountData && accountData.stock_notifs === "1"} onChange={(e) => updateNotification('stock_notifs', e.target.checked)}/>
                         <span className="slider"></span>
                     </label>
                 </div>
                 <div className="notification-item">
                     <p>Shopping List Additions</p>
                     <label className='toggle'>
-                        <input type="checkbox" name='shoppingListAdd'/>
+                        <input type="checkbox" name='shoppingListAdd' checked={accountData && accountData.add_notifs === "1"} onChange={(e) => updateNotification('add_notifs', e.target.checked)}/>
                         <span className="slider"></span>
                     </label>
                 </div>
                 <div className="notification-item">
                     <p>Shopping List Confirmed Purchases</p>
                     <label className='toggle'>
-                        <input type="checkbox" name='shoppingListConfirm'/>
+                        <input type="checkbox" name='shoppingListConfirm' checked={accountData && accountData.remove_notifs === "1"} onChange={(e) => updateNotification('remove_notifs', e.target.checked)}/>
                         <span className="slider"></span>
                     </label>
                 </div>
                 <div className="notification-item">
                     <p>High-contrast Colors</p>
                     <label className='toggle'>
-                        <input type="checkbox" name='highContrast'/>
+                        <input type="checkbox" name='highContrast' checked={accountData && accountData.high_contrast === "1"} onChange={(e) => updateNotification('high_contrast', e.target.checked)}/>
                         <span className="slider"></span>
                     </label>
                 </div>
