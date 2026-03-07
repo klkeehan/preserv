@@ -13,10 +13,11 @@
     if ($http_origin == "http://localhost:3000" || $http_origin == "http://localhost:8080") {
       header("Access-Control-Allow-Origin: $http_origin");
       header("Access-Control-Allow-Credentials: true");
+    } else {
+      header("Access-Control-Allow-Origin: $http_origin");
+      header("Access-Control-Allow-Credentials: true");
     }
   }
-  header('Access-Control-Allow-Origin: https://preserv-one.vercel.app/');
-  header('Access-Control-Allow-Credentials: true');
   header('Access-Control-Allow-Headers: Content-Type');
   header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS');
   header('Content-Type: application/json; charset=UTF-8');

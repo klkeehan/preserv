@@ -35,14 +35,12 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
 
   const handleDelete = async (e) => {
     e.preventDefault();
-    const deleteData = {
-      id: itemID,
-      name: itemName
-    };
+    const id = itemID;
 
-    console.log(deleteData);
+    console.log(id);
+    const url = (`https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php?id`);
 
-    const response = await axios.delete('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', deleteData);
+    const response = await axios.delete(url);
     console.log(response);
     handlePantry();
   };
@@ -52,11 +50,11 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
     e.preventDefault();
     const formData = new FormData(e.target);
     const formValues = {
-      id: itemID,
+      name: formData.get('name'),
       quant: formData.get('add-quant')
     };
 
-    const response = await axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', formValues);
+    const response = await axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/shopping.php', formValues);
     console.log(response);
   };
 
@@ -70,12 +68,13 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
             <Popup contentStyle={{width:'273px'}} trigger={<button className='item-button'>Trash</button>}modal nested>
               {close => (
                 <div className='modal'>
-                  <div className='content'>
-                    <p className='popup-text'>Are you sure you want to trash this item?</p>
-                  </div>
-                  <div>
-                    <button onClick={handleDelete} className='green-button'>Confirm</button>
-                  </div>
+                    <div className='content'>
+                      <form onSubmit={handleDelete}>
+                        <input name='id' type='number' defaultValue={itemID} style={{visibility: 'hidden'}}></input>
+                        <p className='popup-text'>Are you sure you want to trash this item?</p>
+                        <button type='submit' className='green-button'>Confirm</button>
+                      </form>
+                    </div>
                 </div>
               )}
             </Popup>
@@ -88,6 +87,7 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
                   <form onSubmit={handleQuant}>
                   <div className='content'>
                     <p className='popup-text2'>What quantity would you like to add?</p>
+                    <input name='name' defaultValue={itemName}></input>
                     <label className='popup-label'>Amount: <input name='add-quant' className='item-input' type='number' min={0} style={{width:'80px'}}/></label>
                   </div>
                   <div>

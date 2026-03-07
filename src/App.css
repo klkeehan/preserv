@@ -43,7 +43,6 @@
 }
 .cam video {
   width: 100%;
-  max-width: 300px;
 }
 /*heading for 4 main component pages*/
 h1 {
