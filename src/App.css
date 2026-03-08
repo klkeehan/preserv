@@ -762,6 +762,9 @@ textarea {
   visibility: hidden;
 }
 .blank-txt {
+  font-size: 18px;
+  color: var(--green);
+  font-style: italic;
   width: 300px;
   margin-top: 160px;
   margin-left: 20px;
