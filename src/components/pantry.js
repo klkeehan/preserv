@@ -153,7 +153,6 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
         </button>
       </div>
       <Scanner onDetected={(code) => setUpc(code)}/>
-      {upc && <h3>Scanned UPC: {upc}</h3>}
     </div>
   );
 

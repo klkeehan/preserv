@@ -13,15 +13,19 @@ function BarcodeScanner({ onDetected }) {
         target: scannerRef.current,
         constraints: {
           audio: 'false',
-          width: '640',
-          height: '480',
+          width: '1280',
+          height: '720',
           facingMode: 'environment',
         },
       },
       decoder: {
+        locate: true,
         readers: ['upc_reader'],
       },
-      locate: true,
+      locator: {
+        halfSample: true,
+        patchSize: 'large'
+      }
     }, (err) => {
       if (err) {
         console.error('something went wrong :(', err);
