@@ -7,6 +7,7 @@ import camera from '../assets/camera-icon.svg';
 import upload from '../assets/upload-icon.svg';
 import arrow from '../assets/arrow.svg';
 import axios from 'axios';
+import WebCam from './webcam';
 
 const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, itemPurch, itemExp, itemCat, handlePantry}) => {
   const handleEdit = async (e) => {
@@ -56,6 +57,11 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
 
     const response = await axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/shopping.php', formValues);
     console.log(response);
+  };
+
+  function handleExit() {
+    setContent(itemEdit);
+    console.log('camera closed');
   };
 
   let item = (
@@ -189,7 +195,7 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
             <img className='edit-image' src={itemImg} alt={itemName}></img><br></br>
             <div className='image-opts'>
               <input name='image' type='file' id='file' accept='.jpg, .jpeg, .png' className='upload'></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
-              <button className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
+              <button className='image-input' onClick={() => setContent(<WebCam handleExit={handleExit}/>)}><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
             </div>
             <button type='submit' className='save-button'>Save Item</button>
           </form>

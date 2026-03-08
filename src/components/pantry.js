@@ -6,10 +6,12 @@ import x from '../assets/close.svg';
 import camera from '../assets/camera-icon.svg';
 import upload from '../assets/upload-icon.svg';
 import add from '../assets/add-icon.png';
-import WebcamCapture from './webcam';
+import Scanner from './scanner';
 import axios from 'axios';
 
 const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
+  const [upc, setUpc] = useState('');
+
   const handleItem = (item) => {
     if (item.item_status == 1) {
       setContent(
@@ -118,7 +120,7 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
           <p className='label2'>Image:</p>
           <div className='image-opts'>
               <input name='image' type='file' id='file' accept='.jpg, .jpeg, .png' className='upload'></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
-              <button className='image-input' onClick={() => setContent(<WebcamCapture />)}><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
+              <button className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
           </div>
           <button type='submit' className='save-button'>submit</button>
         </form>
@@ -150,7 +152,8 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
           </g><defs><clipPath id="clip0_18_56"><rect width="79" height="60" fill="var(--green)"/></clipPath></defs></svg>
         </button>
       </div>
-      <WebcamCapture />
+      <Scanner onDetected={(code) => setUpc(code)}/>
+      {upc && <h3>Scanned UPC: {upc}</h3>}
     </div>
   );
 
