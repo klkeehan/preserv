@@ -24,7 +24,7 @@ function BarcodeScanner({ onDetected }) {
       },
       locator: {
         halfSample: true,
-        patchSize: 'large'
+        patchSize: 'small'
       }
     }, (err) => {
       if (err) {
