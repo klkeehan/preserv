@@ -25,6 +25,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
     let [newPassword, setNewPassword] = useState('');
     let [confirmPassword, setConfirmPassword] = useState('');
     let [passwordError, setPasswordError] = useState('');
+    let [showCode, setShowCode] = useState(false);
     
 
 
@@ -188,6 +189,15 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
             })
             .catch((error) => {console.error("Remove error:", error);})
 }
+    //VIEW EDIT PERMISSION TYPE TING
+    function updatePermission(userId, field, value) {
+        axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/household.php', { permission: true, user_id: userId, field: field, value: value })
+            .then((response) => {
+                console.log("Permission updated:", response.data);
+                setSelectedUser({...selectedUser, [field] : value});
+            })
+            .catch((error) => {console.error("Permission update erorr:", error)});
+    }
 
     function leaveremoveButton () {
         // console.log("permission:", permission);
@@ -274,6 +284,9 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
         }
     }
 
+    //REGULATION X
+    const passwordReg = /^(?=.*?[0-9])(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[^0-9A-Za-z]).{4,12}$/;
+
     //ACTUAL HTML CONTENT STUFF
     let accountPage = (
         <div className='layout'>
@@ -296,12 +309,14 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
                                     {passwordError !== '' && <p style={{color:'red'}}>{passwordError}</p>}
                                     </div>
                                     <button className='green-button' onClick={() => {
-                                        if (newPassword === confirmPassword) {
+                                        if (!passwordReg.test(newPassword)) {
+                                            setPasswordError('Enter a string containing at least 1 number, 1 capital and 1 lowercase letter, and 1 symbol');
+                                        } else if (newPassword !== confirmPassword) {
+                                            setPasswordError("Passwords do not match.");
+                                        } else if (newPassword === confirmPassword) {
                                             updatePassword(newPassword);
                                             setPasswordError('');
                                             close();
-                                        } else {
-                                            setPasswordError("Passwords do not match.")
                                         }
                                     }}>Submit</button>
                             </div>
@@ -460,16 +475,16 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
                 <h4 style={{textAlign:'left'}}>Household Permissions</h4>
                 <div className="permission-item">
                     <p className="body-text" style={{marginBottom:'0px'}}>Pantry Access</p>
-                    <select style={{width:'100px'}} value="" name="paccess">
+                    <select style={{width:'100px'}} value={selectedUser.pantry_access} name="paccess" onChange={(e) => updatePermission(selectedUser.user_id, 'pantry_access', e.target.value)} disabled={!alexboiOwner}>
                         <option value="view">view</option>
-                        <option value="Edit">edit</option>
+                        <option value="edit">edit</option>
                     </select>
                 </div>
                 <div className="permission-item">
                     <p className="body-text" style={{marginBottom:'0px'}}>Shopping List Access</p>
-                    <select style={{width:'100px'}} value="" name="slaccess">
+                    <select style={{width:'100px'}} value={selectedUser.shopping_access} name="slaccess" onChange={(e) => updatePermission(selectedUser.user_id, 'shopping_access', e.target.value)} disabled={!alexboiOwner}>
                         <option value="view">view</option>
-                        <option value="Edit">edit</option>
+                        <option value="edit">edit</option>
                     </select>
                 </div>
             </div>
@@ -478,13 +493,29 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
             <button className='close-button' onClick={() => getPage("created")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
     )
+
+    function fakeNewsInputSwitch() {
+        if (showCode === true && householdData) {
+            return <input type="text" value={forDisplayPurposes(householdData.invite_code)} readOnly disabled/>;
+        } else {
+            return <input type="text" value="000 000 000" readOnly disabled/>;
+        }
+    }
+
+    function forDisplayPurposes(code) {
+        let codeString = code.toString();
+        return codeString.slice(0,3) + " " + codeString.slice(3,6) + " " + codeString.slice(6,9);
+    }
+
+    
+
     let householdAdd = (
         <div className='layout'>
             <h1>Household</h1>
             <div className="householdBox">
                 <p>Create a unique 9-digit code to invite others to your household. Share this code only with people you trust, as anyone with the code will be able to join.</p>
-                <input type="text" placeholder="000 000 000"/>
-                <button className='green-solid' style={{marginTop:'10px'}}>Generate Code</button>
+                {fakeNewsInputSwitch()}
+                <button className='green-solid' style={{marginTop:'10px'}} onClick={() => setShowCode(true)}>Generate Code</button>
             </div>
             <button className="close-button" onClick={() => getPage("created")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>

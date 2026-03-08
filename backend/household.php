@@ -36,7 +36,7 @@
             
             $householdId = $householdidgot->fetch_object()->household_id;
 
-            $displaystuffquery = "SELECT users.id AS user_id, users.username AS name, users.profile_photo AS image, members.role 
+            $displaystuffquery = "SELECT users.id AS user_id, users.username AS name, users.profile_photo AS image, members.role, members.pantry_access, members.shopping_access 
             FROM members 
             JOIN users ON members.user_id = users.id 
             WHERE members.household_id = $householdId";
@@ -52,9 +52,16 @@
                     $members[] = $row;
                 }
             }
+
+            //GET INVITE CODE
+            $getinvitecodequery = "SELECT invite_code FROM household WHERE id = $householdId";
+            $getinvitecoderesult = $mysqli->query($getinvitecodequery);
+            $inviteCode = $getinvitecoderesult->fetch_object()->invite_code;
+
             echo json_encode([
                 "owner" => $owner,
-                "members" => $members
+                "members" => $members,
+                "invite_code" => $inviteCode
             ]);
             break;
 
@@ -111,27 +118,40 @@
 
         case 'PUT':
             $data = json_decode(file_get_contents('php://input'));
-            $inviteCode = $data->invite_code;
+            
+            if (isset($data->invite_code)) {
+                $inviteCode = $data->invite_code;
 
-            $checkcodequery = "SELECT id FROM household WHERE invite_code= '$inviteCode'";
-            $checkcoderesult = $mysqli->query($checkcodequery);
+                $checkcodequery = "SELECT id FROM household WHERE invite_code= '$inviteCode'";
+                $checkcoderesult = $mysqli->query($checkcodequery);
 
-            if ($checkcoderesult->num_rows === 0) {
-                echo json_encode(["success" => false, "error" => "Invalid invite code"]);
-                exit;
+                if ($checkcoderesult->num_rows === 0) {
+                    echo json_encode(["success" => false, "error" => "Invalid invite code"]);
+                    exit;
+                }
+                $gethouseholdidquery = "SELECT id FROM household WHERE invite_code = '$inviteCode'";
+                $gethouseholdidresult = $mysqli->query($gethouseholdidquery);
+                $householdId = $gethouseholdidresult->fetch_object()->id;
+
+                //Update MEMBER
+                $insertmemberquery = "INSERT INTO members (id, household_id, user_id, role, pantry_access, shopping_access) VALUES (NULL, $householdId, $userId, 'member', 'edit', 'edit')";
+                $mysqli->query($insertmemberquery);
+                // Update household status
+                $updatehouseholdflag = "UPDATE users SET household = 1 WHERE id = $userId";
+                $mysqli->query($updatehouseholdflag);
+
+                echo json_encode(["success" => true]);
+
+            } else if (isset($data->permission) && $data->permission === true) {
+                $theUserId = $data->user_id;
+                $field = $data->field;
+                $value = $data->value;
+
+                $updatequery = "UPDATE members SET $field = '$value' WHERE user_id = $theUserId";
+                $mysqli->query($updatequery);
+                echo json_encode(["success" => true, "message" => "Permission updated"]);
             }
-            $gethouseholdidquery = "SELECT id FROM household WHERE invite_code = '$inviteCode'";
-            $gethouseholdidresult = $mysqli->query($gethouseholdidquery);
-            $householdId = $gethouseholdidresult->fetch_object()->id;
-
-            //Update MEMBER
-            $insertmemberquery = "INSERT INTO members (id, household_id, user_id, role, pantry_access, shopping_access) VALUES (NULL, $householdId, $userId, 'member', 'edit', 'edit')";
-            $mysqli->query($insertmemberquery);
-            // Update household status
-            $updatehouseholdflag = "UPDATE users SET household = 1 WHERE id = $userId";
-            $mysqli->query($updatehouseholdflag);
-
-            echo json_encode(["success" => true]);
+            
             break;
 
         default:

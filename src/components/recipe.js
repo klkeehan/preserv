@@ -17,9 +17,9 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     const [ingredients, setIngredients] = useState([
         { name:'', quantity: '', measurement: ''}
     ]);
+    const [shoppingList, setShoppingList] = useState('');
     const [instructions, setInstructions] = useState('');
     const [image, setImage] = useState('');
-    //const [recipeId, setRecipeId] = useState(''); not needed
 
     const addIngredientRow = () => {
         setIngredients([...ingredients, { name:'', quantity: '', measurement: ''}])
@@ -28,8 +28,40 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
         setIngredients(ingredients.map((ingredient, i) =>
         i === index ? { ...ingredient, [field]: value } : ingredient));
     };
-    //const handleImageUpload = async () => {};
 
+//handling image uploads
+    const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            // Resizing the uploaded so that we handle lighter data, hopefully decreasing load times and saving storage space.
+            //creating new image object
+            const img = new Image();
+            //setting source to reader.results which is the base64 string of the uploaded image
+            img.src = reader.result;
+            //on load this function proceeds to resize and format the image
+            img.onload = () => {
+                //seeting maximum dimension to 300px
+                const MAX = 300;
+                //using Math.min to find the largest ration for given image that fits the MAX dimension and keeps the original image aspect ratio intact preventing distortion
+                const scale = Math.min(MAX / img.width, MAX / img.height);
+                //making a canvas element to 'draw' the image onto it at new calculated dimensions
+                const canvas = document.createElement('canvas');
+                //setting canvas dimentsions to the calculated ratio
+                canvas.width = img.width * scale;
+                canvas.height = img.height * scale;
+                //accordinng to online tutorials this gets the 2d drawing context (whatever that means...)
+                const ctx = canvas.getContext('2d');
+                //drwaing the uploaded image onto the canvas, resizing the image
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                //exporting our beautiful new art which thank god is easier to handle than anything that is respectfully ok sized but too big for UCF student servers...
+                setImage(canvas.toDataURL('image/jpeg', 0.7));
+            };
+        };
+    };
+
+//adding new recipes
     const handleNewRecipe = async () => {
         try {
             const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/recipes.php', {
@@ -44,8 +76,8 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
         } catch (error) {
             console.error('Error creating recipe:', error);
         }
-    }
-
+    };
+//delete function for the recipes
     const handleDeleteRecipe = async () => {
         try {
             const response = await axios.delete('https://students.gaim.ucf.edu/~ka822136/preserv/backend/recipes.php', {
@@ -57,8 +89,8 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
         } catch (error) {
             console.error('Error deleting recipe:', error);
         }
-    }
-
+    };
+//function for updating recipes after edit
     const handleEditRecipe = async () => {
         try {
             const response = await axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/recipes.php', {
@@ -74,8 +106,35 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
         } catch (error) {
             console.error('Error editing recipe:', error);
         }
-    }
+    };
 
+//function for adding missing ingredients to the shopping list
+    const addMissingIngredients = async () => {
+        const missingIngredients = selectedRecipe.ingredients.split(',').filter(item => {
+            const [name] = item.split('|');
+            return Array.isArray(pantry) && !pantry.some(pantryItem => name.toLowerCase().includes(pantryItem.name.toLowerCase())
+        );
+        });
+
+        try {
+
+            for (const item of missingIngredients) {
+                const [name, quantity, measurement] = item.split('|');
+                const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/shopping.php', {
+                    name: name,
+                    quantity:measurement === 'none' ? quantity : 1,
+
+            });
+                console.log(response.data);
+            setShoppingList(response.data);
+            }
+
+        } catch (error) {
+                console.error('Error adding missing ingredients:', error);
+        }
+    };
+
+//Getting recipes from the database
     useEffect(() => {
         const fetchRecipes = async () => {
             try {
@@ -87,7 +146,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
         fetchRecipes();
         }, []);
 
-
+//Getting pantry items for the availability check
   useEffect(() => {
     const pantryStuff = async () => {
       try {
@@ -141,14 +200,14 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
         </div>
     );
 
-    //individual recipe page, create a class name to style, use popup class for styling that. Delete button works BUT THE SHOPPING LIST ADDING IS NOT, NEED TO TWEAK THE SHOPPING LIST TO GET IT WORKING
+    //individual recipe page, create a class name to style, use popup class for styling that. Delete button works BUT THE SHOPPING LIST ADDING IS NOT, NEED TO TWEAK THE SHOPPING LIST TO GET IT WORKING - JK it works now tee hee
     const recipePage = selectedRecipe && (
         <div>
         <div className='item-page'>
             <div className='recipe-header'>
                 <p className='recipe-name'>{selectedRecipe.name}</p>
                 <div className='recipe-buttons'>
-                    <Popup contentStyle={{width:'273px'}} trigger={<button className='item-button'><svg width="100%" height="auto" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <Popup onOpen={addMissingIngredients} contentStyle={{width:'273px'}} trigger={<button className='item-button' ><svg width="100%" height="auto" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M59.5969 34.7223L64.9315 10.7536C65.3167 9.02297 64.0285 7.375 62.2906 7.375H17.9662L16.9318 2.21135C16.6741 0.924295 15.565 0 14.2784 0H2.70833C1.21254 0 0 1.23819 0 2.76562V4.60938C0 6.13681 1.21254 7.375 2.70833 7.375H10.5944L18.5217 46.9505C16.6252 48.0643 15.3472 50.1525 15.3472 52.5469C15.3472 56.1108 18.1765 59 21.6667 59C25.1568 59 27.9861 56.1108 27.9861 52.5469C27.9861 50.7407 27.2586 49.1089 26.0876 47.9375H49.7457C48.5748 49.1089 47.8472 50.7407 47.8472 52.5469C47.8472 56.1108 50.6765 59 54.1667 59C57.6568 59 60.4861 56.1108 60.4861 52.5469C60.4861 49.9919 59.0317 47.784 56.9225 46.7385L57.5451 43.9411C57.9302 42.2105 56.6421 40.5625 54.9041 40.5625H24.6139L23.8753 36.875H56.9559C58.2205 36.875 59.3167 35.9815 59.5969 34.7223Z" fill="var(--white)"/>
                         </svg></button>} modal nested>
                             {close => {
@@ -285,7 +344,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 <label className='label2'>Instructions:<br></br><textarea value={instructions} onChange={(e) => setInstructions(e.target.value)}></textarea></label>< br/>
                 <p className='label2'>Image:</p>
                 <div className='image-opts'>
-                    <input type='file' id='file' className='upload'></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
+                    <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload' onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
                     <button className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
                 </div>
                 <button onClick={handleEditRecipe} className='save-button'>Save Recipe</button>
@@ -370,7 +429,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
             <label className='label2'>Instructions:<textarea value={instructions} onChange={(e) => setInstructions(e.target.value)}></textarea></label>< br/>
             <p className='label2'>Image:</p>
                 <div className='image-opts'>
-                    <input type='file' id='file' className='upload'></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
+                    <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload'onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
                     <button className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
                 </div>
             <button onClick={handleNewRecipe} className='save-button'>Save Recipe</button>
