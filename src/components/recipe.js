@@ -20,11 +20,31 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     const [shoppingList, setShoppingList] = useState('');
     const [instructions, setInstructions] = useState('');
     const [image, setImage] = useState('');
+    const [ingredientError, setIngredientError] = useState('');
 
     const addIngredientRow = () => {
         setIngredients([...ingredients, { name:'', quantity: '', measurement: ''}])
     };
+
+    //RegEx for preventing inputs that will break formatting in the database. Leaving most of formatting very lenient for the sake of freedom to name recipes with own unique names.
     const updateIngredientRow = (index, field, value) => {
+        setIngredientError('');
+        switch (field){
+            case 'name':
+                if (/[|,]/.test(value)){
+                    setIngredientError('Please avoid using "|" or "," in ingredient names');
+                    return;
+            } break;
+            case 'quantity':
+                if (value<0){
+                    setIngredientError('Please enter a valid quantity');
+                    return;
+                }break;
+            case 'measurement':
+                break;
+            default:
+        }
+        setIngredientError('');
         setIngredients(ingredients.map((ingredient, i) =>
         i === index ? { ...ingredient, [field]: value } : ingredient));
     };
@@ -257,7 +277,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                     <ul className='body-text'>{selectedRecipe.ingredients.split(',').map((item,index) => {
                         const [name, quantity, measurement] = item.split('|');
                         return (
-                            <li key={index}>{quantity} {measurement} {name}
+                            <li key={index}>{quantity} {measurement !== 'none' ? measurement : ''} {name}
                                 {Array.isArray(pantry) && !pantry.some(pantryItem => name.toLowerCase().includes(pantryItem.name.toLowerCase()) ) && (<div className='missing-icon'></div>)}
                             </li>
                         );
@@ -280,6 +300,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 <label className='label2'>Recipe Name:<br></br><input type="text" value={recipeName} onChange={(e) => setRecipeName(e.target.value)} className='item-input'/></label><br></br>
                 {ingredients.map((ingredient,index) => (
                 <div key={index}>
+                    {ingredientError && <p className='error-text'>{ingredientError}</p>}
                     <input className='label2' value={ingredient.name} onChange={(e) => updateIngredientRow(index, 'name', e.target.value)} />
                     <input className='label2' type='number' value={ingredient.quantity} onChange={(e) => updateIngredientRow(index, 'quantity',e.target.value)} />
                     <select value={ingredient.measurement} onChange={(e) => updateIngredientRow(index, 'measurement', e.target.value)}>
@@ -345,7 +366,8 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 <p className='label2'>Image:</p>
                 <div className='image-opts'>
                     <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload' onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
-                    <button className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
+                    <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'onChange={handleImageUpload}></input>
+                    <button className='image-input' onClick={() => document.getElementById('camera-capture').click()}><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
                 </div>
                 <button onClick={handleEditRecipe} className='save-button'>Save Recipe</button>
             </div>
@@ -365,6 +387,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
             {/*<label className='label2'>Ingredients:<textarea></textarea></label>*/}
             {ingredients.map((ingredient,index) => (
                 <div key={index}>
+                    {ingredientError && <p className='error-text'>{ingredientError}</p>}
                     <input className='label2' value={ingredient.name} onChange={(e) => updateIngredientRow(index, 'name', e.target.value)} />
                     <input className='label2' type='number' value={ingredient.quantity} onChange={(e) => updateIngredientRow(index, 'quantity',e.target.value)} />
                     <select value={ingredient.measurement} onChange={(e) => updateIngredientRow(index, 'measurement', e.target.value)}>
@@ -430,7 +453,8 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
             <p className='label2'>Image:</p>
                 <div className='image-opts'>
                     <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload'onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
-                    <button className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
+                    <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'onChange={handleImageUpload}></input>
+                    <button className='image-input' onClick={() => document.getElementById('camera-capture').click()}><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
                 </div>
             <button onClick={handleNewRecipe} className='save-button'>Save Recipe</button>
             </div>
