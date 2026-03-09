@@ -53,7 +53,7 @@ function App() {
       const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/signup.php', formValues);
       console.log(response);
       loadPantry();
-    }
+    };
   };
 
   const handleLogin = async (e) => {
@@ -70,7 +70,7 @@ function App() {
       const loginTxt = document.querySelector('#loginMsg');
       loginTxt.textContent = 'Enter a valid username and password'
     } else {
-      loadPantry();
+      loadShopping();
     }
   };
 

@@ -1,6 +1,6 @@
 import '../App.css';
 import Item from './item';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Grid from './grid';
 import x from '../assets/close.svg';
 import camera from '../assets/camera-icon.svg';
@@ -8,16 +8,14 @@ import upload from '../assets/upload-icon.svg';
 import add from '../assets/add-icon.png';
 import Scanner from './scanner';
 import axios from 'axios';
+import Webcam from 'react-webcam';
 
 const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
-  const [upc, setUpc] = useState();
-  const [name, setName] = useState();
-  const [image, setImage] = useState();
-
-  useEffect(() => {
-    console.log(name);
-    console.log(image);
-  }, [name, image]);
+  const [upc, setUpc] = useState('');
+  let name = '';
+  let apiImg = '';
+  let url = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj6N3xujVuKKBIgPSRUo6-z8WO8wImdjl2rQ&s';
+  let flag = 0;
 
   const handleItem = (item) => {
     if (item.item_status == 1) {
@@ -34,10 +32,53 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
       setContent(
         <Item itemID={item.id} itemImg={item.image} itemStatus={item.item_status} itemString={'FRESH'} itemName={item.name} itemQuantity={item.quantity} itemPurch={item.date_purchase} itemExp={item.date_expire} itemCat={item.category} handlePantry={() => setContent(pantryHome)}/>
       );
-    }
+    };
   };
 
+  // uploading item picture
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      const img = new Image();
+      img.src = reader.result;
+      img.onload = () => {
+        const MAX = 300;
+        const scale = Math.min(MAX / img.width, MAX / img.height);
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        url = canvas.toDataURL('image/jpeg', 0.7);
+      };
+    };
+  };
+
+  // taking item picture **taking image clears form data - needs to be fixed**
+  const handleExit = () => {
+    console.log('camera closed');
+  };
+
+  const constraints = {
+    width: 1280,
+    height: 720,
+    facingMode: 'environment'
+  };
+
+  const webcamRef = React.useRef(null);
+
+  const handleCapture = React.useCallback(() => {
+    flag = 1;
+    const imageSrc = webcamRef.current.getScreenshot();
+    url = imageSrc;
+    console.log(url);
+  }, [webcamRef]);
+
   const handleAdd = async (e) => {
+    let validFlag = 0;
+
     e.preventDefault();
     const formData = new FormData(e.target);
     const formValues = {
@@ -45,41 +86,62 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
       quantity: formData.get('quantity'),
       date_purchase: formData.get('date_purchase'),
       date_expire: formData.get('date_expire'),
-      image: formData.get('image'),
+      image: url,
       category: formData.get('category')
     };
 
     //regex form validation
     const dateReg = /^\d{4}-\d{2}-\d{2}$/;
     const pDateFlag = dateReg.test(formValues.date_purchase);
+    if (pDateFlag) {validFlag++} else {
+      const pMsgTxt = document.querySelector('#pDateMsg');
+      pMsgTxt.textContent = 'Enter a date in the format YYYY-MM-DD';
+    };
     const eDateFlag = dateReg.test(formValues.date_expire);
-    console.log(formValues.date_purchase, 'passed result', pDateFlag, formValues.date_expire, 'passed result', eDateFlag);
+    if (eDateFlag) {validFlag++} else {
+      const eMsgTxt = document.querySelector('#eDateMsg');
+      eMsgTxt.textContent = 'Enter a date in the format YYYY-MM-DD';
+    };
 
-    const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', formValues);
-    console.log(response);
+    if (validFlag === 2) {
+      const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', formValues);
+      setContent(pantryHome);
+    };
   };
 
   const handleScan = async () => {
-    const testCode = '312546622135';
-    setUpc(testCode);
     const scanTxt = document.querySelector('#scanMsg');
-    if(!testCode) {
+    if(!upc) {
       scanTxt.textContent = 'There was an error scanning the barcode. Please try again.';
       return;
     };
 
-    const response = await fetch(`https://api.barcodespider.com/v1/lookup?token=370c849d8af257375d9b&upc=${testCode}`, {
+    const response = await fetch(`https://api.barcodespider.com/v1/lookup?token=370c849d8af257375d9b&upc=${upc}`, {
       method: 'GET',
       mode: 'cors'
     });
     const data = await response.json();
     const title = data.item_attributes.title;
     const image2 = data.item_attributes.image;
-    setName(title);
-    setImage(image2);
+    name = title;
+    apiImg = image2;
     setContent(scanForm);
     return data;
   };
+
+  let cameraPage = (
+    <div>
+      <button onClick={handleExit} className='green-button'>x</button>
+      <Webcam
+        width={1280}
+        height={720}
+        ref={webcamRef}
+        screenshotFormat="image/jpeg"
+        videoConstraints={constraints}      
+      />
+      <button onClick={handleCapture} className='green-button'>capture</button>
+    </div>
+  )
 
   let pantryHome = (
     <div className='layout'>
@@ -106,6 +168,17 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
 
   let pantryAdd = (
     <div>
+      <div className={flag === '0' ? 'cam' : 'hidden-div'}>
+        <button onClick={handleExit} className='green-button'>x</button>
+        <Webcam
+          width={1280}
+          height={720}
+          ref={webcamRef}
+          screenshotFormat="image/jpeg"
+          videoConstraints={constraints}      
+        />
+        <button onClick={handleCapture} className='green-button'>capture</button>
+      </div>
       <div className='item-page'>
         <h2>Pantry Add</h2>
         <div className='mode-bar'>
@@ -132,7 +205,9 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
         <form onSubmit={handleAdd}>
           <label className='label2'>Item Name: <br></br><input name='name' type='text' className='item-input' /></label><br></br>
           <label className='label2'>Amount: <br></br><input name='quantity' type='number' defaultValue='1' min='1' className='item-input' style={{width:'80px'}}/></label><br></br>
+          <p id='pDateMsg' className='err-txt' style={{marginLeft:'0px', marginTop:'0px'}}></p>
           <label className='label2'>Date Purchased: <br></br><input name='date_purchase' type='text' className='item-input' /></label><br></br>
+          <p id='eDateMsg' className='err-txt' style={{marginLeft:'0px', marginTop:'0px'}}></p>
           <label className='label2'>Expiration Date: <br></br><input name='date_expire' type='text' className='item-input' /></label><br></br>
           <label className='label2'>Item Type: <br></br><select name='category'>
             <option value='produce'>Produce</option>
@@ -148,8 +223,8 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
           </select></label><br></br><br></br>
           <p className='label2'>Image:</p>
           <div className='image-opts'>
-            <input name='image' type='file' id='file' accept='.jpg, .jpeg, .png' className='upload'></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
-            <button className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
+              <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload' onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
+              <button onClick={handleCapture} className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
           </div>
           <button type='submit' className='save-button'>submit</button>
         </form>
@@ -191,10 +266,12 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     <div className='item-page'>
       <h1 style={{marginLeft:'0px'}}>Item Add</h1>
       <div className='spacer' style={{height:'130px'}}></div>
-      <form>
+      <form onSubmit={handleAdd}>
         <label className='label2'>Item Name: <br></br><input name='name' type='text' defaultValue={name} className='item-input'>{name}</input></label><br></br>
         <label className='label2'>Amount: <br></br><input name='quantity' type='number' defaultValue='1' min='1' className='item-input' style={{width:'80px'}}/></label><br></br>
+        <p id='pDateMsg' className='err-txt' style={{marginLeft:'0px', marginTop:'0px'}}></p>        
         <label className='label2'>Date Purchased: <br></br><input name='date_purchase' type='text' className='item-input' /></label><br></br>
+        <p id='eDateMsg' className='err-txt' style={{marginLeft:'0px', marginTop:'0px'}}></p>
         <label className='label2'>Expiration Date: <br></br><input name='date_expire' type='text' className='item-input' /></label><br></br>
         <label className='label2'>Item Type: <br></br><select name='category'>
           <option value='produce'>Produce</option>
@@ -209,8 +286,8 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
           <option value='other'>Other</option>
         </select></label><br></br><br></br>
         <p className='label2'>Image:</p>
-        <img className='edit-image' src={image} alt='scanned item'></img>
-        <button onClick={() => setContent(pantryHome)} className='save-button'>submit</button>
+        <img className='edit-image' src={apiImg} alt='scanned item'></img>
+        <button type='submit' className='save-button'>submit</button>
       </form>
     </div>
   );

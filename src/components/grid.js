@@ -19,7 +19,7 @@ const Grid = ({handleItem}) => {
       } catch (error) {console.error('Error fetching items:', error);}
     };
     fetchItems();
-  }, [items]);
+  });
 
   //search bar functionality
   const [search, setSearch] = useState('');

@@ -46,6 +46,12 @@
   flex-direction: column;
 }
 
+.cam {
+  height: 70%;
+  background-color: var(--white);
+  z-index: 10;
+}
+
 .cam video {
   width: 100%;
 }
@@ -614,6 +620,10 @@ textarea {
   padding-left: 15px;
   padding-right: 15px;
   height: 45px;
+}
+
+.hidden-div {
+  visibility: hidden;
 }
 
 /*text status styles*/

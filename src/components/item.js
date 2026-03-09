@@ -1,5 +1,5 @@
 import '../App.css';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import x from '../assets/close.svg';
@@ -7,35 +7,13 @@ import camera from '../assets/camera-icon.svg';
 import upload from '../assets/upload-icon.svg';
 import arrow from '../assets/arrow.svg';
 import axios from 'axios';
-import WebCam from './webcam';
+import Webcam from "react-webcam";
 
 const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, itemPurch, itemExp, itemCat, handlePantry}) => {
-  const [image, setImage] = useState('');
-  
-  const handleEdit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const formValues = {
-      id: itemID,
-      name: formData.get('name'),
-      quantity: formData.get('quantity'),
-      date_purchase: formData.get('date_purchase'),
-      date_expire: formData.get('date_expire'),
-      image: formData.get('image'),
-      category: formData.get('category')
-    };
+  let url = itemImg;
+  let flag = 0; // 0 means cam not active, 1 cam is active
 
-    //regex form validation
-    const dateReg = /^\d{4}-\d{2}-\d{2}$/;
-    const pDateFlag = dateReg.test(formValues.date_purchase);
-    const eDateFlag = dateReg.test(formValues.date_expire);
-    console.log(formValues.date_purchase, 'passed result', pDateFlag, formValues.date_expire, 'passed result', eDateFlag);
-
-    const response = await axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', formValues);
-    console.log(response);
-    handlePantry();
-  };
-
+  // uploading item picture
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -51,8 +29,66 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
         canvas.height = img.height * scale;
         const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        setImage(canvas.toDataURL('image/jpeg', 0.7));
+        url = canvas.toDataURL('image/jpeg', 0.7);
       };
+    };
+  };
+
+  // taking item picture
+  const handleExit = () => {
+    flag = 0;
+    console.log('camera closed');
+  };
+
+  const constraints = {
+    width: 1280,
+    height: 720,
+    facingMode: 'environment'
+  };
+
+  const webcamRef = React.useRef(null);
+
+  const handleCapture = React.useCallback(() => {
+    flag = 1;
+    const imageSrc = webcamRef.current.getScreenshot();
+    url = imageSrc;
+    console.log(url);
+  }, [webcamRef]);
+
+
+  // item editing through form
+  const handleEdit = async (e) => {
+    let validFlag = 0;
+
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const formValues = {
+      id: itemID,
+      name: formData.get('name'),
+      quantity: formData.get('quantity'),
+      date_purchase: formData.get('date_purchase'),
+      date_expire: formData.get('date_expire'),
+      image: url,
+      category: formData.get('category')
+    };
+
+    //regex form validation
+    const dateReg = /^\d{4}-\d{2}-\d{2}$/;
+    const pDateFlag = dateReg.test(formValues.date_purchase);
+    if (pDateFlag) {validFlag++} else {
+      const pMsgTxt = document.querySelector('#pDateMsg');
+      pMsgTxt.textContent = 'Enter a date in the format YYYY-MM-DD';
+    };
+    const eDateFlag = dateReg.test(formValues.date_expire);
+    if (eDateFlag) {validFlag++} else {
+      const eMsgTxt = document.querySelector('#eDateMsg');
+      eMsgTxt.textContent = 'Enter a date in the format YYYY-MM-DD';
+    };
+
+    if (validFlag === 2) {
+      const response = await axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', formValues);
+      console.log(response);
+      handlePantry();
     };
   };
 
@@ -64,22 +100,17 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
     handlePantry();
   };
   
-  //needs php
+  // add pantry item to shopping list with inserted quantity
   const handleQuant = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const formValues = {
       name: formData.get('name'),
-      quant: formData.get('add-quant')
+      quantity: formData.get('add-quant')
     };
 
-    const response = await axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/shopping.php', formValues);
+    const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/shopping.php', formValues);
     console.log(response);
-  };
-
-  function handleExit() {
-    setContent(itemEdit);
-    console.log('camera closed');
   };
 
   let item = (
@@ -92,34 +123,33 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
             <Popup contentStyle={{width:'273px'}} trigger={<button className='item-button'>Trash</button>}modal nested>
               {close => (
                 <div className='modal'>
-                    <div className='content'>
-                      <form onSubmit={handleDelete}>
-                        <input name='id' type='number' defaultValue={itemID} style={{visibility: 'hidden'}}></input>
-                        <p className='popup-text'>Are you sure you want to trash this item?</p>
-                        <button type='submit' className='green-button'>Confirm</button>
-                      </form>
-                    </div>
+                  <div className='content'>
+                    <form onSubmit={handleDelete}>
+                      <input name='id' type='number' defaultValue={itemID} style={{visibility: 'hidden'}}></input>
+                      <p className='popup-text'>Are you sure you want to trash this item?</p>
+                      <button type='submit' className='green-button'>Confirm</button>
+                    </form>
+                  </div>
                 </div>
               )}
             </Popup>
-            <Popup contentStyle={{width:'273px'}} trigger={<button className='item-button'><svg width="100%" height="auto" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <Popup contentStyle={{width:'273px', height:'300px'}} trigger={<button className='item-button'><svg width="100%" height="auto" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M59.5969 34.7223L64.9315 10.7536C65.3167 9.02297 64.0285 7.375 62.2906 7.375H17.9662L16.9318 2.21135C16.6741 0.924295 15.565 0 14.2784 0H2.70833C1.21254 0 0 1.23819 0 2.76562V4.60938C0 6.13681 1.21254 7.375 2.70833 7.375H10.5944L18.5217 46.9505C16.6252 48.0643 15.3472 50.1525 15.3472 52.5469C15.3472 56.1108 18.1765 59 21.6667 59C25.1568 59 27.9861 56.1108 27.9861 52.5469C27.9861 50.7407 27.2586 49.1089 26.0876 47.9375H49.7457C48.5748 49.1089 47.8472 50.7407 47.8472 52.5469C47.8472 56.1108 50.6765 59 54.1667 59C57.6568 59 60.4861 56.1108 60.4861 52.5469C60.4861 49.9919 59.0317 47.784 56.9225 46.7385L57.5451 43.9411C57.9302 42.2105 56.6421 40.5625 54.9041 40.5625H24.6139L23.8753 36.875H56.9559C58.2205 36.875 59.3167 35.9815 59.5969 34.7223Z" fill="var(--white)"/>
               </svg></button>}
               modal nested>
               {close => (
                 <div className='modal'>
-                  <form onSubmit={handleQuant}>
                   <div className='content'>
-                    <p className='popup-text2'>What quantity would you like to add?</p>
-                    <input name='name' defaultValue={itemName}></input>
-                    <label className='popup-label'>Amount: <input name='add-quant' className='item-input' type='number' min={0} style={{width:'80px'}}/></label>
+                    <form onSubmit={handleQuant}>
+                      <button className='green-button' onClick={() => close()} style={{position:'absolute', right:'0', marginTop:'20px', marginRight:'20px', height:'30px', paddingTop:'2px'}}>x</button><br></br>
+                      <p className='popup-text2' style={{width:'180px'}}>What quantity would you like to add?</p>
+                      <input name='name' defaultValue={itemName} style={{visibility:'hidden'}}></input>
+                      <label className='label2' style={{display:'flex', width:'fit-content', alignItems:'center', marginLeft:'50px'}}>Amount:<input name='add-quant' type='number' className='item-input' style={{width:'80px', marginLeft:'10px'}}/></label><br></br>
+                      <button type='submit' className='green-button'>Confirm</button>
+                    </form>
                   </div>
-                  <div>
-                    <button onClick={() => {close()}} className='green-button'>Confirm</button>
-                  </div>
-                  </form>
                 </div>
-                )}
+              )}
               </Popup>
             </aside>
           </div>
@@ -189,13 +219,26 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
 
   let itemEdit = (
     <div>
+      <div className={flag === '0' ? 'cam' : 'hidden-div'}>
+        <button onClick={handleExit} className='green-button'>x</button>
+        <Webcam
+          width={1280}
+          height={720}
+          ref={webcamRef}
+          screenshotFormat="image/jpeg"
+          videoConstraints={constraints}      
+        />
+        <button onClick={handleCapture} className='green-button'>capture</button>
+      </div>
       <div className='item-page'>
         <h2>Pantry Edit</h2>
           <div className='spacer' style={{height:'120px'}}></div>
           <form onSubmit={handleEdit}>
             <label className='label2'>Item Name: <br></br><input name='name' type='text' defaultValue={itemName} className='item-input'/></label><br></br>
             <label className='label2'>Amount: <br></br><input name='quantity' type='number' defaultValue={itemQuantity} min='1' className='item-input' style={{width:'80px'}}/></label><br></br>
+            <p id='pDateMsg' className='err-txt' style={{marginLeft:'0px', marginTop:'0px'}}></p>
             <label className='label2'>Date Purchased: <br></br><input name='date_purchase' type='text' defaultValue={itemPurch} className='item-input'/></label><br></br>
+            <p id='eDateMsg' className='err-txt' style={{marginLeft:'0px', marginTop:'0px'}}></p>
             <label className='label2'>Expiration Date: <br></br><input name='date_expire' type='text' defaultValue={itemExp} className='item-input'/></label><br></br>
             <label className='label2'>Item Type: <br></br><select name='category'>
               <option value='produce'>Produce</option>
@@ -212,8 +255,8 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
             <p className='label2'>Image:</p>
             <img className='edit-image' src={itemImg} alt={itemName}></img><br></br>
             <div className='image-opts'>
-              <input name='image' type='file' id='file' accept='.jpg, .jpeg, .png' className='upload'></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
-              <button className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
+              <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload' onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
+              <button onClick={handleCapture} className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
             </div>
             <button type='submit' className='save-button'>Save Item</button>
           </form>
