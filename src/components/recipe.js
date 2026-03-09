@@ -20,11 +20,31 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     const [shoppingList, setShoppingList] = useState('');
     const [instructions, setInstructions] = useState('');
     const [image, setImage] = useState('');
-
+    const [ingredientError, setIngredientError] = useState('');
+//set up for handling the troublesome and evil ingredients
     const addIngredientRow = () => {
         setIngredients([...ingredients, { name:'', quantity: '', measurement: ''}])
     };
+
+    //RegEx for preventing inputs that will break formatting in the database. Leaving most of formatting very lenient for the sake of freedom to name recipes with own unique names.
     const updateIngredientRow = (index, field, value) => {
+        setIngredientError('');
+        switch (field){
+            case 'name':
+                if (/[|,]/.test(value)){
+                    setIngredientError('Please avoid using "|" or "," in ingredient names');
+                    return;
+            } break;
+            case 'quantity':
+                if (value<0){
+                    setIngredientError('Please enter a valid quantity');
+                    return;
+                }break;
+            case 'measurement':
+                break;
+            default:
+        }
+        setIngredientError('');
         setIngredients(ingredients.map((ingredient, i) =>
         i === index ? { ...ingredient, [field]: value } : ingredient));
     };
@@ -170,7 +190,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                             getSelectedRecipe(recipe);
                             getPage("view");
                         }}>
-                        <img className="recipes-image" src={recipe.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyPAQI7ZV9F-8WpetBg1lqDotT7YsN-2Jz8Q&s'} alt={recipe.name} />
+                        <img className="recipes-image" src={recipe.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj6N3xujVuKKBIgPSRUo6-z8WO8wImdjl2rQ&s'} alt={recipe.name} />
                         <p className='recipes-overlay'>{recipe.name}</p>
                         </button>
                     </div>
@@ -213,7 +233,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                             {close => {
                                 setTimeout(() => {
                                     close();
-                                }, 2000); // closes after 2 seconds
+                                }, 1500); // closes after 1.5 seconds
 
                                 return (
                                     <div className='modal'>
@@ -234,7 +254,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                         }));
                         getPage("edit");
                         }} style={{marginLeft:'10px'}}>Edit</button>
-                    <Popup  trigger={<button className="item-button"><p>Delete Recipe</p></button>}modal nested>
+                    <Popup  trigger={<button className="item-button">Delete Recipe</button>}modal nested>
                                             {close => (
                                                 <div className='modal'>
                                                     <div className='content'>
@@ -249,15 +269,17 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                                         </Popup>
                 </div>
             </div>
+
             <div className='recipe-block'>
-                <img className="recipes-image2" src={selectedRecipe.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyPAQI7ZV9F-8WpetBg1lqDotT7YsN-2Jz8Q&s'} alt={selectedRecipe.name} />
+
+                <img className="recipes-image2" src={selectedRecipe.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj6N3xujVuKKBIgPSRUo6-z8WO8wImdjl2rQ&s'} alt={selectedRecipe.name} />
                 <div className='ing-list'>
                     <h4 style={{textIndent:'40px'}}>Ingredients</h4>
                     {/*This generates a list of ingredients based on the JSON data, adds a Missing text when it gets a 0 from the availablity section in the JSON file per each item-Not anymore, now it check if any of the ingredients in the pantry show up in each instance of ingredient*/}
                     <ul className='body-text'>{selectedRecipe.ingredients.split(',').map((item,index) => {
                         const [name, quantity, measurement] = item.split('|');
                         return (
-                            <li key={index}>{quantity} {measurement} {name}
+                            <li key={index}>{quantity} {measurement !== 'none' ? measurement : ''} {name}
                                 {Array.isArray(pantry) && !pantry.some(pantryItem => name.toLowerCase().includes(pantryItem.name.toLowerCase()) ) && (<div className='missing-icon'></div>)}
                             </li>
                         );
@@ -280,8 +302,12 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 <label className='label2'>Recipe Name:<br></br><input type="text" value={recipeName} onChange={(e) => setRecipeName(e.target.value)} className='item-input'/></label><br></br>
                 {ingredients.map((ingredient,index) => (
                 <div key={index}>
-                    <input className='label2' value={ingredient.name} onChange={(e) => updateIngredientRow(index, 'name', e.target.value)} />
-                    <input className='label2' type='number' value={ingredient.quantity} onChange={(e) => updateIngredientRow(index, 'quantity',e.target.value)} />
+                    {ingredientError && <p className='err-txt'>{ingredientError}</p>}
+
+                    <label className='label2'>Ingredients:</label>
+                    < br/>
+                    <input className='item-input' value={ingredient.name} onChange={(e) => updateIngredientRow(index, 'name', e.target.value)} />
+                    <input className='item-input' type='number' value={ingredient.quantity} onChange={(e) => updateIngredientRow(index, 'quantity',e.target.value)} />
                     <select value={ingredient.measurement} onChange={(e) => updateIngredientRow(index, 'measurement', e.target.value)}>
                         <option value='none'>none</option>
                         {/*<!-- Volume -->*/}
@@ -339,13 +365,14 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                     </select>
                 </div>
             ))}
-            <button onClick={addIngredientRow}>Add Ingredient</button>
+            <button className='ingredient-button' onClick={addIngredientRow}>Add Ingredient</button>
             < br/>
                 <label className='label2'>Instructions:<br></br><textarea value={instructions} onChange={(e) => setInstructions(e.target.value)}></textarea></label>< br/>
                 <p className='label2'>Image:</p>
                 <div className='image-opts'>
                     <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload' onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
-                    <button className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
+                    <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'onChange={handleImageUpload}></input>
+                    <button className='image-input' onClick={() => document.getElementById('camera-capture').click()}><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
                 </div>
                 <button onClick={handleEditRecipe} className='save-button'>Save Recipe</button>
             </div>
@@ -365,8 +392,11 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
             {/*<label className='label2'>Ingredients:<textarea></textarea></label>*/}
             {ingredients.map((ingredient,index) => (
                 <div key={index}>
-                    <input className='label2' value={ingredient.name} onChange={(e) => updateIngredientRow(index, 'name', e.target.value)} />
-                    <input className='label2' type='number' value={ingredient.quantity} onChange={(e) => updateIngredientRow(index, 'quantity',e.target.value)} />
+                    {ingredientError && <p className='err-txt'>{ingredientError}</p>}
+                    <label className='label2'>Ingredients:</label>
+                    < br/>
+                    <input className='item-input' value={ingredient.name} onChange={(e) => updateIngredientRow(index, 'name', e.target.value)} />
+                    <input className='item-input' type='number' value={ingredient.quantity} onChange={(e) => updateIngredientRow(index, 'quantity',e.target.value)} />
                     <select value={ingredient.measurement} onChange={(e) => updateIngredientRow(index, 'measurement', e.target.value)}>
                         <option value='none'>none</option>
                         {/*<!-- Volume -->*/}
@@ -424,13 +454,14 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                     </select>
                 </div>
             ))}
-            <button onClick={addIngredientRow}>Add Ingredient</button>
+            <button className='ingredient-button' onClick={addIngredientRow}>Add Ingredient</button>
             < br/>
             <label className='label2'>Instructions:<textarea value={instructions} onChange={(e) => setInstructions(e.target.value)}></textarea></label>< br/>
             <p className='label2'>Image:</p>
                 <div className='image-opts'>
                     <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload'onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
-                    <button className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
+                    <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'onChange={handleImageUpload}></input>
+                    <button className='image-input' onClick={() => document.getElementById('camera-capture').click()}><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
                 </div>
             <button onClick={handleNewRecipe} className='save-button'>Save Recipe</button>
             </div>
