@@ -10,6 +10,8 @@ import axios from 'axios';
 import WebCam from './webcam';
 
 const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, itemPurch, itemExp, itemCat, handlePantry}) => {
+  const [image, setImage] = useState('');
+  
   const handleEdit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -34,14 +36,30 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
     handlePantry();
   };
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      const img = new Image();
+      img.src = reader.result;
+      img.onload = () => {
+        const MAX = 300;
+        const scale = Math.min(MAX / img.width, MAX / img.height);
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        setImage(canvas.toDataURL('image/jpeg', 0.7));
+      };
+    };
+  };
+
   const handleDelete = async (e) => {
     e.preventDefault();
-    const id = itemID;
+    const response = await axios.delete('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', {data: {id: itemID}});
 
-    console.log(id);
-    const url = (`https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php?id`);
-
-    const response = await axios.delete(url);
     console.log(response);
     handlePantry();
   };
@@ -195,7 +213,7 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
             <img className='edit-image' src={itemImg} alt={itemName}></img><br></br>
             <div className='image-opts'>
               <input name='image' type='file' id='file' accept='.jpg, .jpeg, .png' className='upload'></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
-              <button className='image-input' onClick={() => setContent(<WebCam handleExit={handleExit}/>)}><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
+              <button className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
             </div>
             <button type='submit' className='save-button'>Save Item</button>
           </form>

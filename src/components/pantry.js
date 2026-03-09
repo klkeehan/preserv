@@ -148,8 +148,8 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
           </select></label><br></br><br></br>
           <p className='label2'>Image:</p>
           <div className='image-opts'>
-              <input name='image' type='file' id='file' accept='.jpg, .jpeg, .png' className='upload'></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
-              <button className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
+            <input name='image' type='file' id='file' accept='.jpg, .jpeg, .png' className='upload'></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
+            <button className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
           </div>
           <button type='submit' className='save-button'>submit</button>
         </form>
@@ -191,7 +191,7 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     <div className='item-page'>
       <h1 style={{marginLeft:'0px'}}>Item Add</h1>
       <div className='spacer' style={{height:'130px'}}></div>
-      <form onSubmit={handleAdd}>
+      <form>
         <label className='label2'>Item Name: <br></br><input name='name' type='text' defaultValue={name} className='item-input'>{name}</input></label><br></br>
         <label className='label2'>Amount: <br></br><input name='quantity' type='number' defaultValue='1' min='1' className='item-input' style={{width:'80px'}}/></label><br></br>
         <label className='label2'>Date Purchased: <br></br><input name='date_purchase' type='text' className='item-input' /></label><br></br>
@@ -210,7 +210,7 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
         </select></label><br></br><br></br>
         <p className='label2'>Image:</p>
         <img className='edit-image' src={image} alt='scanned item'></img>
-        <button type='submit' className='save-button'>submit</button>
+        <button onClick={() => setContent(pantryHome)} className='save-button'>submit</button>
       </form>
     </div>
   );
