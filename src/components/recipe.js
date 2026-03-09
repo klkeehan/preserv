@@ -21,7 +21,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     const [instructions, setInstructions] = useState('');
     const [image, setImage] = useState('');
     const [ingredientError, setIngredientError] = useState('');
-
+//set up for handling the troublesome and evil ingredients
     const addIngredientRow = () => {
         setIngredients([...ingredients, { name:'', quantity: '', measurement: ''}])
     };
@@ -190,7 +190,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                             getSelectedRecipe(recipe);
                             getPage("view");
                         }}>
-                        <img className="recipes-image" src={recipe.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyPAQI7ZV9F-8WpetBg1lqDotT7YsN-2Jz8Q&s'} alt={recipe.name} />
+                        <img className="recipes-image" src={recipe.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj6N3xujVuKKBIgPSRUo6-z8WO8wImdjl2rQ&s'} alt={recipe.name} />
                         <p className='recipes-overlay'>{recipe.name}</p>
                         </button>
                     </div>
@@ -233,7 +233,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                             {close => {
                                 setTimeout(() => {
                                     close();
-                                }, 2000); // closes after 2 seconds
+                                }, 1500); // closes after 1.5 seconds
 
                                 return (
                                     <div className='modal'>
@@ -254,7 +254,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                         }));
                         getPage("edit");
                         }} style={{marginLeft:'10px'}}>Edit</button>
-                    <Popup  trigger={<button className="item-button"><p>Delete Recipe</p></button>}modal nested>
+                    <Popup  trigger={<button className="item-button">Delete Recipe</button>}modal nested>
                                             {close => (
                                                 <div className='modal'>
                                                     <div className='content'>
@@ -269,8 +269,10 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                                         </Popup>
                 </div>
             </div>
+
             <div className='recipe-block'>
-                <img className="recipes-image2" src={selectedRecipe.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyPAQI7ZV9F-8WpetBg1lqDotT7YsN-2Jz8Q&s'} alt={selectedRecipe.name} />
+
+                <img className="recipes-image2" src={selectedRecipe.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj6N3xujVuKKBIgPSRUo6-z8WO8wImdjl2rQ&s'} alt={selectedRecipe.name} />
                 <div className='ing-list'>
                     <h4 style={{textIndent:'40px'}}>Ingredients</h4>
                     {/*This generates a list of ingredients based on the JSON data, adds a Missing text when it gets a 0 from the availablity section in the JSON file per each item-Not anymore, now it check if any of the ingredients in the pantry show up in each instance of ingredient*/}
