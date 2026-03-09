@@ -58,39 +58,3 @@ function BarcodeScanner({ onDetected }) {
 }
 
 export default BarcodeScanner;
-
-
-
-/*
-import Quagga from '@ericblade/quagga2';
-
-const Scanner = () => {
-  Quagga.init({
-    inputStream: {
-      name: 'Live',
-      type: 'LiveStream',
-      target: document.querySelector('#cam')
-    },
-    decoder: {
-      readers: ['upc_reader']
-    }
-  }, function (err) {
-    if (err) {
-      console.log(err);
-      return;
-    };
-    console.log('Quagga has initialized.');
-    Quagga.start();
-  });
-
-  Quagga.onDetected(function (data) {
-    
-    console.log(data);
-  });
-
-  return (
-    <div id='cam'></div>
-  );
-};
-export default Scanner;
-*/

@@ -1,6 +1,6 @@
 import '../App.css';
 import Item from './item';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Grid from './grid';
 import x from '../assets/close.svg';
 import camera from '../assets/camera-icon.svg';
@@ -10,7 +10,14 @@ import Scanner from './scanner';
 import axios from 'axios';
 
 const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
-  const [upc, setUpc] = useState('');
+  const [upc, setUpc] = useState();
+  const [name, setName] = useState();
+  const [image, setImage] = useState();
+
+  useEffect(() => {
+    console.log(name);
+    console.log(image);
+  }, [name, image]);
 
   const handleItem = (item) => {
     if (item.item_status == 1) {
@@ -50,6 +57,28 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
 
     const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', formValues);
     console.log(response);
+  };
+
+  const handleScan = async () => {
+    const testCode = '312546622135';
+    setUpc(testCode);
+    const scanTxt = document.querySelector('#scanMsg');
+    if(!testCode) {
+      scanTxt.textContent = 'There was an error scanning the barcode. Please try again.';
+      return;
+    };
+
+    const response = await fetch(`https://api.barcodespider.com/v1/lookup?token=370c849d8af257375d9b&upc=${testCode}`, {
+      method: 'GET',
+      mode: 'cors'
+    });
+    const data = await response.json();
+    const title = data.item_attributes.title;
+    const image2 = data.item_attributes.image;
+    setName(title);
+    setImage(image2);
+    setContent(scanForm);
+    return data;
   };
 
   let pantryHome = (
@@ -131,8 +160,8 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
 
   let pantryScan = (
     <div className='item-page'>
-      <h1>Pantry Add</h1>
-      <div className='mode-bar'>
+      <h1 style={{marginLeft:'0px'}}>Pantry Add</h1>
+      <div className='mode-bar' style={{zIndex:'10'}}>
         <button className='mode-button' onClick={() => setContent(pantryAdd)}>Manual Mode</button>
         <button className='mode-button2'><svg width="79" height="60" viewBox="0 0 79 60" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_18_56)">
@@ -153,6 +182,36 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
         </button>
       </div>
       <Scanner onDetected={(code) => setUpc(code)}/>
+      <button onClick={handleScan} className='green-button' style={{position:'absolute', bottom:'0'}}>scan</button>
+      <p id='scanMsg' className='err-txt' style={{position:'absolute', bottom:'0', marginLeft:'70px'}}></p>
+    </div>
+  );
+
+  let scanForm = (
+    <div className='item-page'>
+      <h1 style={{marginLeft:'0px'}}>Item Add</h1>
+      <div className='spacer' style={{height:'130px'}}></div>
+      <form onSubmit={handleAdd}>
+        <label className='label2'>Item Name: <br></br><input name='name' type='text' defaultValue={name} className='item-input'>{name}</input></label><br></br>
+        <label className='label2'>Amount: <br></br><input name='quantity' type='number' defaultValue='1' min='1' className='item-input' style={{width:'80px'}}/></label><br></br>
+        <label className='label2'>Date Purchased: <br></br><input name='date_purchase' type='text' className='item-input' /></label><br></br>
+        <label className='label2'>Expiration Date: <br></br><input name='date_expire' type='text' className='item-input' /></label><br></br>
+        <label className='label2'>Item Type: <br></br><select name='category'>
+          <option value='produce'>Produce</option>
+          <option value='proteins'>Proteins</option>
+          <option value='dairy'>Dairy</option>
+          <option value='grains'>Grains</option>
+          <option value='canned'>Canned</option>
+          <option value='condiments'>Condiments</option>
+          <option value='beverages'>Beverages</option>
+          <option value='frozen'>Frozen</option>
+          <option value='snacks'>Snacks</option>
+          <option value='other'>Other</option>
+        </select></label><br></br><br></br>
+        <p className='label2'>Image:</p>
+        <img className='edit-image' src={image} alt='scanned item'></img>
+        <button type='submit' className='save-button'>submit</button>
+      </form>
     </div>
   );
 
