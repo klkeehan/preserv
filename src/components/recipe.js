@@ -303,8 +303,9 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 {ingredients.map((ingredient,index) => (
                 <div key={index}>
                     {ingredientError && <p className='err-txt'>{ingredientError}</p>}
-                    < br/>
+
                     <label className='label2'>Ingredients:</label>
+                    < br/>
                     <input className='item-input' value={ingredient.name} onChange={(e) => updateIngredientRow(index, 'name', e.target.value)} />
                     <input className='item-input' type='number' value={ingredient.quantity} onChange={(e) => updateIngredientRow(index, 'quantity',e.target.value)} />
                     <select value={ingredient.measurement} onChange={(e) => updateIngredientRow(index, 'measurement', e.target.value)}>
