@@ -302,9 +302,11 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 <label className='label2'>Recipe Name:<br></br><input type="text" value={recipeName} onChange={(e) => setRecipeName(e.target.value)} className='item-input'/></label><br></br>
                 {ingredients.map((ingredient,index) => (
                 <div key={index}>
-                    {ingredientError && <p className='error-text'>{ingredientError}</p>}
-                    <input className='label2' value={ingredient.name} onChange={(e) => updateIngredientRow(index, 'name', e.target.value)} />
-                    <input className='label2' type='number' value={ingredient.quantity} onChange={(e) => updateIngredientRow(index, 'quantity',e.target.value)} />
+                    {ingredientError && <p className='err-txt'>{ingredientError}</p>}
+                    < br/>
+                    <label className='label2'>Ingredients:</label>
+                    <input className='item-input' value={ingredient.name} onChange={(e) => updateIngredientRow(index, 'name', e.target.value)} />
+                    <input className='item-input' type='number' value={ingredient.quantity} onChange={(e) => updateIngredientRow(index, 'quantity',e.target.value)} />
                     <select value={ingredient.measurement} onChange={(e) => updateIngredientRow(index, 'measurement', e.target.value)}>
                         <option value='none'>none</option>
                         {/*<!-- Volume -->*/}
@@ -362,7 +364,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                     </select>
                 </div>
             ))}
-            <button onClick={addIngredientRow}>Add Ingredient</button>
+            <button className='ingredient-button' onClick={addIngredientRow}>Add Ingredient</button>
             < br/>
                 <label className='label2'>Instructions:<br></br><textarea value={instructions} onChange={(e) => setInstructions(e.target.value)}></textarea></label>< br/>
                 <p className='label2'>Image:</p>
@@ -389,9 +391,11 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
             {/*<label className='label2'>Ingredients:<textarea></textarea></label>*/}
             {ingredients.map((ingredient,index) => (
                 <div key={index}>
-                    {ingredientError && <p className='error-text'>{ingredientError}</p>}
-                    <input className='label2' value={ingredient.name} onChange={(e) => updateIngredientRow(index, 'name', e.target.value)} />
-                    <input className='label2' type='number' value={ingredient.quantity} onChange={(e) => updateIngredientRow(index, 'quantity',e.target.value)} />
+                    {ingredientError && <p className='err-txt'>{ingredientError}</p>}
+                    <label className='label2'>Ingredients:</label>
+                    < br/>
+                    <input className='item-input' value={ingredient.name} onChange={(e) => updateIngredientRow(index, 'name', e.target.value)} />
+                    <input className='item-input' type='number' value={ingredient.quantity} onChange={(e) => updateIngredientRow(index, 'quantity',e.target.value)} />
                     <select value={ingredient.measurement} onChange={(e) => updateIngredientRow(index, 'measurement', e.target.value)}>
                         <option value='none'>none</option>
                         {/*<!-- Volume -->*/}
@@ -449,7 +453,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                     </select>
                 </div>
             ))}
-            <button onClick={addIngredientRow}>Add Ingredient</button>
+            <button className='ingredient-button' onClick={addIngredientRow}>Add Ingredient</button>
             < br/>
             <label className='label2'>Instructions:<textarea value={instructions} onChange={(e) => setInstructions(e.target.value)}></textarea></label>< br/>
             <p className='label2'>Image:</p>
