@@ -26,6 +26,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
     let [confirmPassword, setConfirmPassword] = useState('');
     let [passwordError, setPasswordError] = useState('');
     let [showCode, setShowCode] = useState(false);
+    let [image, setImage] = useState('');
     
 
 
@@ -155,6 +156,15 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
             .catch ((error) => {console.error("Join household error:", error);}); 
     }
 
+    function uploadProfilePicture (imagelink) {
+        axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/account.php', { field: 'profile_photo', value: imagelink, isProfilePicture: true })
+            .then((response => {
+                console.log("Profile picture updated:", response.data);
+            }))
+            .catch((error) => {console.error("Profile photo update error:", error);});
+    }
+
+
     //REMOVE MEMBER / LEAVE BACKEND
     function leaveHousehold() {
     /* const formData = new FormData();
@@ -283,6 +293,27 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
             getPage("household");
         }
     }
+      const handleImageUpload = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            const img = new Image();
+            img.src = reader.result;
+            img.onload = () => {
+                const MAX = 300;
+                const scale = Math.min(MAX / img.width, MAX / img.height);
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width * scale;
+                canvas.height = img.height * scale;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                const imagelink = canvas.toDataURL('image/jpeg', 0.7);
+                setImage(imagelink);
+                uploadProfilePicture(imagelink);
+            };
+        };
+    };
 
     //REGULATION X
     const passwordReg = /^(?=.*?[0-9])(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[^0-9A-Za-z]).{4,12}$/;
@@ -296,8 +327,9 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
                 <div className="profile-settings">
                     <h2>{accountData && accountData.first_name}</h2>
                     <p onClick={skiptoHousehold}>Household Settings</p>
-                    <p>Change Profile Picture...</p>
-                    <Popup contentStyle={{width:'273px', height:'240px'}} trigger={<p>Change Password...</p>}modal nested onClose={() => setPasswordError('')}>
+                    <label for='profileUpload' className="change-profile-picture-class">Change Profile Picture...</label>
+                    <input type='file' id='profileUpload' accept='image/jpeg, image/png, image/webp' className = "hide-this-input-please" onChange={handleImageUpload}/>
+                        <Popup contentStyle={{width:'273px', height:'240px'}} trigger={<p>Change Password...</p>}modal nested onClose={() => setPasswordError('')}>
                         {close => (
                             <div className='modal'>
                                 <div className='content' style={{textAlign:'left', marginLeft:'35px'}}>

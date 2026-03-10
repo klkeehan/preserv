@@ -32,17 +32,23 @@
 
         case 'PUT':
             $data = json_decode(file_get_contents('php://input'));
+            //PASSWORD NOTIFS AND PROFILE PIC
+
             $field = $data->field;
             $value = $data->value;
 
             if (isset($data->isPassword) && $data->isPassword === true) {
                 $value = md5($value);
             }
+            if (isset($data->isProfilePicture) && $data->isProfilePicture === true) {
+                $value = mysqli_real_escape_string($mysqli, $value);
+            }
 
             $updatequery = "UPDATE users SET $field = '$value' WHERE id = $userId";
 
             $mysqli->query($updatequery);
             echo json_encode(["success" => true, "message" => "Notifcation updated"]);
+            break;
         
         default:
             break;
