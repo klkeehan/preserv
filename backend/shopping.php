@@ -3,14 +3,13 @@
   include('connect.php');
   if (isset($_SERVER['HTTP_ORIGIN'])) {
     $http_origin = $_SERVER['HTTP_ORIGIN'];
-    if ($http_origin == "http://localhost:3000" || $http_origin == "http://localhost:8080") {
+    if ($http_origin == "http://localhost:3000" || $http_origin == "http://localhost:8080" || $http_origin == "https://preserv-one.vercel.app") {
       header("Access-Control-Allow-Origin: $http_origin");
       header("Access-Control-Allow-Credentials: true");
     } else {
-      header("Access-Control-Allow-Origin: $http_origin");
-      header("Access-Control-Allow-Credentials: true");
+      echo 'something went wrong :(';
     }
-  }
+  };
   header('Access-Control-Allow-Headers: Content-Type');
   header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS');
   header('Content-Type: application/json; charset=UTF-8');

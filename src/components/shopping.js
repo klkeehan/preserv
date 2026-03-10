@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import axios from 'axios';
+axios.defaults.withCredentials = true;
 
 const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
   const [items, setItems] = useState([]);
