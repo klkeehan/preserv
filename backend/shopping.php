@@ -24,8 +24,27 @@
   $method = $_SERVER['REQUEST_METHOD'];
 
   if ($method === 'GET') {
-    $username = $_SESSION['logged_in_user'];
-    $query = "SELECT * FROM shopping WHERE username = '$username'";
+    //Household CHECK
+      $username = $_SESSION['logged_in_user'];
+      $inHousehold = $_SESSION['logged_in_household'];
+      $userId = $_SESSION['logged_in_user_id'];
+       if ($inHousehold == 1) {
+          $householdIdquery = "SELECT household_id FROM members WHERE user_id = $userId";
+          $householdIdresult = $mysqli->query($householdIdquery);
+          $householdId = $householdIdresult->fetch_object()->household_id;
+
+          $ownerquery = "SELECT users.username 
+              FROM members 
+              JOIN users ON members.user_id = users.id 
+              WHERE members.household_id = $householdId 
+              AND members.role = 'owner'";
+          $ownerresult = $mysqli->query($ownerquery);
+          $mainpullUsername = $ownerresult->fetch_object()->username;
+      } else {
+          $mainpullUsername = $username;
+      }
+    //$username = $_SESSION['logged_in_user'];
+    $query = "SELECT * FROM shopping WHERE username = '$mainpullUsername'";
     $result = $mysqli->query($query);
     $rows = array();
     while ($row = $result->fetch_assoc()) {$rows[] = $row;}
@@ -33,12 +52,31 @@
 
   } elseif ($method === 'POST') {
     $shoppingData = json_decode(file_get_contents('php://input'), true);
-    $username = $_SESSION['logged_in_user'];
+    //Household CHECK
+      $username = $_SESSION['logged_in_user'];
+      $inHousehold = $_SESSION['logged_in_household'];
+      $userId = $_SESSION['logged_in_user_id'];
+       if ($inHousehold == 1) {
+          $householdIdquery = "SELECT household_id FROM members WHERE user_id = $userId";
+          $householdIdresult = $mysqli->query($householdIdquery);
+          $householdId = $householdIdresult->fetch_object()->household_id;
+
+          $ownerquery = "SELECT users.username 
+              FROM members 
+              JOIN users ON members.user_id = users.id 
+              WHERE members.household_id = $householdId 
+              AND members.role = 'owner'";
+          $ownerresult = $mysqli->query($ownerquery);
+          $mainpullUsername = $ownerresult->fetch_object()->username;
+      } else {
+          $mainpullUsername = $username;
+      }
+    //$username = $_SESSION['logged_in_user'];
     $name = ($shoppingData['name']);
     $quantity = intval($shoppingData['quantity']);
-    $query = "INSERT INTO shopping (username, name, quantity) VALUES ('$username', '$name', '$quantity')";
+    $query = "INSERT INTO shopping (username, name, quantity) VALUES ('$mainpullUsername', '$name', '$quantity')";
     $mysqli->query($query);
-    $query = "SELECT * FROM shopping WHERE username = '$username'";
+    $query = "SELECT * FROM shopping WHERE username = '$mainpullUsername'";
     $result = $mysqli->query($query);
     $rows = array();
     while ($row = $result->fetch_assoc()) {$rows[] = $row;}

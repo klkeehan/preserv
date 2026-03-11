@@ -43,8 +43,16 @@
         $password = md5($data->password);
         $query = "INSERT INTO users (first_name, email, username, password) VALUES ('$name', '$email', '$username', '$password')";
         $mysqli->query($query);
+
+        //grab new user Id and household status
+        $grabnewuserquery = "SELECT id, household FROM users WHERE username ='$username'";
+        $grabnewuserresult = $mysqli->query($grabnewuserquery);
+        $newuser = $grabnewuserresult->fetch_object();
+
         $_SESSION['logged_in_user'] = $username;
         $_SESSION['logged_in_name'] = $name;
+        $_SESSION['logged_in_user_id'] = $newuser->id;
+        $_SESSION['logged_in_household'] = $newuser->household;
         };
       $response = [
       'status' => 'success',

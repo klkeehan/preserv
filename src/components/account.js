@@ -160,6 +160,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
         axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/account.php', { field: 'profile_photo', value: imagelink, isProfilePicture: true })
             .then((response => {
                 console.log("Profile picture updated:", response.data);
+                setAccountData({...accountData, profile_photo: imagelink});
             }))
             .catch((error) => {console.error("Profile photo update error:", error);});
     }

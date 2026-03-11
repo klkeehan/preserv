@@ -374,7 +374,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                     <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'onChange={handleImageUpload}></input>
                     <button className='image-input' onClick={() => document.getElementById('camera-capture').click()}><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
                 </div>
-                <button onClick={handleEditRecipe} className='save-button'>Save Recipe</button>
+                <button onClick={handleEditRecipe} disabled={ingredientError !== ''} style={{opacity: ingredientError !== '' ? 0.5 :1}} className='save-button'>Save Recipe</button>
             </div>
         <button className='close-button' onClick={() => getPage("view")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
@@ -463,7 +463,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                     <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'onChange={handleImageUpload}></input>
                     <button className='image-input' onClick={() => document.getElementById('camera-capture').click()}><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
                 </div>
-            <button onClick={handleNewRecipe} className='save-button'>Save Recipe</button>
+            <button onClick={handleNewRecipe} disabled={ingredientError !== ''} style={{opacity: ingredientError !== '' ? 0.5 :1}} className='save-button'>Save Recipe</button>
             </div>
             <button className='close-button' onClick={() => getPage("home")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
