@@ -112,12 +112,12 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
     const pDateFlag = dateReg.test(formValues.date_purchase);
     if (pDateFlag) {validFlag++} else {
       const pMsgTxt = document.querySelector('#pDateMsg');
-      pMsgTxt.textContent = 'Enter a date in the format YYYY-MM-DD';
+      pMsgTxt.textContent = 'Use the calendar popup to select a date';
     };
     const eDateFlag = dateReg.test(formValues.date_expire);
     if (eDateFlag) {validFlag++} else {
       const eMsgTxt = document.querySelector('#eDateMsg');
-      eMsgTxt.textContent = 'Enter a date in the format YYYY-MM-DD';
+      eMsgTxt.textContent = 'Use the calendar popup to select a date';
     };
 
     if (validFlag === 2) {
@@ -227,7 +227,7 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
                 <p className='nf-quant'>{perFat}</p>
               </div>
               <div className='nf-row'>
-                <p className='nf-header'>Cholesterol</p>\
+                <p className='nf-header'>Cholesterol</p>
                 <p className='nf-header'>{chol}</p>
                 <p className='nf-quant'>{perChol}</p>
               </div>
@@ -278,9 +278,9 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
             <label className='label2'>Item Name: <br></br><input name='name' type='text' defaultValue={itemName} className='item-input'/></label><br></br>
             <label className='label2'>Amount: <br></br><input name='quantity' type='number' defaultValue={itemQuantity} min='1' className='item-input' style={{width:'80px'}}/></label><br></br>
             <p id='pDateMsg' className='err-txt' style={{marginLeft:'0px', marginTop:'0px'}}></p>
-            <label className='label2'>Date Purchased: <br></br><input name='date_purchase' type='text' defaultValue={itemPurch} className='item-input'/></label><br></br>
+            <label className='label2'>Date Purchased: <br></br><input name='date_purchase' type='date' defaultValue={itemPurch} className='item-input'/></label><br></br>
             <p id='eDateMsg' className='err-txt' style={{marginLeft:'0px', marginTop:'0px'}}></p>
-            <label className='label2'>Expiration Date: <br></br><input name='date_expire' type='text' defaultValue={itemExp} className='item-input'/></label><br></br>
+            <label className='label2'>Expiration Date: <br></br><input name='date_expire' type='date' defaultValue={itemExp} className='item-input'/></label><br></br>
             <label className='label2'>Item Type: <br></br><select name='category'>
               <option value='produce'>Produce</option>
               <option value='proteins'>Proteins</option>
