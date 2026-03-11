@@ -190,7 +190,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                             getSelectedRecipe(recipe);
                             getPage("view");
                         }}>
-                        <img className="recipes-image" src={recipe.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj6N3xujVuKKBIgPSRUo6-z8WO8wImdjl2rQ&s'} alt={recipe.name} />
+                        <img className="recipes-image" src={recipe.image || 'https://students.gaim.ucf.edu/~ka822136/preserv/src/assets/logomark.png'} alt={recipe.name} />
                         <p className='recipes-overlay'>{recipe.name}</p>
                         </button>
                     </div>
@@ -272,7 +272,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
 
             <div className='recipe-block'>
 
-                <img className="recipes-image2" src={selectedRecipe.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj6N3xujVuKKBIgPSRUo6-z8WO8wImdjl2rQ&s'} alt={selectedRecipe.name} />
+                <img className="recipes-image2" src={selectedRecipe.image || 'https://students.gaim.ucf.edu/~ka822136/preserv/src/assets/logomark.png'} alt={selectedRecipe.name} />
                 <div className='ing-list'>
                     <h4 style={{textIndent:'40px'}}>Ingredients</h4>
                     {/*This generates a list of ingredients based on the JSON data, adds a Missing text when it gets a 0 from the availablity section in the JSON file per each item-Not anymore, now it check if any of the ingredients in the pantry show up in each instance of ingredient*/}
