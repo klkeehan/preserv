@@ -1,6 +1,6 @@
 import '../App.css';
 import Item from './item';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Grid from './grid';
 import x from '../assets/close.svg';
 import camera from '../assets/camera-icon.svg';

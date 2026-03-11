@@ -13,9 +13,8 @@ const BarcodeScanner = ({ onDetected }) => {
         target: scannerRef.current,
         constraints: {
           audio: 'false',
-          width: {min: 1920},
-          height: {min: 1080},
-          aspectRatio: {min: 1, max: 2},
+          width: {min: 720},
+          height: {min: 360},
           facingMode: 'environment'
         },
       },
