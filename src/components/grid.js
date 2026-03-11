@@ -12,7 +12,7 @@ const Grid = ({handleItem}) => {
       try {
         const response = await axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php');
         setItems(response.data);
-        if(items) {
+        if(items.length > 0) {
           setFlag(true);
         }
         setDisplay(response.data);
