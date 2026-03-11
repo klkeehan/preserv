@@ -18,12 +18,31 @@
     header('Content-Type: application/json; charset=UTF-8');
 
   $method = $_SERVER['REQUEST_METHOD'];
-  $username = $_SESSION['logged_in_user'] ?? 'karissa';
+  //$username = $_SESSION['logged_in_user'] ?? 'karissa';
+$username = $_SESSION['logged_in_user'];
+$inHousehold = $_SESSION['logged_in_household'];
+$userId = $_SESSION['logged_in_user_id'];
+
+if ($inHousehold == 1) {
+        $householdIdquery = "SELECT household_id FROM members WHERE user_id = $userId";
+        $householdIdresult = $mysqli->query($householdIdquery);
+        $householdId = $householdIdresult->fetch_object()->household_id;
+
+        $ownerquery = "SELECT users.username 
+            FROM members 
+            JOIN users ON members.user_id = users.id 
+            WHERE members.household_id = $householdId 
+            AND members.role = 'owner'";
+        $ownerresult = $mysqli->query($ownerquery);
+        $mainpullUsername = $ownerresult->fetch_object()->username;
+} else {
+    $mainpullUsername = $username;
+}
 
   if ($method === 'GET') {
       // TODO: Add WHERE username = '$username' once sessions are implemented - is it resolved? Almost, need the login page to work and begin using sessions for this to work as intended...
       //$username = $_SESSION['logged_in_user'];
-      $query = "SELECT * FROM recipe WHERE username = '$username'";
+      $query = "SELECT * FROM recipe WHERE username = '$mainpullUsername'";
       $result = $mysqli->query($query);
       $rows = array();
       while ($row = $result->fetch_assoc()) {$rows[] = $row;}
@@ -38,9 +57,9 @@
       // TODO: ingredients need to be parsed/cleaned before insert
       //But this portion of the API is done
       // read into these: preg_split, array_map trim, array_filter, implode
-      $query = "INSERT INTO recipe (username, name, ingredients, instructions, image) VALUES ('$username', '$name', '$ingredients', '$instructions', '$image')";
+      $query = "INSERT INTO recipe (username, name, ingredients, instructions, image) VALUES ('$mainpullUsername', '$name', '$ingredients', '$instructions', '$image')";
       $mysqli->query($query);
-      $query = "SELECT * FROM recipe WHERE username = '$username'";
+      $query = "SELECT * FROM recipe WHERE username = '$mainpullUsername'";
       $result = $mysqli->query($query);
       $rows = array();
       while ($row = $result->fetch_assoc()) {$rows[] = $row;}
@@ -55,7 +74,7 @@
       $id = intval($recipeData['id']);
       $query = "UPDATE recipe SET name='$name',ingredients='$ingredients', instructions='$instructions', image='$image' WHERE id=$id";
       $mysqli->query($query);
-      $query = "SELECT * FROM recipe WHERE username = '$username'";
+      $query = "SELECT * FROM recipe WHERE username = '$mainpullUsername'";
       $result = $mysqli->query($query);
       $rows = array();
       while ($row = $result->fetch_assoc()) {$rows[] = $row;}
@@ -66,7 +85,7 @@
       $recipeId = intval($recipeData['id']);
       $query = 'DELETE FROM recipe WHERE id = ' . $recipeId;
       $mysqli->query($query);
-      $query = "SELECT * FROM recipe WHERE username = '$username'";
+      $query = "SELECT * FROM recipe WHERE username = '$mainpullUsername'";
       $result = $mysqli->query($query);
       $rows = array();
       while ($row = $result->fetch_assoc()) {$rows[] = $row;}
