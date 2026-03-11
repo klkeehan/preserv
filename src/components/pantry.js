@@ -11,6 +11,48 @@ import axios from 'axios';
 import Webcam from 'react-webcam';
 
 const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
+// NOTIFICATIONS from the browser
+  useEffect(() => {
+    //To fix the spam (no canned meat)
+    if (sessionStorage.getItem('sentNotis') === 'true') return;
+    const pingNotifications = async () => {
+      //REQUEST Permission to land
+      const permission = await Notification.requestPermission();
+      console.log("permission:", permission);
+      //Actual notifcation ping technology
+      if (permission === 'granted') {
+        const response = await axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/notifications.php');
+        console.log("response:", response.data);
+        if (response.data.expiring && response.data.expiring.length > 0) {
+          new Notification('Items Expiring Soon!', {
+            body: response.data.expiring.join(', ') + ' will expire soon',
+            icon: "https://raw.githubusercontent.com/klkeehan/preserv/main/src/assets/profile-green.png"
+          });
+        }
+        if (response.data.low_stock && response.data.low_stock.length > 0) {
+          new Notification('Low Stock Items', {
+            body: response.data.low_stock.join(', ') + ' are low in stock',
+            icon: "https://raw.githubusercontent.com/klkeehan/preserv/main/src/assets/profile-green.png"
+          });
+        }
+        if (response.data.shopping_added && response.data.shopping_added.length > 0) {
+          new Notification('Shopping List Additions', {
+            body: response.data.shopping_added.join(', ') + ' added to the shopping list',
+            icon: "https://raw.githubusercontent.com/klkeehan/preserv/main/src/assets/profile-green.png"
+          });
+        }
+        if (response.data.shopping_purchased && response.data.shopping_purchased.length > 0) {
+          new Notification('Items Purchased', {
+            body: response.data.shopping_purchased.join(', ') + ' has been purchased',
+            icon: "https://raw.githubusercontent.com/klkeehan/preserv/main/src/assets/profile-green.png"
+          });
+        }
+        sessionStorage.setItem('sentNotis', 'true');
+      }
+    };
+    pingNotifications();
+  }, []);
+
   const [upc, setUpc] = useState('');
   const [name, setName] = useState('');
   const [apiImg, setApiImg] = useState('');
