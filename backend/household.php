@@ -77,11 +77,13 @@
             $deletequery = "DELETE FROM members WHERE user_id = $deleteUserId";
             $changehouseholdquery = "UPDATE users SET household = 0 WHERE id = $deleteUserId";
 
-            if ($mysqli->query($deletequery) && $mysqli->query($changehouseholdquery)) {
-                echo json_encode(["success" => true]);
-            } else {
-                echo json_encode(["success" => false, "error" => $mysqli->error]);
+            $mysqli->query($deletequery);
+            $mysqli->query($changehouseholdquery);
+
+            if ($deleteUserId == $userId) {
+                $_SESSION['logged_in_household'] = 0;
             }
+            echo json_encode(["success" => true]);
             break;
         
         case 'POST':
@@ -110,6 +112,7 @@
             $mysqli->query($insertownerquery);
             //REPLACE WITH SESSION -------------------------------------------------------------------------------------------------------
             $updatehouseholdflag = "UPDATE users SET household = 1 WHERE id = $userId";
+            $_SESSION['logged_in_household'] = 1;
             $mysqli->query($updatehouseholdflag);
 
             echo json_encode(["success" => true, "invite_code" => $inviteCode]);
@@ -138,6 +141,7 @@
                 $mysqli->query($insertmemberquery);
                 // Update household status
                 $updatehouseholdflag = "UPDATE users SET household = 1 WHERE id = $userId";
+                $_SESSION['logged_in_household'] = 1;
                 $mysqli->query($updatehouseholdflag);
 
                 echo json_encode(["success" => true]);
