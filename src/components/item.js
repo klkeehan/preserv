@@ -10,8 +10,23 @@ import axios from 'axios';
 import Webcam from "react-webcam";
 
 const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, itemPurch, itemExp, itemCat, handlePantry}) => {
+  // nutrition facts state variables
+  const [servingSize, setServingSize] = useState('');
+  const [servingAmount, setServingAmount] = useState('');
+  const [cals, setCals] = useState('');
+  const [fat, setFat] = useState('');
+  const [perFat, setPerFat] = useState('');
+  const [chol, setChol] = useState('');
+  const [perChol, setPerChol] = useState('');
+  const [sod, setSod] = useState('');
+  const [perSod, setPerSod] = useState('');
+  const [carb, setCarb] = useState('');
+  const [perCarb, setPerCarb] = useState('');
+  const [prot, setProt] = useState('');
+  const [perProt, setPerProt] = useState('');
+
   let url = itemImg;
-  let flag = 0; // 0 means cam not active, 1 cam is active
+  let flag = 0; // for image capture - 0 means cam not active, 1 cam is active
 
   // uploading item picture
   const handleImageUpload = (e) => {
@@ -55,9 +70,29 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
     console.log(url);
   }, [webcamRef]);
 
+  // nutrition facts fetch from fatsecret api
+  const handleNutrition = async () => {
+
+    let options = {
+      method: 'POST',
+      url: 'https://oauth.fatsecret.com/connect/token',
+      method: 'POST',
+      auth: {
+        user: '6fbea50e127d4dc086815c4d2f59b736',
+        password: 'dda533f392f741188f19c16dfe3ca86f'
+      },
+      headers: {'content-type': 'application/x-www-form-urlencoded'},
+      form: {
+        'grant_type': 'client_credentials',
+        'scope': 'basic'
+      },
+      json: true
+    }
+  };
 
   // item editing through form
   const handleEdit = async (e) => {
+    handleNutrition();
     let validFlag = 0;
 
     e.preventDefault();
@@ -72,7 +107,7 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
       category: formData.get('category')
     };
 
-    //regex form validation
+    // regex form validation
     const dateReg = /^\d{4}-\d{2}-\d{2}$/;
     const pDateFlag = dateReg.test(formValues.date_purchase);
     if (pDateFlag) {validFlag++} else {
@@ -144,7 +179,7 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
                       <button className='green-button' onClick={() => close()} style={{position:'absolute', right:'0', marginTop:'20px', marginRight:'20px', height:'30px', paddingTop:'2px'}}>x</button><br></br>
                       <p className='popup-text2' style={{width:'180px'}}>What quantity would you like to add?</p>
                       <input name='name' defaultValue={itemName} style={{visibility:'hidden'}}></input>
-                      <label className='label2' style={{display:'flex', width:'fit-content', alignItems:'center', marginLeft:'50px'}}>Amount:<input name='add-quant' type='number' className='item-input' style={{width:'80px', marginLeft:'10px'}}/></label><br></br>
+                      <label className='label2' style={{display:'flex', width:'fit-content', alignItems:'center', marginLeft:'50px'}}>Amount:<input name='add-quant' type='number' min='1' className='item-input' style={{width:'80px', marginLeft:'10px'}}/></label><br></br>
                       <button type='submit' className='green-button'>Confirm</button>
                     </form>
                   </div>
@@ -171,39 +206,44 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
             <div id='nfBlock' className='nf-block'>
               <div className='nf-row'>
                 <p className='nf-header'>Serving Size</p>
-                <p className='nf-quant'>30g</p>
+                <p className='nf-quant'>{servingSize}</p>
               </div>
               <div className='nf-row'>
                 <p className='nf-header'>Amount Per Serving</p>
-                <p className='nf-quant'>4</p>
+                <p className='nf-quant'>{servingAmount}</p>
               </div>
               <div className='nf-row'>
                 <h3>Calories</h3>
-                <h3 style={{color:'var(--black)'}}>100</h3>
+                <h3 style={{color:'var(--black)'}}>{cals}</h3>
               </div>
               <div className='nf-row'>
                 <p className='nf-header'></p>
                 <p className='nf-quant'>% Daily Value</p>
               </div>
               <div className='nf-row'>
-                <p className='nf-header'>Total Fat 0g</p>
-                <p className='nf-quant'>0%</p>
+                <p className='nf-header'>Total Fat</p>
+                <p className='nf-header'>{fat}</p>
+                <p className='nf-quant'>{perFat}</p>
               </div>
               <div className='nf-row'>
-                <p className='nf-header'>Cholesterol 0mg</p>
-                <p className='nf-quant'>0%</p>
+                <p className='nf-header'>Cholesterol</p>\
+                <p className='nf-header'>{chol}</p>
+                <p className='nf-quant'>{perChol}</p>
               </div>
               <div className='nf-row'>
-                <p className='nf-header'>Sodium 0mg</p>
-                <p className='nf-quant'>0%</p>
+                <p className='nf-header'>Sodium</p>
+                <p className='nf-header'>{sod}</p>
+                <p className='nf-quant'>{perSod}</p>
               </div>
               <div className='nf-row'>
-                <p className='nf-header'>Total Carbohydrate 5g</p>
-                <p className='nf-quant'>3%</p>
+                <p className='nf-header'>Total Carbohydrate</p>
+                <p className='nf-header'>{carb}</p>
+                <p className='nf-quant'>{perCarb}</p>
               </div>
               <div className='nf-row'>
-                <p className='nf-header'>Protein 0g</p>
-                <p className='nf-quant'>0%</p>
+                <p className='nf-header'>Protein</p>
+                <p className='nf-header'>{prot}</p>
+                <p className='nf-quant'>{perProt}</p>
               </div>
               <div className='nf-line'></div>
                 <p className='nf-small'>The % Daily Value (DV) tells you how much a nutrient in a serving of food contributes to a daily diet. 2,000 calories a day is used for general nutrition advice.</p>

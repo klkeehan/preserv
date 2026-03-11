@@ -70,7 +70,7 @@ function App() {
       const loginTxt = document.querySelector('#loginMsg');
       loginTxt.textContent = 'Enter a valid username and password'
     } else {
-      loadShopping();
+      loadPantry();
     }
   };
 

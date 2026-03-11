@@ -1,6 +1,6 @@
 import '../App.css';
 import Item from './item';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Grid from './grid';
 import x from '../assets/close.svg';
 import camera from '../assets/camera-icon.svg';
@@ -12,10 +12,10 @@ import Webcam from 'react-webcam';
 
 const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
   const [upc, setUpc] = useState('');
-  let name = '';
-  let apiImg = '';
-  let url = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj6N3xujVuKKBIgPSRUo6-z8WO8wImdjl2rQ&s';
-  let flag = 0;
+  const [name, setName] = useState('');
+  const [apiImg, setApiImg] = useState('');
+  let url = ('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj6N3xujVuKKBIgPSRUo6-z8WO8wImdjl2rQ&s');
+  let flag = 0; // for image capture - 0 means cam not active, 1 cam is active
 
   const handleItem = (item) => {
     if (item.item_status == 1) {
@@ -105,6 +105,7 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
 
     if (validFlag === 2) {
       const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', formValues);
+      console.log(response);
       setContent(pantryHome);
     };
   };
@@ -114,7 +115,9 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     if(!upc) {
       scanTxt.textContent = 'There was an error scanning the barcode. Please try again.';
       return;
-    };
+    } else {
+
+    }
 
     const response = await fetch(`https://api.barcodespider.com/v1/lookup?token=370c849d8af257375d9b&upc=${upc}`, {
       method: 'GET',
@@ -123,25 +126,11 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     const data = await response.json();
     const title = data.item_attributes.title;
     const image2 = data.item_attributes.image;
-    name = title;
-    apiImg = image2;
+    setName(title);
+    setApiImg(image2);
     setContent(scanForm);
     return data;
   };
-
-  let cameraPage = (
-    <div>
-      <button onClick={handleExit} className='green-button'>x</button>
-      <Webcam
-        width={1280}
-        height={720}
-        ref={webcamRef}
-        screenshotFormat="image/jpeg"
-        videoConstraints={constraints}      
-      />
-      <button onClick={handleCapture} className='green-button'>capture</button>
-    </div>
-  )
 
   let pantryHome = (
     <div className='layout'>

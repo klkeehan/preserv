@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import Quagga from '@ericblade/quagga2';
 
-function BarcodeScanner({ onDetected }) {
+const BarcodeScanner = ({ onDetected }) => {
   const scannerRef = useRef(null);
 
   useEffect(() => {
@@ -13,11 +13,14 @@ function BarcodeScanner({ onDetected }) {
         target: scannerRef.current,
         constraints: {
           audio: 'false',
-          width: '1280',
-          height: '720',
-          facingMode: 'environment',
+          width: {min: 1920},
+          height: {min: 1080},
+          aspectRatio: {min: 1, max: 2},
+          facingMode: 'environment'
         },
       },
+      numOfWorkers: 4,
+      locate: true,
       decoder: {
         locate: true,
         readers: ['upc_reader'],
@@ -48,12 +51,7 @@ function BarcodeScanner({ onDetected }) {
   }, [onDetected]);
 
   return (
-    <div
-      ref={scannerRef}
-      style={{
-        position: 'relative',
-      }}
-    />
+    <div ref={scannerRef} style={{position: 'relative', width: '100%'}}></div>
   );
 }
 
