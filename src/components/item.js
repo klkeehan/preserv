@@ -146,6 +146,7 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
 
     const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/shopping.php', formValues);
     console.log(response);
+    handlePantry();
   };
 
   let item = (
@@ -155,15 +156,15 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
           <img className={itemStatus === '3' ? 'pantry-fresh2' : itemStatus === '1' ? 'pantry-exp2' : 'pantry-soon2'} src={itemImg} alt={itemName}></img>
           <aside className='item-column'>
             <button className='item-button' onClick={() => setContent(itemEdit)}>Edit</button>
-            <Popup contentStyle={{width:'273px'}} trigger={<button className='item-button'>Trash</button>}modal nested>
+            <Popup contentStyle={{width:'273px', height:'210px'}} trigger={<button className='green-button'>Remove</button>}modal nested>
               {close => (
-                <div className='modal'>
+                <div>
                   <div className='content'>
-                    <form onSubmit={handleDelete}>
-                      <input name='id' type='number' defaultValue={itemID} style={{visibility: 'hidden'}}></input>
-                      <p className='popup-text'>Are you sure you want to trash this item?</p>
-                      <button type='submit' className='green-button'>Confirm</button>
-                    </form>
+                    <p className='popup-text2'>Remove item from pantry?</p>
+                  </div>
+                  <div>
+                    <button className='pink-solid' onClick={handleDelete}>Remove</button><br></br>
+                    <button className='pink-hollow' onClick={() => close()}>Cancel</button>
                   </div>
                 </div>
               )}
