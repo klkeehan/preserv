@@ -182,7 +182,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
             <h1>My Recipes</h1>
             <div className="recipes-grid">
                 {Array.isArray(recipesSet) && recipesSet.length === 0 && (
-                    <p>No recipes yet — add your first one!</p>
+                    <h1 className='blank-txt' style={{marginTop:'0px'}}>No recipes yet — add your first one!</h1>
                 )}
                 {Array.isArray(recipesSet) && recipesSet.map((recipe) => (
                     <div className="recipes-card" key ={recipe.id}>
