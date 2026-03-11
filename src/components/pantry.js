@@ -62,17 +62,17 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
   const handleItem = (item) => {
     if (item.item_status == 1) {
       setContent(
-        <Item itemID={item.id} itemImg={item.image} itemStatus={item.item_status} itemString={'EXPIRED'} itemName={item.name} itemQuantity={item.quantity} itemPurch={item.date_purchase} itemExp={item.date_expire} itemCat={item.category} handlePantry={() => setContent(pantryHome)}/>
+        <Item itemID={item.id} itemImg={item.image} itemStatus={item.item_status} itemString={'EXPIRED'} itemName={item.name} itemQuantity={item.quantity} itemPurch={item.date_purchase} itemExp={item.date_expire} itemCat={item.category} handlePantry={setContent(pantryHome)}/>
       );
     }
     else if (item.item_status == 2) {
       setContent(
-        <Item itemID={item.id} itemImg={item.image} itemStatus={item.item_status} itemString={'USE SOON - NEAR EXPIRATION'} itemName={item.name} itemQuantity={item.quantity} itemPurch={item.date_purchase} itemExp={item.date_expire} itemCat={item.category} handlePantry={() => setContent(pantryHome)}/>
+        <Item itemID={item.id} itemImg={item.image} itemStatus={item.item_status} itemString={'USE SOON - NEAR EXPIRATION'} itemName={item.name} itemQuantity={item.quantity} itemPurch={item.date_purchase} itemExp={item.date_expire} itemCat={item.category} handlePantry={setContent(pantryHome)}/>
       );
     }
     else {
       setContent(
-        <Item itemID={item.id} itemImg={item.image} itemStatus={item.item_status} itemString={'FRESH'} itemName={item.name} itemQuantity={item.quantity} itemPurch={item.date_purchase} itemExp={item.date_expire} itemCat={item.category} handlePantry={() => setContent(pantryHome)}/>
+        <Item itemID={item.id} itemImg={item.image} itemStatus={item.item_status} itemString={'FRESH'} itemName={item.name} itemQuantity={item.quantity} itemPurch={item.date_purchase} itemExp={item.date_expire} itemCat={item.category} handlePantry={setContent(pantryHome)}/>
       );
     };
   };

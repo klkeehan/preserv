@@ -42,6 +42,7 @@ const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
   };
 
   const handleAdd = async (e) => {
+    let validFlag = 0;
     e.preventDefault();
     const formData = new FormData(e.target);
     const formValues = {
@@ -49,8 +50,14 @@ const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
       quantity: formData.get('quantity')
     };
 
-    const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/shopping.php', formValues);
-    console.log(response);
+    if (formValues.name !== '') {
+      validFlag++;
+    };
+
+    if (validFlag === 1) {
+      const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/shopping.php', formValues);
+      console.log(response);
+    };
   };
 
   let shoppingPage = (
@@ -92,8 +99,9 @@ const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
                 <div className='content' style={{textAlign:'left', marginLeft:'35px'}}>
                   <div className='spacer' style={{height:'20px'}}></div>
                     <button className='green-button' onClick={() => close()} style={{position:'absolute', right:'0', marginRight:'20px', height:'30px', paddingTop:'2px'}}>x</button><br></br>
+                    <p id='nameMsg' className='err-txt'></p>
                     <label className='label2'>Item Name: <input name='name' type='text' className='item-input' style={{width:'200px'}}/></label>
-                    <label className='label2'>Amount:<br></br><input name='quantity' type='number' className='item-input' style={{width:'80px'}}/></label>
+                    <label className='label2'>Amount:<br></br><input name='quantity' type='number' min='1' className='item-input' style={{width:'80px'}}/></label>
                   </div>
                   <div>
                   <button type='submit' className='green-button'>Confirm</button>
