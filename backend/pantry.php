@@ -22,30 +22,29 @@
   header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, PATCH, OPTIONS');
   header('Content-Type: application/json; charset=UTF-8');
 
-  $username = $_SESSION['logged_in_user'];
-  $inHousehold = $_SESSION['logged_in_household'];
-  $userId = $_SESSION['logged_in_user_id'];
-
-  if ($inHousehold == 1) {
-    $householdIdquery = "SELECT household_id FROM members WHERE user_id = $userId";
-    $householdIdresult = $mysqli->query($householdIdquery);
-    $householdId = $householdIdresult->fetch_object()->household_id;
-
-    $ownerquery = "SELECT users.username 
-        FROM members 
-        JOIN users ON members.user_id = users.id 
-        WHERE members.household_id = $householdId 
-        AND members.role = 'owner'";
-    $ownerresult = $mysqli->query($ownerquery);
-    $mainpullUsername = $ownerresult->fetch_object()->username;
-} else {
-    $mainpullUsername = $username;
-}
-
   $method = $_SERVER['REQUEST_METHOD'];
 
   switch ($method) {
     case 'GET':
+      //Household CHECK
+      $username = $_SESSION['logged_in_user'];
+      $inHousehold = $_SESSION['logged_in_household'];
+      $userId = $_SESSION['logged_in_user_id'];
+       if ($inHousehold == 1) {
+          $householdIdquery = "SELECT household_id FROM members WHERE user_id = $userId";
+          $householdIdresult = $mysqli->query($householdIdquery);
+          $householdId = $householdIdresult->fetch_object()->household_id;
+
+          $ownerquery = "SELECT users.username 
+              FROM members 
+              JOIN users ON members.user_id = users.id 
+              WHERE members.household_id = $householdId 
+              AND members.role = 'owner'";
+          $ownerresult = $mysqli->query($ownerquery);
+          $mainpullUsername = $ownerresult->fetch_object()->username;
+      } else {
+          $mainpullUsername = $username;
+      }
       //$username = $_SESSION['logged_in_user'];
       $query = "SELECT * FROM pantry WHERE username='$mainpullUsername' ORDER BY item_status ASC";
       $result = $mysqli->query($query);
@@ -55,6 +54,25 @@
       break;
 
     case 'POST':
+      //HOUSEHOLD CHECK
+      $username = $_SESSION['logged_in_user'];
+      $inHousehold = $_SESSION['logged_in_household'];
+      $userId = $_SESSION['logged_in_user_id'];
+       if ($inHousehold == 1) {
+          $householdIdquery = "SELECT household_id FROM members WHERE user_id = $userId";
+          $householdIdresult = $mysqli->query($householdIdquery);
+          $householdId = $householdIdresult->fetch_object()->household_id;
+
+          $ownerquery = "SELECT users.username 
+              FROM members 
+              JOIN users ON members.user_id = users.id 
+              WHERE members.household_id = $householdId 
+              AND members.role = 'owner'";
+          $ownerresult = $mysqli->query($ownerquery);
+          $mainpullUsername = $ownerresult->fetch_object()->username;
+      } else {
+          $mainpullUsername = $username;
+      }
       $data = json_decode(file_get_contents('php://input'));
       //$username = $_SESSION['logged_in_user'];
       $name = $data->name;
