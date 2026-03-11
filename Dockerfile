@@ -2,7 +2,7 @@
 FROM node:22
 
 # navigate to the app directory
-WORKDIR /app
+WORKDIR /preserv
 
 # copy json file
 COPY package*.json ./
