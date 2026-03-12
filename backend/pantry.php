@@ -79,9 +79,10 @@
       $quantity = $data->quantity;
       $date_purchase = $data->date_purchase;
       $date_expire = $data->date_expire;
+      $status = $data->item_status;
       $image = $data->image;
       $category = ucwords($data->category);
-      $query = "INSERT INTO pantry (username, name, quantity, date_purchase, date_expire, image, category) VALUES ('$mainpullUsername', '$name', '$quantity', '$date_purchase', '$date_expire', '$image', '$category')";
+      $query = "INSERT INTO pantry (username, name, quantity, date_purchase, date_expire, item_status, image, category) VALUES ('$mainpullUsername', '$name', '$quantity', '$date_purchase', '$date_expire', '$status', '$image', '$category')";
       $mysqli->query($query);
       break;
 
@@ -92,9 +93,10 @@
       $quantity = $data->quantity;
       $date_purchase = $data->date_purchase;
       $date_expire = $data->date_expire;
+      $status = $data->item_status;
       $image = $data->image;
       $category = ucwords($data->category);
-      $query = "UPDATE pantry SET name='$name', quantity='$quantity', date_purchase='$date_purchase', date_expire='$date_expire', image='$image', category='$category' WHERE id='$id'";
+      $query = "UPDATE pantry SET name='$name', quantity='$quantity', date_purchase='$date_purchase', date_expire='$date_expire', item_status='$status', image='$image', category='$category' WHERE id='$id'";
       $mysqli->query($query);
       break;
 

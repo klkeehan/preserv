@@ -26,6 +26,7 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
   const [perProt, setPerProt] = useState('');
 
   let url = itemImg;
+  let status = 3;
   let flag = 0; // for image capture - 0 means cam not active, 1 cam is active
 
   // uploading item picture
@@ -90,6 +91,15 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
     }
   };
 
+  // find day difference between current date and expiration date for item status
+  function statusCalc(curDate, expDate) {
+    let start = new Date(curDate);
+    let end = new Date(expDate);
+    let diff = end - start;
+    let diff2 = diff / (1000 * 3600 * 24);
+    return diff2;
+  };
+
   // item editing through form
   const handleEdit = async (e) => {
     handleNutrition();
@@ -121,7 +131,30 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
     };
 
     if (validFlag === 2) {
-      const response = await axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', formValues);
+      let currentDate = new Date();
+      const dayDiff = statusCalc(currentDate, formValues.date_expire);
+      if (dayDiff > 3) {
+        status = 3;
+      } else if (dayDiff > 0 && dayDiff < 3) {
+        status = 2;
+      } else if (dayDiff < 0) {
+        status = 1;
+      };
+
+      const formValues2 = {
+        id: itemID,
+        name: formData.get('name'),
+        quantity: formData.get('quantity'),
+        date_purchase: formData.get('date_purchase'),
+        date_expire: formData.get('date_expire'),
+        item_status: status,
+        image: url,
+        category: formData.get('category')
+      };
+
+      console.log('difference:', dayDiff);
+      console.log(status);
+      const response = await axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', formValues2);
       console.log(response);
       handlePantry();
     };

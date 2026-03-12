@@ -58,6 +58,7 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
   const [apiImg, setApiImg] = useState('');
   let url = ('https://students.gaim.ucf.edu/~ka822136/preserv/src/assets/logomark.png');
   let flag = 0; // for image capture - 0 means cam not active, 1 cam is active
+  let status = 3;
 
   const handleItem = (item) => {
     if (item.item_status == 1) {
@@ -118,6 +119,15 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     console.log(url);
   }, [webcamRef]);
 
+  // find day difference between current date and expiration date for item status
+  function statusCalc(curDate, expDate) {
+    let start = new Date(curDate);
+    let end = new Date(expDate);
+    let diff = end - start;
+    let diff2 = diff / (1000 * 3600 * 24);
+    return diff2;
+  };
+
   const handleAdd = async (e) => {
     let validFlag = 0;
 
@@ -146,7 +156,26 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     };
 
     if (validFlag === 2) {
-      const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', formValues);
+      let currentDate = new Date();
+      const dayDiff = statusCalc(currentDate, formValues.date_expire);
+      if (dayDiff > 3) {
+        status= 3;
+      } else if (dayDiff > 0 && dayDiff < 3) {
+        status = 2;
+      } else if (dayDiff < 0) {
+        status = 1;
+      };
+
+      const formValues2 = {
+        name: formData.get('name'),
+        quantity: formData.get('quantity'),
+        date_purchase: formData.get('date_purchase'),
+        date_expire: formData.get('date_expire'),
+        item_status: status,
+        image: url,
+        category: formData.get('category')
+      };
+      const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', formValues2);
       console.log(response);
       setContent(pantryHome);
     };
