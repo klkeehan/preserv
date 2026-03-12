@@ -126,8 +126,7 @@ function App() {
       <form onSubmit={handleLogin}>
         <p id='loginMsg' className='err-txt'></p>
         <input name='username' placeholder='Username' className='input' />
-        <input name='password' placeholder='Password' type='password' className='input' style={{marginBottom:'0px'}} />
-        <button className='pw-forgot' onClick={loadPWReset}>Forgot Password?</button>
+        <input name='password' placeholder='Password' type='password' className='input' style={{marginBottom:'35px'}} />
         <button type='submit' className='solid-button' style={{color:'var(--white)'}}>LOG IN</button>
       </form>
     </div>
