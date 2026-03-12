@@ -79,6 +79,9 @@ const Grid = ({handleItem}) => {
             </button>
           </div>
         ))}
+        <div className='spacer' style={{height:'220px'}}>
+          <p className='hidden-txt'>hidden</p>
+        </div>
       </div>
       <h1 className={flag ? 'hidden-txt' : 'blank-txt'}>Add your first pantry item...</h1>
     </div>
