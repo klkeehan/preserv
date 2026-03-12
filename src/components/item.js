@@ -1,5 +1,5 @@
 import '../App.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import x from '../assets/close.svg';
@@ -85,11 +85,20 @@ const Item = ({itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, 
       headers: {'content-type': 'application/x-www-form-urlencoded'},
       form: {
         'grant_type': 'client_credentials',
-        'scope': 'basic'
+        'scope': 'barcode'
       },
       json: true
-    }
+    };
+
+    const response = await axios.get(options);
+    console.log(response);
   };
+
+  /*
+  useEffect(() => {
+    handleNutrition();
+  });
+  */
 
   // find day difference between current date and expiration date for item status
   function statusCalc(curDate, expDate) {
