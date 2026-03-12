@@ -315,7 +315,15 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
             };
         };
     };
-
+    function handleLogout() {
+    axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/logout.php')
+        .then((response) => {
+            console.log("Logout response:", response.data);
+            console.log("loginLoad");
+            loginLoad();
+        })
+        .catch((error) => {console.error("Logout error:", error);});
+    }
     //REGULATION X
     const passwordReg = /^(?=.*?[0-9])(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[^0-9A-Za-z]).{4,12}$/;
 
@@ -362,7 +370,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
                                     <p className='popup-text2'>Log out of your account?</p>
                                 </div>
                                 <div>
-                                    <button className='pink-solid' onClick={loginLoad}>Log Out</button><br></br>
+                                    <button className='pink-solid' onClick={() => {close(); handleLogout();}}>Log Out</button><br></br>
                                     <button className='pink-hollow' onClick={() => {close()}}>Cancel</button>
                                 </div>
                             </div>

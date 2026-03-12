@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Pantry from './components/pantry';
 import Shopping from './components/shopping';
 import Recipe from './components/recipe';
@@ -10,6 +10,17 @@ import axios from 'axios';
 axios.defaults.withCredentials = true;
 
 function App() {
+  //LOGIN SKIP
+  useEffect(() => {
+    axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/session.php')
+      .then((response) => {
+        if (response.data.user_id !== null) {
+          loadPantry();
+        }
+      })
+      .catch((error) => {console.error("Session check error:", error);});
+  }, []);
+  
   const handleSignup = async (e) => {
     let validFlag = 0;
 
