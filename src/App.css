@@ -1078,6 +1078,8 @@ textarea {
   top: 0;
   left: 0;
   margin-top: 120px;
+  height: 550px;
+  overflow: scroll;
 }
 
 
