@@ -413,6 +413,7 @@ textarea {
 .cat-bar {
   position: absolute;
   top: 0;
+  left: 0;
   display: inline-block;
   overflow-y: hidden;
   overflow-x: scroll;
@@ -570,7 +571,6 @@ textarea {
   padding-top: 5px;
   font-family: figtree;
   font-size: 12px;
-  font-weight: 200px;
   height: 25px;
   width: 85px;
   background-color: rgb(8, 8, 8, 0.75);

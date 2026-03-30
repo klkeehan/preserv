@@ -6,20 +6,22 @@ const Grid = ({handleItem}) => {
   const [items, setItems] = useState([]);
   const [display, setDisplay] = useState([]);
   const [flag, setFlag] = useState(false);
-  
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
         const response = await axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php');
+        console.log(response.data);
         setItems(response.data);
+        setDisplay(response.data);
+        console.log('display set');
         if(items.length > 0) {
           setFlag(true);
         }
-        setDisplay(response.data);
       } catch (error) {console.error('Error fetching items:', error);}
     };
     fetchItems();
-  });
+  }, []);
 
   //search bar functionality
   const [search, setSearch] = useState('');

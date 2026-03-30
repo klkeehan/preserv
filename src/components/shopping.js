@@ -1,5 +1,5 @@
 import '../App.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import axios from 'axios';
@@ -7,9 +7,26 @@ axios.defaults.withCredentials = true;
 
 const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
   const [items, setItems] = useState([]);
-  const [flag, setFlag] = useState(false);
+  const [flag, setFlag] = useState(false); // false=no items // true=at least 1 item
   const [checkItems, setCheckItems] = useState([]);
 
+  const ref = useRef();
+  const closePopup = () => ref.current.close();
+
+  const fetchItems = async () => {
+    try {
+      const response = await axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/shopping.php');
+      setItems(response.data);
+      if(response.data.length > 0) {setFlag(true)};
+      if(response.data.length === 0) {setFlag(false)};
+    } catch (error) {console.error('Error fetching shopping list:', error);}
+  };
+
+  useEffect(() => {
+    fetchItems();
+  }, [])
+
+  /*
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -21,7 +38,8 @@ const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
       } catch (error) {console.error('Error fetching items:', error);}
     };
     fetchItems();
-  });
+  }, [items]);
+  */
 
   const handleCheck = (id) => {
     setCheckItems(prev => {
@@ -35,10 +53,12 @@ const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
   const handleDelete = async () => {
     if (checkItems.length === 0) {return};
 
-    const response = axios.delete('https://students.gaim.ucf.edu/~ka822136/preserv/backend/shopping.php', {data: {ids: checkItems}});
-    setCheckItems([]);
-    
-    console.log(response);
+    try {
+      const response = await axios.delete('https://students.gaim.ucf.edu/~ka822136/preserv/backend/shopping.php', {data: {ids: checkItems}});
+      fetchItems();
+      setCheckItems([]);
+      closePopup();
+    } catch (error) {console.error('Error deleting selected items:', error)}
   };
 
   const handleAdd = async (e) => {
@@ -57,30 +77,31 @@ const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
     if (validFlag === 1) {
       const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/shopping.php', formValues);
       console.log(response);
-      shoppingLoad();
+      closePopup();
+      fetchItems();
     };
   };
 
   let shoppingPage = (
     <div className='layout'>
       <h1>My Shopping List</h1>
+      <h1 className={flag ? 'hidden-txt' : 'blank-txt'} style={{marginTop:'120px', marginLeft:'30px'}}>Add your first shopping list item...</h1>
       <div className='shopping-list'>
-        <h1 className={flag ? 'hidden-txt' : 'blank-txt'} style={{marginTop:'0px'}}>Add your first shopping list item...</h1>
-          {items.map((item) => (
-            <div key={item.id}>
-              <div className='shopping-item'>
-                <aside className='shopping-info'>
-                  <h4>{item.name}</h4><br></br>
-                  <p className='body-text'>Quantity: {item.quantity}</p>
-                </aside>
-                <input type="checkbox" checked={checkItems.includes(item.id)} onChange={() => handleCheck(item.id)}></input>
-              </div>
-              <div className='divider'></div>
+        {items.map((item) => (
+          <div key={item.id}>
+            <div className='shopping-item'>
+              <aside className='shopping-info'>
+                <h4>{item.name}</h4><br></br>
+                <p className='body-text'>Quantity: {item.quantity}</p>
+              </aside>
+              <input type="checkbox" checked={checkItems.includes(item.id)} onChange={() => handleCheck(item.id)}></input>
             </div>
-          ))}
+            <div className='divider'></div>
+          </div>
+        ))}
       </div>
       <div className='button-bar'>
-        <Popup contentStyle={{width:'273px', height:'230px'}} trigger={<button className='green-button'>Remove</button>}modal nested>
+        <Popup ref={ref} contentStyle={{width:'273px', height:'230px'}} trigger={<button className='green-button'>Remove</button>}modal nested>
           {close => (
             <div>
               <div className='content'>
@@ -93,7 +114,7 @@ const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
             </div>
           )}
         </Popup>
-        <Popup contentStyle={{width:'273px', height:'270px'}} trigger={<button>add</button>}modal nested>
+        <Popup ref={ref} contentStyle={{width:'273px', height:'270px'}} trigger={<button>add</button>}modal nested>
           {close => (
             <div>
               <form onSubmit={handleAdd}>
@@ -102,7 +123,7 @@ const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
                     <button className='green-button' onClick={() => close()} style={{position:'absolute', right:'0', marginRight:'20px', height:'30px', paddingTop:'2px'}}>x</button><br></br>
                     <p id='nameMsg' className='err-txt'></p>
                     <label className='label2'>Item Name: <input name='name' type='text' className='item-input' style={{width:'200px'}}/></label>
-                    <label className='label2'>Amount:<br></br><input name='quantity' type='number' min='1' className='item-input' style={{width:'80px'}}/></label>
+                    <label className='label2'>Amount:<br></br><input name='quantity' type='number' min='1' defaultValue='1' className='item-input' style={{width:'80px'}}/></label>
                   </div>
                   <div>
                   <button type='submit' className='green-button'>Confirm</button>
