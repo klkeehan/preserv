@@ -26,21 +26,6 @@ const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
     fetchItems();
   }, [])
 
-  /*
-  useEffect(() => {
-    const fetchItems = async () => {
-      try {
-        const response = await axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/shopping.php');
-        setItems(response.data);
-        if(items.length !== 0) {
-          setFlag(true);
-        }
-      } catch (error) {console.error('Error fetching items:', error);}
-    };
-    fetchItems();
-  }, [items]);
-  */
-
   const handleCheck = (id) => {
     setCheckItems(prev => {
       if(prev.includes(id)) {
@@ -54,7 +39,7 @@ const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
     if (checkItems.length === 0) {return};
 
     try {
-      const response = await axios.delete('https://students.gaim.ucf.edu/~ka822136/preserv/backend/shopping.php', {data: {ids: checkItems}});
+      await axios.delete('https://students.gaim.ucf.edu/~ka822136/preserv/backend/shopping.php', {data: {ids: checkItems}});
       fetchItems();
       setCheckItems([]);
       closePopup();
@@ -75,8 +60,7 @@ const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
     };
 
     if (validFlag === 1) {
-      const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/shopping.php', formValues);
-      console.log(response);
+      await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/shopping.php', formValues);
       closePopup();
       fetchItems();
     };
