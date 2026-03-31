@@ -463,8 +463,9 @@ textarea {
   padding-top: 4px;
   width: 373px;
   height: 691px;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  row-gap: 0px;
   overflow: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -489,8 +490,6 @@ textarea {
 .pantry-item {
   position: relative;
   height: 115px;
-  margin-top: 0px;
-  margin-bottom: 3.6px;
 }
 
 /*item images by status*/
