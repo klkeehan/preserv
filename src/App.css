@@ -458,14 +458,12 @@ textarea {
 
 .pantry-grid {
   position: absolute;
-  top: 0;
   margin-top: 145px;
   padding-top: 4px;
   width: 373px;
-  height: 691px;
   display: grid;
-  grid-template-columns: auto auto auto;
-  row-gap: 0px;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 0px;
   overflow: scroll;
   -ms-overflow-style: none;
   scrollbar-width: none;

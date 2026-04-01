@@ -5,15 +5,10 @@ import axios from 'axios';
 const Grid = ({ handleItem }) => {
   const [items, setItems] = useState([]);
   const [display, setDisplay] = useState([]);
+  const [catDisplay, setCatDisplay] = useState([]);
   const [flag, setFlag] = useState(false);
-  
-  //initializing category menu states for class //true=clicked
-  const flags = new Array(10);
-  flags[0] = true;
-  for(var x=1; x<11; x++) {
-    flags[x] = false;
-  };
 
+  //fetching pantry items
   const fetchItems = async () => {
     try {
       const response = await axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php');
@@ -24,9 +19,7 @@ const Grid = ({ handleItem }) => {
     } catch (error) {console.error('Error fetching pantry items:', error)};
   };
 
-  useEffect(() => {
-    fetchItems();
-  }, []);
+  useEffect(() => {fetchItems()}, []);
 
   //search bar functionality
   const [search, setSearch] = useState('');
@@ -35,15 +28,11 @@ const Grid = ({ handleItem }) => {
     if (e.target.value.length > 0) {
       const searchInput = e.target.value;
       setSearch(searchInput);
-
-      const newItems = items.filter((item) => 
-      item.name.toLowerCase().includes(search.toLowerCase())
-      );
-
+      const newItems = catDisplay.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
       setDisplay(newItems)
     } else {
       setSearch('');
-      setDisplay(items);
+      setDisplay(catDisplay);
     }
   };
 
@@ -59,20 +48,21 @@ const Grid = ({ handleItem }) => {
   const snackData = items.filter((item) => item.category === 'Snacks');
   const otherData = items.filter((item) => item.category === 'Other');
 
+  //category menu buttons styling and display change
   function handleCategory(type, id) {
+    let btn = document.getElementById(id);
     for(var x=0; x<11; x++) {
-      flags[x] = false;
+      let homeButton = document.getElementById(0);
+      homeButton.classList.add('cat-button');
+      let button = document.getElementById(x);
+      button.classList.remove('cat-button-clicked');
     };
-    flags[id] = true;
-    console.log(id);
-    console.log(flags[id]);
-    console.log(flags[0]);
+    btn.classList.add('cat-button-clicked');
     setDisplay(type);
+    setCatDisplay(type);
   };
-
-    console.log(flags[1]);
-    console.log(flags[0]);
     
+  //jsx
   return (
     <div className='pantry'>
       <div className='pantry-header'>
@@ -80,17 +70,17 @@ const Grid = ({ handleItem }) => {
         <input type="text" value={search} onChange={handleSearch} placeholder='Search' className='search-bar' />
       </div>
       <div className='cat-bar'>
-        <button id='0' onClick={() => handleCategory(items, '0')} className={flags[0] ? 'cat-button-clicked' : 'cat-button'}>All</button>
-        <button id='1' onClick={() => handleCategory(prodData, '1')} className={flags[1] ? 'cat-button-clicked' : 'cat-button'}>Produce</button>
-        <button id='2' onClick={() => setDisplay(proData)} className='cat-button'>Proteins</button>
-        <button id='3' onClick={() => setDisplay(dairyData)} className='cat-button'>Dairy</button>
-        <button id='4' onClick={() => setDisplay(grainData)} className='cat-button'>Grains</button>
-        <button id='5' onClick={() => setDisplay(cannedData)} className='cat-button'>Canned</button>
-        <button id='6' onClick={() => setDisplay(condData)} className='cat-button'>Condiments</button>
-        <button id='7' onClick={() => setDisplay(bevData)} className='cat-button'>Beverages</button>
-        <button id='8' onClick={() => setDisplay(frozData)} className='cat-button'>Frozen</button>
-        <button id='9' onClick={() => setDisplay(snackData)} className='cat-button'>Snacks</button>
-        <button id='10' onClick={() => setDisplay(otherData)} className='cat-button'>Other</button>
+        <button id='0' onClick={(e) => handleCategory(items, e.target.id)} className='cat-button-clicked'>All</button>
+        <button id='1' onClick={(e) => handleCategory(prodData, e.target.id)} className='cat-button'>Produce</button>
+        <button id='2' onClick={(e) => handleCategory(proData, e.target.id)} className='cat-button'>Proteins</button>
+        <button id='3' onClick={(e) => handleCategory(dairyData, e.target.id)} className='cat-button'>Dairy</button>
+        <button id='4' onClick={(e) => handleCategory(grainData, e.target.id)} className='cat-button'>Grains</button>
+        <button id='5' onClick={(e) => handleCategory(cannedData, e.target.id)} className='cat-button'>Canned</button>
+        <button id='6' onClick={(e) => handleCategory(condData, e.target.id)} className='cat-button'>Condiments</button>
+        <button id='7' onClick={(e) => handleCategory(bevData, e.target.id)} className='cat-button'>Beverages</button>
+        <button id='8' onClick={(e) => handleCategory(frozData, e.target.id)} className='cat-button'>Frozen</button>
+        <button id='9' onClick={(e) => handleCategory(snackData, e.target.id)} className='cat-button'>Snacks</button>
+        <button id='10' onClick={(e) => handleCategory(otherData, e.target.id)} className='cat-button'>Other</button>
       </div>
       <div className='pantry-grid'>
         {display.map((item) => (
@@ -107,6 +97,6 @@ const Grid = ({ handleItem }) => {
       <h1 className={flag ? 'hidden-txt' : 'blank-txt'}>Add your first pantry item...</h1>
     </div>
   )
-}
+};
 
 export default Grid;
