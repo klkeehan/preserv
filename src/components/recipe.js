@@ -267,6 +267,22 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                                                 </div>
                                             )}
                                         </Popup>
+                        <Popup trigger={<button className='help-button'><strong>help</strong></button>}modal nested>
+                                            {close => (
+                                                <div className='modal'>
+                                                <div className='content'>
+                                                    <div className='popup-text2'>
+                                                        The <div className='missing-icon'></div> indicates missing ingredients. Click the "shopping cart" button to add them to your shopping list!
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                        <button className='pink-hollow' onClick={() => {close()}}>Ok</button>
+                                                    </div>
+                                                    </div>
+                                            )
+
+                                            }
+                        </Popup>
                 </div>
             </div>
 
