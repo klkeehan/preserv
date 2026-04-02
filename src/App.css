@@ -726,15 +726,9 @@ textarea {
 }
 
 /*nutrition facts styling*/
-.nf-dropdown {
+.nutrition {
   display: flex;
   flex-direction: column;
-}
-
-.nf-toggle {
-  width: 353px;
-  display: flex;
-  justify-content: space-between;
 }
 
 .nf-block {
@@ -794,7 +788,6 @@ textarea {
 }
 
 .save-button {
-  position: absolute;
   bottom: 0;
   right: 0;
   margin-bottom: 90px;

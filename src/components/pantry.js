@@ -287,7 +287,7 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
               <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload' onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
               <button onClick={handleCapture} className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
           </div>
-          <button type='submit' className='save-button'>submit</button>
+          <button type='submit' className='save-button' style={{position:'absolute'}}>submit</button>
         </form>
       </div>
       <button className='close-button' onClick={() => setContent(pantryHome)}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
