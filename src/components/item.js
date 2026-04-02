@@ -25,8 +25,8 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
   const [perProt, setPerProt] = useState('');
 
   const [image, setImage] = useState(itemImg); //image for editing
-  const [url, setUrl] = useState(itemImg); //image url for state updating
 
+  let url = itemImg;
   let status = 3; //item status - 3/2/1 
   let flag = 0; //for image capture - 0 means cam not active, 1 cam is active
 
@@ -46,7 +46,9 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
         canvas.height = img.height * scale;
         const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        setUrl(canvas.toDataURL('image/jpeg', 0.7));
+        url = canvas.toDataURL('image/jpeg', 0.7);
+        console.log(image);
+        document.getElementById('item-image').src = url;
       };
     };
   };
@@ -320,7 +322,7 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
               <option value='other'>Other</option>
             </select></label><br></br>
             <p className='label2'>Image:</p>
-            <img className='edit-image' src={image} alt={itemName}></img><br></br>
+            <img className='edit-image' id='item-image' src={url} alt={itemName}></img><br></br>
             <div className='image-opts'>
               <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload' onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
               <button onClick={handleCapture} className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
