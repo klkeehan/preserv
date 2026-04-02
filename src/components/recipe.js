@@ -90,7 +90,6 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 instructions: instructions,
                 image: image
             });
-            console.log(response.data);
             setRecipesSet(response.data);
             getPage("home");
         } catch (error) {
@@ -103,7 +102,6 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
             const response = await axios.delete('https://students.gaim.ucf.edu/~ka822136/preserv/backend/recipes.php', {
                 data: {id: selectedRecipe.id}
             });
-            console.log(response.data);
             setRecipesSet(response.data);
             getPage("home");
         } catch (error) {
@@ -120,7 +118,6 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 instructions: instructions,
                 image: image
             });
-            console.log(response.data);
             setRecipesSet(response.data);
             getPage("home");
         } catch (error) {
@@ -145,7 +142,6 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                     quantity:measurement === 'none' ? quantity : 1,
 
             });
-                console.log(response.data);
             setShoppingList(response.data);
             }
 
@@ -159,7 +155,6 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
         const fetchRecipes = async () => {
             try {
                 const response = await axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/recipes.php');
-                console.log(response.data);
                 setRecipesSet(response.data);
             } catch (error) {console.error('Error fetching recipes:', error);}
         };
@@ -254,7 +249,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                         }));
                         getPage("edit");
                         }} style={{marginLeft:'10px'}}>Edit</button>
-                    <Popup  trigger={<button className="item-button">Delete Recipe</button>}modal nested>
+                    <Popup  trigger={<button className="item-button">Delete</button>}modal nested>
                                             {close => (
                                                 <div className='modal'>
                                                     <div className='content'>
@@ -267,7 +262,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                                                 </div>
                                             )}
                                         </Popup>
-                        <Popup trigger={<button className='help-button'><strong>help</strong></button>}modal nested>
+                        <Popup trigger={<button className='item-button'>help</button>}modal nested>
                                             {close => (
                                                 <div className='modal'>
                                                 <div className='content'>
@@ -491,7 +486,6 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
             {page === "view" && recipePage}
             {page === "edit" && recipeEdit}
             {page === "new" && recipeNew}
-
         </div>
     );
 }
