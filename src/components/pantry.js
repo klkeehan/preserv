@@ -8,9 +8,8 @@ import upload from '../assets/upload-icon.svg';
 import add from '../assets/add-icon.png';
 import Scanner from './scanner';
 import axios from 'axios';
-import Webcam from 'react-webcam';
 
-const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
+const Pantry = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
   /*
 // NOTIFICATIONS from the browser
   useEffect(() => {
@@ -55,11 +54,9 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
   }, []);
   */
 
-  const [upc, setUpc] = useState('');
   const [name, setName] = useState('');
-  const [apiImg, setApiImg] = useState('');
+  const [image, setImage] = useState('');
   let url = ('https://students.gaim.ucf.edu/~ka822136/preserv/src/assets/logomark.png');
-  let flag = 0; // for image capture - 0 means cam not active, 1 cam is active
   let status = 3;
 
   const handleItem = (item) => {
@@ -94,26 +91,6 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
       };
     };
   };
-
-  // taking item picture **taking image clears form data - needs to be fixed**
-  const handleExit = () => {
-    console.log('camera closed');
-  };
-
-  const constraints = {
-    width: 1280,
-    height: 720,
-    facingMode: 'environment'
-  };
-
-  const webcamRef = React.useRef(null);
-
-  const handleCapture = React.useCallback(() => {
-    flag = 1;
-    const imageSrc = webcamRef.current.getScreenshot();
-    url = imageSrc;
-    console.log(url);
-  }, [webcamRef]);
 
   //find day difference between current date and expiration date for item status
   function statusCalc(curDate, expDate) {
@@ -178,29 +155,29 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     };
   };
 
-  //add item via barcode scan
-  const handleScan = async () => {
-    const scanTxt = document.querySelector('#scanMsg');
+  //add item via barcode scan with info from barcodespider
+  const receiveUpc = async (upc) => {
+    console.log('received', upc);
     if(!upc) {
-      scanTxt.textContent = 'There was an error scanning the barcode. Please try again.';
-      return;
+      //scanTxt.textContent = 'There was an error scanning the barcode. Please try again.';
+      console.log('something went wrong :(');
     } else {
-
-    }
-
-    const response = await fetch(`https://api.barcodespider.com/v1/lookup?token=370c849d8af257375d9b&upc=${upc}`, {
-      method: 'GET',
-      mode: 'cors'
-    });
-    const data = await response.json();
-    const title = data.item_attributes.title;
-    const image2 = data.item_attributes.image;
-    setName(title);
-    setApiImg(image2);
-    setContent(scanForm);
-    return data;
+      const response = await fetch(`https://api.barcodespider.com/v1/lookup?token=370c849d8af257375d9b&upc=${upc}`, {
+        method: 'GET',
+        mode: 'cors'
+      });
+      const data = await response.json();
+      const title = data.item_attributes.title;
+      const image2 = data.item_attributes.image;
+      console.log('item name is', title);
+      console.log('item image link is', image2);
+      setName(title);
+      setImage(image2);
+      setContent(scanForm);
+    };
   };
 
+  //main pantry page jsx
   let pantryHome = (
     <div className='layout'>
       <Grid handleItem={handleItem} handlePantry={() => setContent(pantryHome)}/>
@@ -227,17 +204,6 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
 
   let pantryAdd = (
     <div>
-      <div className={flag === '0' ? 'cam' : 'hidden-div'}>
-        <button onClick={handleExit} className='green-button'>x</button>
-        <Webcam
-          width={1280}
-          height={720}
-          ref={webcamRef}
-          screenshotFormat="image/jpeg"
-          videoConstraints={constraints}      
-        />
-        <button onClick={handleCapture} className='green-button'>capture</button>
-      </div>
       <div className='item-page'>
         <h2>Pantry Add</h2>
         <div className='mode-bar'>
@@ -282,8 +248,9 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
           </select></label><br></br><br></br>
           <p className='label2'>Image:</p>
           <div className='image-opts'>
-              <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload' onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
-              <button onClick={handleCapture} className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
+            <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload' onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
+            <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'onChange={handleImageUpload}></input>
+            <button className='image-input' onClick={() => document.getElementById('camera-capture').click()}><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
           </div>
           <button type='submit' className='save-button' style={{position:'absolute'}}>submit</button>
         </form>
@@ -315,12 +282,11 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
           </g><defs><clipPath id="clip0_18_56"><rect width="79" height="60" fill="var(--green)"/></clipPath></defs></svg>
         </button>
       </div>
-      <Scanner onDetected={(code) => setUpc(code)}/>
-      <button onClick={handleScan} className='green-button' style={{position:'absolute', bottom:'0'}}>scan</button>
-      <p id='scanMsg' className='err-txt' style={{position:'absolute', bottom:'0', marginLeft:'70px'}}></p>
+      <Scanner sendUpc={receiveUpc}/>
     </div>
   );
 
+  /*
   let scanForm = (
     <div className='item-page'>
       <h1 style={{marginLeft:'0px'}}>Item Add</h1>
@@ -350,6 +316,18 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
       </form>
     </div>
   );
+  */
+
+  let scanForm = (
+    <div className='item-page'>
+      <h1 style={{marginLeft:'0px'}}>Item Add</h1>
+      <div className='spacer' style={{height:'130px'}}></div>
+      <input defaultValue={name} type='text' />
+      <p>{name}</p>
+      <p className='label2'>Image:</p>
+      <img className='edit-image' id='scanned-image' src={image} alt='scanned item'></img>
+    </div>
+  )
 
   return (
     <div>

@@ -53,33 +53,11 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
     };
   };
 
-  //taking item picture
-  const handleExit = () => {
-    flag = 0;
-    console.log('camera closed');
-  };
-
-  const constraints = {
-    width: 1280,
-    height: 720,
-    facingMode: 'environment'
-  };
-  const webcamRef = React.useRef(null);
-  const handleCapture = React.useCallback(() => {
-    flag = 1;
-    const imageSrc = webcamRef.current.getScreenshot();
-    url = imageSrc;
-    console.log(url);
-    setImage(url);
-
-  }, [webcamRef]);
-
-  // nutrition facts fetch from fatsecret api
+  //nutrition facts fetch from fatsecret api
   const handleNutrition = async () => {
     let options = {
       method: 'POST',
       url: 'https://oauth.fatsecret.com/connect/token',
-      method: 'POST',
       auth: {
         user: '6fbea50e127d4dc086815c4d2f59b736',
         password: 'dda533f392f741188f19c16dfe3ca86f'
@@ -96,9 +74,7 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
     console.log(response);
   };
 
-  // useEffect(() => {handleNutrition()}, []);
-
-  // find day difference between current date and expiration date for item status
+  //find day difference between current date and expiration date for item status
   function statusCalc(curDate, expDate) {
     let start = new Date(curDate);
     let end = new Date(expDate);
@@ -154,7 +130,7 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
         image: url,
         category: formData.get('category')
       };
-      const response = await axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', formValues2);
+      await axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', formValues2);
       handlePantry();
     };
   };
@@ -162,7 +138,7 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
   //deleting item from pantry
   const handleDelete = async (e) => {
     e.preventDefault();
-    const response = await axios.delete('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', {data: {id: itemID}});
+    await axios.delete('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', {data: {id: itemID}});
     handlePantry();
   };
   
@@ -174,7 +150,7 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
       name: formData.get('name'),
       quantity: formData.get('add-quant')
     };
-    const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/shopping.php', formValues);
+    await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/shopping.php', formValues);
     handlePantry();
   };
 
@@ -288,17 +264,6 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
   //item edit page jsx
   let itemEdit = (
     <div>
-      <div className={flag === '0' ? 'cam' : 'hidden-div'}>
-        <button onClick={handleExit} className='green-button'>x</button>
-        <Webcam
-          width={1280}
-          height={720}
-          ref={webcamRef}
-          screenshotFormat="image/jpeg"
-          videoConstraints={constraints}      
-        />
-        <button onClick={handleCapture} className='green-button'>capture</button>
-      </div>
       <div className='item-page'>
         <h2>Item Edit</h2>
           <div className='spacer' style={{height:'120px'}}></div>
@@ -325,7 +290,8 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
             <img className='edit-image' id='item-image' src={url} alt={itemName}></img><br></br>
             <div className='image-opts'>
               <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload' onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
-              <button onClick={handleCapture} className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
+              <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'onChange={handleImageUpload}></input>
+              <button className='image-input' onClick={() => document.getElementById('camera-capture').click()}><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
             </div>
             <button type='submit' className='save-button' style={{position:'absolute'}}>Save Item</button>
           </form>

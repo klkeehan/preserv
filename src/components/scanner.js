@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import Quagga from '@ericblade/quagga2';
 
-const BarcodeScanner = ({ onDetected }) => {
+const BarcodeScanner = ({ onDetected, sendUpc }) => {
   const scannerRef = useRef(null);
 
   useEffect(() => {
@@ -40,14 +40,15 @@ const BarcodeScanner = ({ onDetected }) => {
     Quagga.onDetected((result) => {
       const code = result.codeResult.code;
       if (onDetected) {onDetected(code)};
-      console.log(code, 'was found');
+      sendUpc(code);
+      Quagga.stop();
     });
 
     return () => {
       Quagga.stop();
       Quagga.offDetected();
     };
-  }, [onDetected]);
+  }, [onDetected, sendUpc]);
 
   return (
     <div ref={scannerRef} style={{position: 'relative', width: '100%'}}></div>
