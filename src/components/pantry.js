@@ -11,6 +11,7 @@ import axios from 'axios';
 import Webcam from 'react-webcam';
 
 const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
+  /*
 // NOTIFICATIONS from the browser
   useEffect(() => {
     //To fix the spam (no canned meat)
@@ -52,6 +53,7 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     };
     pingNotifications();
   }, []);
+  */
 
   const [upc, setUpc] = useState('');
   const [name, setName] = useState('');
@@ -62,23 +64,17 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
 
   const handleItem = (item) => {
     if (item.item_status == 1) {
-      setContent(
-        <Item itemID={item.id} itemImg={item.image} itemStatus={item.item_status} itemString={'EXPIRED'} itemName={item.name} itemQuantity={item.quantity} itemPurch={item.date_purchase} itemExp={item.date_expire} itemCat={item.category} handlePantry={() => setContent(pantryHome)}/>
-      );
+      setContent(<Item itemID={item.id} itemImg={item.image} itemStatus={item.item_status} itemString={'EXPIRED'} itemName={item.name} itemQuantity={item.quantity} itemPurch={item.date_purchase} itemExp={item.date_expire} itemCat={item.category} handlePantry={() => setContent(pantryHome)}/>);
     }
     else if (item.item_status == 2) {
-      setContent(
-        <Item itemID={item.id} itemImg={item.image} itemStatus={item.item_status} itemString={'USE SOON - NEAR EXPIRATION'} itemName={item.name} itemQuantity={item.quantity} itemPurch={item.date_purchase} itemExp={item.date_expire} itemCat={item.category} handlePantry={() => setContent(pantryHome)}/>
-      );
+      setContent(<Item itemID={item.id} itemImg={item.image} itemStatus={item.item_status} itemString={'USE SOON - NEAR EXPIRATION'} itemName={item.name} itemQuantity={item.quantity} itemPurch={item.date_purchase} itemExp={item.date_expire} itemCat={item.category} handlePantry={() => setContent(pantryHome)}/>);
     }
     else {
-      setContent(
-        <Item itemID={item.id} itemImg={item.image} itemStatus={item.item_status} itemString={'FRESH'} itemName={item.name} itemQuantity={item.quantity} itemPurch={item.date_purchase} itemExp={item.date_expire} itemCat={item.category} handlePantry={() => setContent(pantryHome)}/>
-      );
+      setContent(<Item itemID={item.id} itemImg={item.image} itemStatus={item.item_status} itemString={'FRESH'} itemName={item.name} itemQuantity={item.quantity} itemPurch={item.date_purchase} itemExp={item.date_expire} itemCat={item.category} handlePantry={() => setContent(pantryHome)}/>);
     };
   };
 
-  // uploading item picture
+  //uploading item picture
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -119,7 +115,7 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     console.log(url);
   }, [webcamRef]);
 
-  // find day difference between current date and expiration date for item status
+  //find day difference between current date and expiration date for item status
   function statusCalc(curDate, expDate) {
     let start = new Date(curDate);
     let end = new Date(expDate);
@@ -128,6 +124,7 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     return diff2;
   };
 
+  //add item via form data
   const handleAdd = async (e) => {
     let validFlag = 0;
 
@@ -181,6 +178,7 @@ const Pantry = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     };
   };
 
+  //add item via barcode scan
   const handleScan = async () => {
     const scanTxt = document.querySelector('#scanMsg');
     if(!upc) {

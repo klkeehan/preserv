@@ -30,7 +30,7 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
   let status = 3; //item status - 3/2/1 
   let flag = 0; //for image capture - 0 means cam not active, 1 cam is active
 
-  // uploading item picture
+  //uploading item picture
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -53,7 +53,7 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
     };
   };
 
-  // taking item picture
+  //taking item picture
   const handleExit = () => {
     flag = 0;
     console.log('camera closed');
