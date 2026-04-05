@@ -83,18 +83,17 @@ const Grid = ({ handleItem }) => {
         <button id='10' onClick={(e) => handleCategory(otherData, e.target.id)} className='cat-button'>Other</button>
       </div>
       <div className='pantry-grid'>
-        {flag === true && display.map((item) => (
+        {display.length > 0 ? (display.map((item) => (
           <div key={item.id} className='pantry-item'>
             <button onClick={() => handleItem(item)} className='pantry-button'><img src={item.image} className={item.item_status === '3' ? 'pantry-fresh' : item.item_status === '1' ? 'pantry-exp' : 'pantry-soon'} alt={item.name}></img>
             <p className='pantry-overlay'>{item.name}</p>
             </button>
           </div>
-        ))}
+        ))) : <h1 className={'blank-txt'}>Add your first pantry item...</h1>}
       </div>
       <div className='spacer' style={{height:'220px'}}>
         <p className='hidden-txt'>hidden</p>
       </div>
-      <h1 className={flag ? 'hidden-txt' : 'blank-txt'}>Add your first pantry item...</h1>
     </div>
   )
 };
