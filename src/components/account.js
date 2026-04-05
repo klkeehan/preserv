@@ -7,6 +7,7 @@ import 'reactjs-popup/dist/index.css';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import x from '../assets/close.svg';
+import add from '../assets/add-icon.png';
 import axios from 'axios';
 
 const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad}) => {
@@ -218,7 +219,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
         // console.log("selectedUser:", selectedUser);
         if (alexboiOwner) {
             if (theOwner) {
-                return <Popup contentStyle={{width:'273px', height:'210px'}} trigger={<button className="green-button" style={{marginTop:'10px'}}>Leave Household</button>}modal nested>
+                return <Popup contentStyle={{width:'273px', height:'210px'}} trigger={<button className="kick-leave-button">Leave Household</button>}modal nested>
                     {close => (
                         <div className='modal'>
                             <div className='content'>
@@ -233,7 +234,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
                      </Popup>
                 // <button className="kick-leave-button" onClick={() => {setInHousehold(false); getPage("household");}}>Leave Household</button>
             } else {
-                return <Popup contentStyle={{width:'273px', height:'210px'}} trigger={<button className="green-button" style={{marginTop:'10px'}}>Remove From Household</button>}modal nested>
+                return <Popup contentStyle={{width:'273px', height:'210px'}} trigger={<button className="kick-leave-button">Remove From Household</button>}modal nested>
                         {close => (
                             <div className='modal'>
                                 <div className='content'>
@@ -250,18 +251,20 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
             }
         }
         if (!alexboiOwner && isSelf) {
-            return <Popup trigger=
+            return <Popup
+                        contentStyle={{width:'273px', height:'210px'}} 
+                        trigger=
                         {<button className="kick-leave-button">Leave Household</button>}
                         modal nested>
                         {
                             close => (
                                 <div className='modal'>
                                     <div className='content'>
-                                        <p>Leave your current household?</p>
+                                        <p className='popup-text2'>Leave your current household?</p>
                                     </div>
                                 <div className="pop-up-buttons">
-                                    <button onClick={() => {leaveHousehold(); close();}}>Leave Household</button>
-                                    <button onClick={() => {close()}}>Cancel</button>
+                                    <button className='pink-solid' onClick={() => {leaveHousehold(); close();}}>Leave Household</button><br></br>
+                                    <button className='pink-hollow' onClick={() => {close()}}>Cancel</button>
                                 </div>
                             </div>
                             )
@@ -471,6 +474,9 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
     let householdCreated = (
         <div>
             <h1>Household</h1>
+            {permission === "owner" && (
+                    <button className='add-button-household' onClick={() => getPage("add")}><img src={add} alt='add button' style={{width:'42px', height:'43px'}}></img></button>
+                )}
             {!householdData && <p>Loading...</p>}
             {householdData && (
             <div className='household-contents'>
@@ -496,9 +502,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
                         </div>
                     ))}
                 </div>
-                {permission === "owner" && (
-                    <button className="green-button" onClick={() => getPage("add")}>Add Member</button>
-                )}
+            
             </div>
             )}
             <button className="close-button" onClick={() => getPage("account")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>

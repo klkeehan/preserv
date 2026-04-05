@@ -1086,6 +1086,8 @@ textarea {
 .profile-pic {
   width: 137px;
   height: 137px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .profile-settings {
@@ -1306,6 +1308,8 @@ aside {
 .member-list .household-profile-pic {
   width: 50px;
   height: 50px;
+  border-radius: 50%;
+  object-fit:cover;
   margin-right: 10px;
 }
 
@@ -1402,4 +1406,26 @@ aside {
 }
 .hide-this-input-please {
     display:none;
+}
+.kick-leave-button {
+    background: none;
+    border: none;
+    padding: 0;
+    color:#FF006A;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: left;
+    display: block;
+    margin-top: 100px;
+}
+.add-button-household {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: transparent;
+  border: 0px none;
+  margin-top: 58px;
+  margin-right: 19px;
+  z-index: 10;
 }
