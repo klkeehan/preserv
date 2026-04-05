@@ -83,7 +83,7 @@ const Grid = ({ handleItem }) => {
         <button id='10' onClick={(e) => handleCategory(otherData, e.target.id)} className='cat-button'>Other</button>
       </div>
       <div className='pantry-grid'>
-        {Array.isArray && display.map((item) => (
+        {flag === true && display.map((item) => (
           <div key={item.id} className='pantry-item'>
             <button onClick={() => handleItem(item)} className='pantry-button'><img src={item.image} className={item.item_status === '3' ? 'pantry-fresh' : item.item_status === '1' ? 'pantry-exp' : 'pantry-soon'} alt={item.name}></img>
             <p className='pantry-overlay'>{item.name}</p>
