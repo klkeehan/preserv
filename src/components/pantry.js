@@ -54,8 +54,8 @@ const Pantry = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
   }, []);
   */
 
-  const [name, setName] = useState('');
-  const [image, setImage] = useState('');
+  let [name, setName] = useState('');
+  let [image, setImage] = useState('');
   let url = ('https://students.gaim.ucf.edu/~ka822136/preserv/src/assets/logomark.png');
   let status = 3;
 
@@ -159,7 +159,6 @@ const Pantry = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
   const receiveUpc = async (upc) => {
     console.log('received', upc);
     if(!upc) {
-      //scanTxt.textContent = 'There was an error scanning the barcode. Please try again.';
       console.log('something went wrong :(');
     } else {
       const response = await fetch(`https://api.barcodespider.com/v1/lookup?token=370c849d8af257375d9b&upc=${upc}`, {
@@ -171,8 +170,8 @@ const Pantry = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
       const image2 = data.item_attributes.image;
       console.log('item name is', title);
       console.log('item image link is', image2);
-      setName(title);
-      setImage(image2);
+      setName(data.item_attributes.title);
+      setImage(data.item_attributes.image);
       setContent(scanForm);
     };
   };
@@ -286,18 +285,17 @@ const Pantry = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
     </div>
   );
 
-  /*
   let scanForm = (
     <div className='item-page'>
       <h1 style={{marginLeft:'0px'}}>Item Add</h1>
       <div className='spacer' style={{height:'130px'}}></div>
       <form onSubmit={handleAdd}>
-        <label className='label2'>Item Name: <br></br><input name='name' type='text' defaultValue={name} className='item-input'>{name}</input></label><br></br>
+        <label className='label2'>Item Name: <br></br><input name='name' type='text' defaultValue={name} className='item-input'></input></label><br></br>
         <label className='label2'>Amount: <br></br><input name='quantity' type='number' defaultValue='1' min='1' className='item-input' style={{width:'80px'}}/></label><br></br>
         <p id='pDateMsg' className='err-txt' style={{marginLeft:'0px', marginTop:'0px'}}></p>        
-        <label className='label2'>Date Purchased: <br></br><input name='date_purchase' type='text' className='item-input' /></label><br></br>
+        <label className='label2'>Date Purchased: <br></br><input name='date_purchase' type='date' className='item-input' /></label><br></br>
         <p id='eDateMsg' className='err-txt' style={{marginLeft:'0px', marginTop:'0px'}}></p>
-        <label className='label2'>Expiration Date: <br></br><input name='date_expire' type='text' className='item-input' /></label><br></br>
+        <label className='label2'>Expiration Date: <br></br><input name='date_expire' type='date' className='item-input' /></label><br></br>
         <label className='label2'>Item Type: <br></br><select name='category'>
           <option value='produce'>Produce</option>
           <option value='proteins'>Proteins</option>
@@ -311,23 +309,12 @@ const Pantry = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
           <option value='other'>Other</option>
         </select></label><br></br><br></br>
         <p className='label2'>Image:</p>
-        <img className='edit-image' src={apiImg} alt='scanned item'></img>
-        <button type='submit' className='save-button'>submit</button>
+        <img className='edit-image' src={image} alt='scanned item'></img>
+        <button type='submit' className='save-button' style={{position:'absolute'}}>submit</button>
       </form>
+      <button className='close-button' onClick={() => setContent(pantryHome)}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
     </div>
   );
-  */
-
-  let scanForm = (
-    <div className='item-page'>
-      <h1 style={{marginLeft:'0px'}}>Item Add</h1>
-      <div className='spacer' style={{height:'130px'}}></div>
-      <input defaultValue={name} type='text' />
-      <p>{name}</p>
-      <p className='label2'>Image:</p>
-      <img className='edit-image' id='scanned-image' src={image} alt='scanned item'></img>
-    </div>
-  )
 
   return (
     <div>

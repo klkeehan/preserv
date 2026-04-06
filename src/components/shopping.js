@@ -71,7 +71,7 @@ const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
       <h1>My Shopping List</h1>
       <h1 className={flag ? 'hidden-txt' : 'blank-txt'} style={{marginTop:'120px', marginLeft:'30px'}}>Add your first shopping list item...</h1>
       <div className='shopping-list'>
-        {Array.isArray && items.map((item) => (
+        {(flag) && items.map((item) => (
           <div key={item.id}>
             <div className='shopping-item'>
               <aside className='shopping-info'>

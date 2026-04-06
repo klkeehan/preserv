@@ -54,7 +54,7 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
   };
 
   //nutrition facts fetch from fatsecret api
-  const handleNutrition = async () => {
+  const getToken = async () => {
     let options = {
       method: 'POST',
       url: 'https://oauth.fatsecret.com/connect/token',
@@ -65,7 +65,7 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
       headers: {'content-type': 'application/x-www-form-urlencoded'},
       form: {
         'grant_type': 'client_credentials',
-        'scope': 'barcode'
+        'scope': 'basic'
       },
       json: true
     };
@@ -205,6 +205,7 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
           <p className='item-info'>{itemExp}</p>
           <h3>Category:</h3>
           <p className='item-info'>{itemCat}</p>
+          <button onClick={() => getToken()}>click</button>
           <div id='nutrition' className='nutrition'>
             <h3>Nutrition Facts</h3>
             <div className='nf-block'>

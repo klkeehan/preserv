@@ -6,7 +6,6 @@ const Grid = ({ handleItem }) => {
   const [items, setItems] = useState([]);
   const [display, setDisplay] = useState([]);
   const [catDisplay, setCatDisplay] = useState([]);
-  const [flag, setFlag] = useState(false);
 
   //fetching pantry items
   const fetchItems = async () => {
@@ -14,8 +13,6 @@ const Grid = ({ handleItem }) => {
       const response = await axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php');
       setItems(response.data);
       setDisplay(response.data);
-      if(response.data.length > 0) {setFlag(true)};
-      if(response.data.length === 0) {setFlag(false)};
     } catch (error) {console.error('Error fetching pantry items:', error)};
   };
 
