@@ -7,7 +7,6 @@ axios.defaults.withCredentials = true;
 
 const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
   const [items, setItems] = useState([]);
-  const [flag, setFlag] = useState(false); // false=no items // true=at least 1 item
   const [checkItems, setCheckItems] = useState([]);
 
   const ref = useRef();
@@ -17,8 +16,6 @@ const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
     try {
       const response = await axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/shopping.php');
       setItems(response.data);
-      if(response.data.length > 0) {setFlag(true)};
-      if(response.data.length === 0) {setFlag(false)};
     } catch (error) {console.error('Error fetching shopping list:', error);}
   };
 
@@ -69,9 +66,9 @@ const Shopping = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
   let shoppingPage = (
     <div className='layout'>
       <h1>My Shopping List</h1>
-      <h1 className={flag ? 'hidden-txt' : 'blank-txt'} style={{marginTop:'120px', marginLeft:'30px'}}>Add your first shopping list item...</h1>
+      {Array.isArray(items) && items.length === 0 && (<h1 className='blank-txt' style={{marginTop:'120px', marginLeft:'30px'}}>Add your first shopping list item...</h1>)}
       <div className='shopping-list'>
-        {(flag) && items.map((item) => (
+        {Array.isArray(items) && items.length > 0 && items.map((item) => (
           <div key={item.id}>
             <div className='shopping-item'>
               <aside className='shopping-info'>
