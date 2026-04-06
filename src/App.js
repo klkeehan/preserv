@@ -15,7 +15,7 @@ function App() {
     axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/session.php')
       .then((response) => {
         if (response.data.user_id !== null) {
-          loadShopping();
+          loadRecipe();
         }
       })
       .catch((error) => {console.error("Session check error:", error);});
@@ -63,7 +63,7 @@ function App() {
     if(validFlag === 4) {
       const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/signup.php', formValues);
       console.log(response);
-      loadShopping();
+      loadRecipe();
     };
   };
 
@@ -81,7 +81,7 @@ function App() {
       const loginTxt = document.querySelector('#loginMsg');
       loginTxt.textContent = 'Enter a valid username and password'
     } else {
-      loadShopping();
+      loadRecipe();
     }
   };
 
