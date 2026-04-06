@@ -53,26 +53,10 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
     };
   };
 
-  //nutrition facts fetch from fatsecret api
-  const getToken = async () => {
-    let options = {
-      method: 'POST',
-      url: 'https://oauth.fatsecret.com/connect/token',
-      auth: {
-        user: '6fbea50e127d4dc086815c4d2f59b736',
-        password: 'dda533f392f741188f19c16dfe3ca86f'
-      },
-      headers: {'content-type': 'application/x-www-form-urlencoded'},
-      form: {
-        'grant_type': 'client_credentials',
-        'scope': 'basic'
-      },
-      json: true
-    };
-
-    const response = await axios.get(options);
-    console.log(response);
-  };
+  //nutrition facts fetch
+  const handleNutrition = () => {
+    console.log('a');
+  }
 
   //find day difference between current date and expiration date for item status
   function statusCalc(curDate, expDate) {
@@ -205,7 +189,7 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
           <p className='item-info'>{itemExp}</p>
           <h3>Category:</h3>
           <p className='item-info'>{itemCat}</p>
-          <button onClick={() => getToken()}>click</button>
+          <button onClick={() => handleNutrition()}>click</button>
           <div id='nutrition' className='nutrition'>
             <h3>Nutrition Facts</h3>
             <div className='nf-block'>

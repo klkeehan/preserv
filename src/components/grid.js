@@ -6,17 +6,42 @@ const Grid = ({ handleItem }) => {
   const [items, setItems] = useState([]);
   const [display, setDisplay] = useState([]);
   const [catDisplay, setCatDisplay] = useState([]);
+  const [newItems, setNewItems] = useState([]);
+  //category filters for data mapping
+  const [prodData, setProdData] = useState();
+  const [proData, setProData] = useState();
+  const [dairyData, setDairyData] = useState();
+  const [grainData, setGrainData] = useState();
+  const [cannedData, setCannedData] = useState();
+  const [condData, setCondData] = useState();
+  const [bevData, setBevData] = useState();
+  const [frozData, setFrozData] = useState();
+  const [snackData, setSnackData] = useState();
+  const [otherData, setOtherData] = useState();
 
   //fetching pantry items
   const fetchItems = async () => {
     try {
       const response = await axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php');
       setItems(response.data);
+      console.log(items.length);
+      if (items.length > 0) {
+        setProdData(items.filter((item) => item.category === 'Produce'));
+        setProData(items.filter((item) => item.category === 'Proteins'));
+        setDairyData(items.filter((item) => item.category === 'Dairy'));
+        setGrainData(items.filter((item) => item.category === 'Grains'));
+        setCannedData(items.filter((item) => item.category === 'Canned'));
+        setCondData(items.filter((item) => item.category === 'Condiments'));
+        setBevData(items.filter((item) => item.category === 'Beverages'));
+        setFrozData(items.filter((item) => item.category === 'Frozen'));
+        setSnackData(items.filter((item) => item.category === 'Snacks'));
+        setOtherData(items.filter((item) => item.category === 'Other'));
+      };
       setDisplay(response.data);
     } catch (error) {console.error('Error fetching pantry items:', error)};
   };
 
-  useEffect(() => {fetchItems()}, []);
+  useEffect(() => {fetchItems()}, [items.length]);
 
   //search bar functionality
   const [search, setSearch] = useState('');
@@ -25,25 +50,13 @@ const Grid = ({ handleItem }) => {
     if (e.target.value.length > 0) {
       const searchInput = e.target.value;
       setSearch(searchInput);
-      const newItems = catDisplay.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
+      setNewItems(catDisplay.filter((item) => item.name.toLowerCase().includes(search.toLowerCase())));
       setDisplay(newItems)
     } else {
       setSearch('');
       setDisplay(catDisplay);
     }
   };
-
-  //category filters for data mapping
-  const prodData = items.filter((item) => item.category === 'Produce');
-  const proData = items.filter((item) => item.category === 'Proteins');
-  const dairyData = items.filter((item) => item.category === 'Dairy');
-  const grainData = items.filter((item) => item.category === 'Grains');
-  const cannedData = items.filter((item) => item.category === 'Canned');
-  const condData = items.filter((item) => item.category === 'Condiments');
-  const bevData = items.filter((item) => item.category === 'Beverages');
-  const frozData = items.filter((item) => item.category === 'Frozen');
-  const snackData = items.filter((item) => item.category === 'Snacks');
-  const otherData = items.filter((item) => item.category === 'Other');
 
   //category menu buttons styling and display change
   function handleCategory(type, id) {
@@ -81,7 +94,7 @@ const Grid = ({ handleItem }) => {
       </div>
       {Array.isArray(items) && items.length === 0 && (<h1 className={'blank-txt'}>Add your first pantry item...</h1>)}
       <div className='pantry-grid'>
-        {Array.isArray(display) && (display.map((item) => (
+        {Array.isArray(display) && items.length > 0 && (display.map((item) => (
           <div key={item.id} className='pantry-item'>
             <button onClick={() => handleItem(item)} className='pantry-button'><img src={item.image} className={item.item_status === '3' ? 'pantry-fresh' : item.item_status === '1' ? 'pantry-exp' : 'pantry-soon'} alt={item.name}></img>
             <p className='pantry-overlay'>{item.name}</p>
