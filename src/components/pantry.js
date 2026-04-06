@@ -161,18 +161,20 @@ const Pantry = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
     if(!upc) {
       console.log('something went wrong :(');
     } else {
-      const response = await fetch(`https://api.barcodespider.com/v1/lookup?token=370c849d8af257375d9b&upc=${upc}`, {
-        method: 'GET',
-        mode: 'cors'
-      });
-      const data = await response.json();
-      const title = data.item_attributes.title;
-      const image2 = data.item_attributes.image;
-      console.log('item name is', title);
-      console.log('item image link is', image2);
-      setName(data.item_attributes.title);
-      setImage(data.item_attributes.image);
-      setContent(scanForm);
+      try {
+        const response = await fetch(`https://api.barcodespider.com/v1/lookup?token=370c849d8af257375d9b&upc=${upc}`, {
+          method: 'GET',
+          mode: 'cors'
+        });
+        const data = await response.json();
+        const title = data.item_attributes.title;
+        const image2 = data.item_attributes.image;
+        console.log('item name is', title);
+        console.log('item image link is', image2);
+        setName(data.item_attributes.title);
+        setImage(data.item_attributes.image);
+        setContent(scanForm);
+      } catch (error) {document.getElementById('scan-msg').textContent = ('something went wrong with the API, please try again later');};
     };
   };
 
@@ -281,6 +283,7 @@ const Pantry = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
           </g><defs><clipPath id="clip0_18_56"><rect width="79" height="60" fill="var(--green)"/></clipPath></defs></svg>
         </button>
       </div>
+      <p id='scan-msg' className='err-txt' style={{position:'absolute', marginTop:'180px'}}></p>
       <Scanner sendUpc={receiveUpc}/>
     </div>
   );
