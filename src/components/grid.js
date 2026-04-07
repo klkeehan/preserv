@@ -24,7 +24,6 @@ const Grid = ({ handleItem }) => {
     try {
       const response = await axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php');
       setItems(response.data);
-      console.log(items.length);
       if (items.length > 0) {
         setProdData(items.filter((item) => item.category === 'Produce'));
         setProData(items.filter((item) => item.category === 'Proteins'));

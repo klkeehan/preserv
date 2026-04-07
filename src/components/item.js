@@ -9,21 +9,6 @@ import upload from '../assets/upload-icon.svg';
 import Webcam from "react-webcam";
 
 const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, itemPurch, itemExp, itemCat, handlePantry }) => {
-  //nutrition facts state variables
-  const [servingSize, setServingSize] = useState('');
-  const [servingAmount, setServingAmount] = useState('');
-  const [cals, setCals] = useState('');
-  const [fat, setFat] = useState('');
-  const [perFat, setPerFat] = useState('');
-  const [chol, setChol] = useState('');
-  const [perChol, setPerChol] = useState('');
-  const [sod, setSod] = useState('');
-  const [perSod, setPerSod] = useState('');
-  const [carb, setCarb] = useState('');
-  const [perCarb, setPerCarb] = useState('');
-  const [prot, setProt] = useState('');
-  const [perProt, setPerProt] = useState('');
-
   let url = itemImg;
   let status = 3; //item status - 3/2/1
 
@@ -49,9 +34,13 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
     };
   };
 
+  useEffect(() => {
+    handleNutrition();
+  }, []);
+
   //nutrition facts fetch
   const handleNutrition = async () => {
-    const key = process.env.NUTRITION_API_KEY;
+    const key = process.env.REACT_APP_NUTRITION_API_KEY;
     const query = itemName;
     try {
       const response = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${key}&query=${query}`, {
@@ -59,9 +48,18 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
       });
       const data = await response.json();
       console.log(data);
-      //const datapoint = data.foods[0].foodNutrients[0].nutrientName;
-      //console.log(datapoint);
-    } catch (err) {console.error('something went wrong:', err);}
+      const size = data.foods[0].servingSize;
+      const sizeUnit = data.foods[0].servingSizeUnit;
+      const calories = data.foods[0].foodNutrients[3].value;
+      const fat = data.foods[0].foodNutrients[1].value;
+      const protein = data.foods[0].foodNutrients[0].value;
+      const carb = data.foods[0].foodNutrients[2].value;
+      if (!size.isNaN) {document.getElementById('serving-size').textContent = size+sizeUnit};
+      document.getElementById('calories').textContent = calories;
+      document.getElementById('fat').textContent = fat+'g';
+      document.getElementById('protein').textContent = protein+'g';
+      document.getElementById('carb').textContent = carb+'g';
+    } catch (err) {document.getElementById('nutrition-info').textContent = 'Your item either produced no results from our nutrition API or there was an error fetching data from the API. Please check back later.';}
   };
 
   //find day difference between current date and expiration date for item status
@@ -195,54 +193,33 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
           <p className='item-info'>{itemExp}</p>
           <h3>Category:</h3>
           <p className='item-info'>{itemCat}</p>
-          <button onClick={() => handleNutrition()}>click</button>
+          <p className='nf-small' style={{fontSize:'16px'}} id='nutrition-info'></p>
           <div id='nutrition' className='nutrition'>
             <h3>Nutrition Facts</h3>
             <div className='nf-block'>
               <div className='nf-row'>
                 <p className='nf-header'>Serving Size</p>
-                <p className='nf-quant'>{servingSize}</p>
-              </div>
-              <div className='nf-row'>
-                <p className='nf-header'>Amount Per Serving</p>
-                <p className='nf-quant'>{servingAmount}</p>
+                <p className='nf-quant' id='serving-size'></p>
               </div>
               <div className='nf-row'>
                 <h3>Calories</h3>
-                <h3 style={{color:'var(--black)'}}>{cals}</h3>
-              </div>
-              <div className='nf-row'>
-                <p className='nf-header'></p>
-                <p className='nf-quant'>% Daily Value</p>
+                <h3 style={{color:'var(--black)'}} id='calories'></h3>
               </div>
               <div className='nf-row'>
                 <p className='nf-header'>Total Fat</p>
-                <p className='nf-header'>{fat}</p>
-                <p className='nf-quant'>{perFat}</p>
-              </div>
-              <div className='nf-row'>
-                <p className='nf-header'>Cholesterol</p>
-                <p className='nf-header'>{chol}</p>
-                <p className='nf-quant'>{perChol}</p>
-              </div>
-              <div className='nf-row'>
-                <p className='nf-header'>Sodium</p>
-                <p className='nf-header'>{sod}</p>
-                <p className='nf-quant'>{perSod}</p>
+                <p className='nf-header' id='fat'></p>
               </div>
               <div className='nf-row'>
                 <p className='nf-header'>Total Carbohydrate</p>
-                <p className='nf-header'>{carb}</p>
-                <p className='nf-quant'>{perCarb}</p>
+                <p className='nf-header' id='carb'></p>
               </div>
               <div className='nf-row'>
                 <p className='nf-header'>Protein</p>
-                <p className='nf-header'>{prot}</p>
-                <p className='nf-quant'>{perProt}</p>
+                <p className='nf-header' id='protein'></p>
               </div>
               <div className='nf-line'></div>
-                <p className='nf-small'>The % Daily Value (DV) tells you how much a nutrient in a serving of food contributes to a daily diet. 2,000 calories a day is used for general nutrition advice.</p>
-                <div className='spacer' style={{height:'50px'}}></div>
+                <p className='nf-small'>Nutrition data may be inaccurate and can depend on the specificity of the item name. Please verify needed information.</p>
+                <div className='spacer' style={{height:'60px'}}></div>
               </div>
             </div>
           </div>

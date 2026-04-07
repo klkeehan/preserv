@@ -780,7 +780,8 @@ textarea {
   font-family: manrope;
   font-size: 12px;
   font-weight: 400;
-  color: var(--black);
+  font-style: italic;
+  color: var(--pink);
 }
 
 .arrow {
