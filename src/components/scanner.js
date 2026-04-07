@@ -51,7 +51,7 @@ const BarcodeScanner = ({ onDetected, sendUpc }) => {
   }, [onDetected, sendUpc]);
 
   return (
-    <div ref={scannerRef} style={{position: 'relative', width: '100%'}}></div>
+    <div ref={scannerRef} style={{position: 'relative', width: '100%', marginTop:'200px'}}></div>
   );
 }
 
