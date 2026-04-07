@@ -1,16 +1,20 @@
 import '../App.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Component } from 'react';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import x from '../assets/close.svg';
 import camera from '../assets/camera-icon.svg';
 import upload from '../assets/upload-icon.svg';
-import Webcam from "react-webcam";
 
 const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, itemPurch, itemExp, itemCat, handlePantry }) => {
   let url = itemImg;
   let status = 3; //item status - 3/2/1
+  const [edit, setEdit] = useState(false); //false=content is set to item page //true=content is set to item edit
+
+  useEffect(() => {
+    handleNutrition();
+  }, []);
 
   //uploading item picture
   const handleImageUpload = (e) => {
@@ -34,32 +38,30 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
     };
   };
 
-  useEffect(() => {
-    handleNutrition();
-  }, []);
-
   //nutrition facts fetch
   const handleNutrition = async () => {
     const key = process.env.REACT_APP_NUTRITION_API_KEY;
     const query = itemName;
-    try {
-      const response = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${key}&query=${query}`, {
-        method: 'GET'
-      });
-      const data = await response.json();
-      console.log(data);
-      const size = data.foods[0].servingSize;
-      const sizeUnit = data.foods[0].servingSizeUnit;
-      const calories = data.foods[0].foodNutrients[3].value;
-      const fat = data.foods[0].foodNutrients[1].value;
-      const protein = data.foods[0].foodNutrients[0].value;
-      const carb = data.foods[0].foodNutrients[2].value;
-      if (!size.isNaN) {document.getElementById('serving-size').textContent = size+sizeUnit};
-      document.getElementById('calories').textContent = calories;
-      document.getElementById('fat').textContent = fat+'g';
-      document.getElementById('protein').textContent = protein+'g';
-      document.getElementById('carb').textContent = carb+'g';
-    } catch (err) {document.getElementById('nutrition-info').textContent = 'Your item either produced no results from our nutrition API or there was an error fetching data from the API. Please check back later.';}
+    if (!edit) {
+      try {
+        const response = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${key}&query=${query}`, {
+          method: 'GET'
+        });
+        const data = await response.json();
+        console.log(data);
+        const size = data.foods[0].servingSize;
+        const sizeUnit = data.foods[0].servingSizeUnit;
+        const calories = data.foods[0].foodNutrients[3].value;
+        const fat = data.foods[0].foodNutrients[1].value;
+        const protein = data.foods[0].foodNutrients[0].value;
+        const carb = data.foods[0].foodNutrients[2].value;
+        if (!size.isNaN) {document.getElementById('serving-size').textContent = size+sizeUnit};
+        document.getElementById('calories').textContent = calories;
+        document.getElementById('fat').textContent = fat+'g';
+        document.getElementById('protein').textContent = protein+'g';
+        document.getElementById('carb').textContent = carb+'g';
+      } catch (err) {document.getElementById('nutrition-info').textContent = 'Your item either produced no results from our nutrition API or there was an error fetching data from the API. Please check back later.';}
+    };
   };
 
   //find day difference between current date and expiration date for item status
@@ -73,6 +75,7 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
 
   //item editing through form
   const handleEdit = async (e) => {
+    setEdit(true);
     let validFlag = 0;
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -259,10 +262,12 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
             <div className='image-opts'>
               <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload' onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
               <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'></input>
+              <button className='image-input' onClick={() => document.getElementById('camera-capture').click()}><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
             </div>
             <button type='submit' className='save-button' style={{position:'absolute'}}>Save Item</button>
           </form>
         </div>
+      <button className='close-button' onClick={handlePantry}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
     </div>
   );
 

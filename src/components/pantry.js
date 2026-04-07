@@ -88,6 +88,7 @@ const Pantry = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
         const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         url = canvas.toDataURL('image/jpeg', 0.7);
+        document.getElementById('item-image').src = url;
       };
     };
   };
@@ -174,7 +175,7 @@ const Pantry = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
         setName(data.item_attributes.title);
         setImage(data.item_attributes.image);
         setContent(scanForm);
-      } catch (err) {document.getElementById('scan-msg').textContent = ('something went wrong with the API, please try again later');};
+      } catch (err) {document.getElementById('scan-msg').textContent = ('Something went wrong with the API, please try again later.');};
     };
   };
 
@@ -210,7 +211,7 @@ const Pantry = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
         <div className='mode-bar'>
           <button className='mode-button2'>Manual Mode</button>
           <button className='mode-button' onClick={() => setContent(pantryScan)}><svg width="79" height="60" viewBox="0 0 79 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g clip-path="url(#clip0_18_56)">
+            <g clipPath="url(#clip0_18_56)">
             <path d="M23.5238 1.75171V6.8233C23.5238 7.74086 22.7967 8.48325 21.8981 8.48325H8.36754V22.3008C8.36754 23.2184 7.64046 23.9608 6.74183 23.9608H1.7728C0.87417 23.9608 0.147095 23.2184 0.147095 22.3008V2.34395C0.147095 1.10107 1.13355 0.0917587 2.35079 0.0917587H21.8981C22.7967 0.0917587 23.5238 0.834147 23.5238 1.75171Z" fill="var(--green)"/>
             <path d="M77.3743 23.869H72.4073C71.5087 23.869 70.7816 23.1266 70.7816 22.2091V8.39358H57.249C56.3504 8.39358 55.6233 7.65119 55.6233 6.73363V1.65995C55.6233 0.742388 56.3504 0 57.249 0H76.7963C78.0135 0 79 1.00723 79 2.2501V22.2091C79 23.1266 78.2729 23.869 77.3743 23.869Z" fill="var(--green)"/>
             <path d="M55.6233 58.3401V53.2685C55.6233 52.3509 56.3504 51.6085 57.249 51.6085H70.7795V37.7909C70.7795 36.8734 71.5066 36.131 72.4052 36.131H77.3743C78.2729 36.131 79 36.8734 79 37.7909V57.7499C79 58.9928 78.0135 60 76.7963 60H57.249C56.3504 60 55.6233 59.2576 55.6233 58.3401Z" fill="var(--green)"/>
@@ -248,13 +249,15 @@ const Pantry = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
             <option value='other'>Other</option>
           </select></label><br></br><br></br>
           <p className='label2'>Image:</p>
+          <img className='edit-image' id='item-image' src={url} alt='item'></img><br></br>
           <div className='image-opts'>
-            <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload' onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
+            <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload' onChange={handleImageUpload}></input><label htmlFor='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
             <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload' onChange={handleImageUpload}></input>
             <button className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
           </div>
           <button type='submit' className='save-button' style={{position:'absolute'}}>submit</button>
         </form>
+        <div className='spacer' style={{height:'100px'}}></div>
       </div>
       <button className='close-button' onClick={() => setContent(pantryHome)}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
     </div>
@@ -266,7 +269,7 @@ const Pantry = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
       <div className='mode-bar' style={{zIndex:'10'}}>
         <button className='mode-button' onClick={() => setContent(pantryAdd)}>Manual Mode</button>
         <button className='mode-button2'><svg width="79" height="60" viewBox="0 0 79 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g clip-path="url(#clip0_18_56)">
+          <g clipPath="url(#clip0_18_56)">
           <path d="M23.5238 1.75171V6.8233C23.5238 7.74086 22.7967 8.48325 21.8981 8.48325H8.36754V22.3008C8.36754 23.2184 7.64046 23.9608 6.74183 23.9608H1.7728C0.87417 23.9608 0.147095 23.2184 0.147095 22.3008V2.34395C0.147095 1.10107 1.13355 0.0917587 2.35079 0.0917587H21.8981C22.7967 0.0917587 23.5238 0.834147 23.5238 1.75171Z" fill="var(--white)"/>
           <path d="M77.3743 23.869H72.4073C71.5087 23.869 70.7816 23.1266 70.7816 22.2091V8.39358H57.249C56.3504 8.39358 55.6233 7.65119 55.6233 6.73363V1.65995C55.6233 0.742388 56.3504 0 57.249 0H76.7963C78.0135 0 79 1.00723 79 2.2501V22.2091C79 23.1266 78.2729 23.869 77.3743 23.869Z" fill="var(--white)"/>
           <path d="M55.6233 58.3401V53.2685C55.6233 52.3509 56.3504 51.6085 57.249 51.6085H70.7795V37.7909C70.7795 36.8734 71.5066 36.131 72.4052 36.131H77.3743C78.2729 36.131 79 36.8734 79 37.7909V57.7499C79 58.9928 78.0135 60 76.7963 60H57.249C56.3504 60 55.6233 59.2576 55.6233 58.3401Z" fill="var(--white)"/>
