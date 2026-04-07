@@ -1,5 +1,5 @@
 import '../App.css';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
@@ -24,11 +24,8 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
   const [prot, setProt] = useState('');
   const [perProt, setPerProt] = useState('');
 
-  const [image, setImage] = useState(itemImg); //image for editing
-
   let url = itemImg;
-  let status = 3; //item status - 3/2/1 
-  let flag = 0; //for image capture - 0 means cam not active, 1 cam is active
+  let status = 3; //item status - 3/2/1
 
   //uploading item picture
   const handleImageUpload = (e) => {
@@ -47,16 +44,25 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
         const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         url = canvas.toDataURL('image/jpeg', 0.7);
-        console.log(image);
         document.getElementById('item-image').src = url;
       };
     };
   };
 
   //nutrition facts fetch
-  const handleNutrition = () => {
-    console.log('a');
-  }
+  const handleNutrition = async () => {
+    const key = process.env.NUTRITION_API_KEY;
+    const query = itemName;
+    try {
+      const response = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${key}&query=${query}`, {
+        method: 'GET'
+      });
+      const data = await response.json();
+      console.log(data);
+      //const datapoint = data.foods[0].foodNutrients[0].nutrientName;
+      //console.log(datapoint);
+    } catch (err) {console.error('something went wrong:', err);}
+  };
 
   //find day difference between current date and expiration date for item status
   function statusCalc(curDate, expDate) {
@@ -259,7 +265,7 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
             <label className='label2'>Date Purchased: <br></br><input name='date_purchase' type='date' defaultValue={itemPurch} className='item-input'/></label><br></br>
             <p id='eDateMsg' className='err-txt' style={{marginLeft:'0px', marginTop:'0px'}}></p>
             <label className='label2'>Expiration Date: <br></br><input name='date_expire' type='date' defaultValue={itemExp} className='item-input'/></label><br></br>
-            <label className='label2'>Item Type: <br></br><select name='category'>
+            <label className='label2'>Item Type: <br></br><select name='category' defaultValue={itemCat.toLowerCase()}>
               <option value='produce'>Produce</option>
               <option value='proteins'>Proteins</option>
               <option value='dairy'>Dairy</option>
@@ -275,13 +281,11 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
             <img className='edit-image' id='item-image' src={url} alt={itemName}></img><br></br>
             <div className='image-opts'>
               <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload' onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
-              <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'onChange={handleImageUpload}></input>
-              <button className='image-input' onClick={() => document.getElementById('camera-capture').click()}><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
+              <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'></input>
             </div>
             <button type='submit' className='save-button' style={{position:'absolute'}}>Save Item</button>
           </form>
         </div>
-        <button className='close-button' onClick={() => setContent(item)}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
     </div>
   );
 
@@ -289,7 +293,7 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
     <div>
       {content}
     </div>
-  )
-};
+  );
+}
 
 export default Item;

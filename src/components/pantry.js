@@ -1,6 +1,6 @@
 import '../App.css';
 import Item from './item';
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Grid from './grid';
 import x from '../assets/close.svg';
 import camera from '../assets/camera-icon.svg';
@@ -174,7 +174,7 @@ const Pantry = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
         setName(data.item_attributes.title);
         setImage(data.item_attributes.image);
         setContent(scanForm);
-      } catch (error) {document.getElementById('scan-msg').textContent = ('something went wrong with the API, please try again later');};
+      } catch (err) {document.getElementById('scan-msg').textContent = ('something went wrong with the API, please try again later');};
     };
   };
 
@@ -250,8 +250,8 @@ const Pantry = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
           <p className='label2'>Image:</p>
           <div className='image-opts'>
             <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload' onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
-            <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'onChange={handleImageUpload}></input>
-            <button className='image-input' onClick={() => document.getElementById('camera-capture').click()}><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
+            <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload' onChange={handleImageUpload}></input>
+            <button className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
           </div>
           <button type='submit' className='save-button' style={{position:'absolute'}}>submit</button>
         </form>
