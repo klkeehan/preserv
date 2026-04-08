@@ -26,16 +26,16 @@ const Grid = ({ handleItem }) => {
       const data = response.data;
       setItems(data);
       if (data.length > 0) {
-        setProdData(items.filter((item) => item.category === 'Produce'));
-        setProData(items.filter((item) => item.category === 'Proteins'));
-        setDairyData(items.filter((item) => item.category === 'Dairy'));
-        setGrainData(items.filter((item) => item.category === 'Grains'));
-        setCannedData(items.filter((item) => item.category === 'Canned'));
-        setCondData(items.filter((item) => item.category === 'Condiments'));
-        setBevData(items.filter((item) => item.category === 'Beverages'));
-        setFrozData(items.filter((item) => item.category === 'Frozen'));
-        setSnackData(items.filter((item) => item.category === 'Snacks'));
-        setOtherData(items.filter((item) => item.category === 'Other'));
+        setProdData(data.filter((item) => item.category === 'Produce'));
+        setProData(data.filter((item) => item.category === 'Proteins'));
+        setDairyData(data.filter((item) => item.category === 'Dairy'));
+        setGrainData(data.filter((item) => item.category === 'Grains'));
+        setCannedData(data.filter((item) => item.category === 'Canned'));
+        setCondData(data.filter((item) => item.category === 'Condiments'));
+        setBevData(data.filter((item) => item.category === 'Beverages'));
+        setFrozData(data.filter((item) => item.category === 'Frozen'));
+        setSnackData(data.filter((item) => item.category === 'Snacks'));
+        setOtherData(data.filter((item) => item.category === 'Other'));
       };
       setDisplay(data);
     } catch (error) {console.error('Error fetching pantry items:', error)};
