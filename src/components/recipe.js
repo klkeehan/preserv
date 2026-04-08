@@ -262,7 +262,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                                                 </div>
                                             )}
                                         </Popup>
-                        <Popup trigger={<button className='item-button'>help</button>}modal nested>
+                        <Popup trigger={<button className='item-button'><img height="22" src="https://students.gaim.ucf.edu/~ka822136/preserv/src/assets/info-icon-1-white.png" alt="help"/></button>}modal nested>
                                             {close => (
                                                 <div className='modal'>
                                                 <div className='content'>
