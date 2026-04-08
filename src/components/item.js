@@ -1,48 +1,25 @@
 import '../App.css';
-import { useState, useEffect, Component } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import x from '../assets/close.svg';
-import camera from '../assets/camera-icon.svg';
-import upload from '../assets/upload-icon.svg';
 
-const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, itemPurch, itemExp, itemCat, handlePantry }) => {
-  let url = itemImg;
-  let status = 3; //item status - 3/2/1
-  const [edit, setEdit] = useState(false); //false=content is set to item page //true=content is set to item edit
+const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity, itemPurch, itemExp, itemCat, handlePantry, handleEdit }) => {
+  const [info, setInfo] = useState();
+  const [cals, setCals] = useState();
+  const [fat, setFat] = useState();
+  const [carb, setCarb] = useState();
+  const [protein, setProtein] = useState();
 
   useEffect(() => {
     handleNutrition();
-  }, []);
-
-  //uploading item picture
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      const img = new Image();
-      img.src = reader.result;
-      img.onload = () => {
-        const MAX = 300;
-        const scale = Math.min(MAX / img.width, MAX / img.height);
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width * scale;
-        canvas.height = img.height * scale;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        url = canvas.toDataURL('image/jpeg', 0.7);
-        document.getElementById('item-image').src = url;
-      };
-    };
-  };
+  }, [info, cals, fat, carb, protein]);
 
   //nutrition facts fetch
   const handleNutrition = async () => {
     const key = process.env.REACT_APP_NUTRITION_API_KEY;
     const query = itemName;
-    if (!edit) {
       try {
         const response = await fetch(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${key}&query=${query}`, {
           method: 'GET'
@@ -55,76 +32,13 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
         const fat = data.foods[0].foodNutrients[1].value;
         const protein = data.foods[0].foodNutrients[0].value;
         const carb = data.foods[0].foodNutrients[2].value;
-        if (!size.isNaN) {document.getElementById('serving-size').textContent = size+sizeUnit};
-        document.getElementById('calories').textContent = calories;
-        document.getElementById('fat').textContent = fat+'g';
-        document.getElementById('protein').textContent = protein+'g';
-        document.getElementById('carb').textContent = carb+'g';
-      } catch (err) {document.getElementById('nutrition-info').textContent = 'Your item either produced no results from our nutrition API or there was an error fetching data from the API. Please check back later.';}
+        if (!size.isNaN) {setCals(size+sizeUnit)};
+        setCals(calories);
+        setFat(fat+'g');
+        setProtein(protein+'g');
+        setCarb(carb+'g');
+      } catch (err) {setInfo('Your item either produced no results from our nutrition API or there was an error fetching data from the API. Please check back later.')}
     };
-  };
-
-  //find day difference between current date and expiration date for item status
-  function statusCalc(curDate, expDate) {
-    let start = new Date(curDate);
-    let end = new Date(expDate);
-    let diff = end - start;
-    let diff2 = diff / (1000 * 3600 * 24);
-    return diff2;
-  };
-
-  //item editing through form
-  const handleEdit = async (e) => {
-    setEdit(true);
-    let validFlag = 0;
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const formValues = {
-      id: itemID,
-      name: formData.get('name'),
-      quantity: formData.get('quantity'),
-      date_purchase: formData.get('date_purchase'),
-      date_expire: formData.get('date_expire'),
-      image: url,
-      category: formData.get('category')
-    };
-
-    // regex form validation
-    const dateReg = /^\d{4}-\d{2}-\d{2}$/;
-    const pDateFlag = dateReg.test(formValues.date_purchase);
-    if (pDateFlag) {validFlag++} else {
-      const pMsgTxt = document.querySelector('#pDateMsg');
-      pMsgTxt.textContent = 'Use the calendar popup to select a date';
-    };
-    const eDateFlag = dateReg.test(formValues.date_expire);
-    if (eDateFlag) {validFlag++} else {
-      const eMsgTxt = document.querySelector('#eDateMsg');
-      eMsgTxt.textContent = 'Use the calendar popup to select a date';
-    };
-    if (validFlag === 2) {
-      let currentDate = new Date();
-      const dayDiff = statusCalc(currentDate, formValues.date_expire);
-      if (dayDiff > 3) {
-        status = 3;
-      } else if (dayDiff > 0 && dayDiff < 3) {
-        status = 2;
-      } else if (dayDiff < 0) {
-        status = 1;
-      };
-      const formValues2 = {
-        id: itemID,
-        name: formData.get('name'),
-        quantity: formData.get('quantity'),
-        date_purchase: formData.get('date_purchase'),
-        date_expire: formData.get('date_expire'),
-        item_status: status,
-        image: url,
-        category: formData.get('category')
-      };
-      await axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php', formValues2);
-      handlePantry();
-    };
-  };
 
   //deleting item from pantry
   const handleDelete = async (e) => {
@@ -145,14 +59,13 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
     handlePantry();
   };
 
-  //main item page jsx
-  let item = (
-    <div>
+  return (
+    <>
       <div className='item-page'>
         <div className='item-header'>
           <img className={itemStatus === '3' ? 'pantry-fresh2' : itemStatus === '1' ? 'pantry-exp2' : 'pantry-soon2'} src={itemImg} alt={itemName}></img>
           <aside className='item-column'>
-            <button className='item-button' onClick={() => setContent(itemEdit)}>Edit</button>
+            <button className='item-button' onClick={handleEdit}>Edit</button>
             <Popup contentStyle={{width:'273px', height:'210px'}} trigger={<button className='green-button'>Remove</button>}modal nested>
               {close => (
                 <div>
@@ -196,7 +109,7 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
           <p className='item-info'>{itemExp}</p>
           <h3>Category:</h3>
           <p className='item-info'>{itemCat}</p>
-          <p className='nf-small' style={{fontSize:'16px'}} id='nutrition-info'></p>
+          <p className='nf-small' style={{fontSize:'16px'}}>{info}</p>
           <div id='nutrition' className='nutrition'>
             <h3>Nutrition Facts</h3>
             <div className='nf-block'>
@@ -206,19 +119,19 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
               </div>
               <div className='nf-row'>
                 <h3>Calories</h3>
-                <h3 style={{color:'var(--black)'}} id='calories'></h3>
+                <h3 style={{color:'var(--black)'}}>{cals}</h3>
               </div>
               <div className='nf-row'>
                 <p className='nf-header'>Total Fat</p>
-                <p className='nf-header' id='fat'></p>
+                <p className='nf-header'>{fat}</p>
               </div>
               <div className='nf-row'>
                 <p className='nf-header'>Total Carbohydrate</p>
-                <p className='nf-header' id='carb'></p>
+                <p className='nf-header'>{carb}</p>
               </div>
               <div className='nf-row'>
                 <p className='nf-header'>Protein</p>
-                <p className='nf-header' id='protein'></p>
+                <p className='nf-header'>{protein}</p>
               </div>
               <div className='nf-line'></div>
                 <p className='nf-small'>Nutrition data may be inaccurate and can depend on the specificity of the item name. Please verify needed information.</p>
@@ -227,54 +140,7 @@ const Item = ({ itemID, itemImg, itemStatus, itemString, itemName, itemQuantity,
             </div>
           </div>
       <button className='close-button' onClick={handlePantry}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
-    </div>
-  );
-
-  let [content, setContent] = useState(item);
-
-  //item edit page jsx
-  let itemEdit = (
-    <div>
-      <div className='item-page'>
-        <h2>Item Edit</h2>
-          <div className='spacer' style={{height:'120px'}}></div>
-          <form onSubmit={handleEdit}>
-            <label className='label2'>Item Name: <br></br><input name='name' type='text' defaultValue={itemName} className='item-input'/></label><br></br>
-            <label className='label2'>Amount: <br></br><input name='quantity' type='number' defaultValue={itemQuantity} min='1' className='item-input' style={{width:'80px'}}/></label><br></br>
-            <p id='pDateMsg' className='err-txt' style={{marginLeft:'0px', marginTop:'0px'}}></p>
-            <label className='label2'>Date Purchased: <br></br><input name='date_purchase' type='date' defaultValue={itemPurch} className='item-input'/></label><br></br>
-            <p id='eDateMsg' className='err-txt' style={{marginLeft:'0px', marginTop:'0px'}}></p>
-            <label className='label2'>Expiration Date: <br></br><input name='date_expire' type='date' defaultValue={itemExp} className='item-input'/></label><br></br>
-            <label className='label2'>Item Type: <br></br><select name='category' defaultValue={itemCat.toLowerCase()}>
-              <option value='produce'>Produce</option>
-              <option value='proteins'>Proteins</option>
-              <option value='dairy'>Dairy</option>
-              <option value='grains'>Grains</option>
-              <option value='canned'>Canned</option>
-              <option value='condiments'>Condiments</option>
-              <option value='beverages'>Beverages</option>
-              <option value='frozen'>Frozen</option>
-              <option value='snacks'>Snacks</option>
-              <option value='other'>Other</option>
-            </select></label><br></br>
-            <p className='label2'>Image:</p>
-            <img className='edit-image' id='item-image' src={url} alt={itemName}></img><br></br>
-            <div className='image-opts'>
-              <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload' onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
-              <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'></input>
-              <button className='image-input' onClick={() => document.getElementById('camera-capture').click()}><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
-            </div>
-            <button type='submit' className='save-button' style={{position:'absolute'}}>Save Item</button>
-          </form>
-        </div>
-      <button className='close-button' onClick={handlePantry}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
-    </div>
-  );
-
-  return (
-    <div>
-      {content}
-    </div>
+    </>
   );
 }
 

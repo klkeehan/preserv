@@ -93,7 +93,7 @@ const Grid = ({ handleItem }) => {
       </div>
       {Array.isArray(items) && items.length === 0 && (<h1 className={'blank-txt'}>Add your first pantry item...</h1>)}
       <div className='pantry-grid'>
-        {Array.isArray(display) && items.length > 0 && (display.map((item) => (
+        {Array.isArray(display) && Array.isArray(items) && items.length > 0 && (display.map((item) => (
           <div key={item.id} className='pantry-item'>
             <button onClick={() => handleItem(item)} className='pantry-button'><img src={item.image} className={item.item_status === '3' ? 'pantry-fresh' : item.item_status === '1' ? 'pantry-exp' : 'pantry-soon'} alt={item.name}></img>
             <p className='pantry-overlay'>{item.name}</p>
