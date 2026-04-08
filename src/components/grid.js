@@ -23,28 +23,29 @@ const Grid = ({ handleItem }) => {
   const fetchItems = async () => {
     try {
       const response = await axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php');
-      const data = response.data;
-      setItems(data);
-      if (data.length > 0) {
-        setProdData(data.filter((item) => item.category === 'Produce'));
-        setProData(data.filter((item) => item.category === 'Proteins'));
-        setDairyData(data.filter((item) => item.category === 'Dairy'));
-        setGrainData(data.filter((item) => item.category === 'Grains'));
-        setCannedData(data.filter((item) => item.category === 'Canned'));
-        setCondData(data.filter((item) => item.category === 'Condiments'));
-        setBevData(data.filter((item) => item.category === 'Beverages'));
-        setFrozData(data.filter((item) => item.category === 'Frozen'));
-        setSnackData(data.filter((item) => item.category === 'Snacks'));
-        setOtherData(data.filter((item) => item.category === 'Other'));
+      setItems(response.data);
+      if (items.length > 0) {
+        setProdData(items.filter((item) => item.category === 'Produce'));
+        setProData(items.filter((item) => item.category === 'Proteins'));
+        setDairyData(items.filter((item) => item.category === 'Dairy'));
+        setGrainData(items.filter((item) => item.category === 'Grains'));
+        setCannedData(items.filter((item) => item.category === 'Canned'));
+        setCondData(items.filter((item) => item.category === 'Condiments'));
+        setBevData(items.filter((item) => item.category === 'Beverages'));
+        setFrozData(items.filter((item) => item.category === 'Frozen'));
+        setSnackData(items.filter((item) => item.category === 'Snacks'));
+        setOtherData(items.filter((item) => item.category === 'Other'));
       };
-      setDisplay(data);
+      setDisplay(response.data);
+      setCatDisplay(response.data);
     } catch (error) {console.error('Error fetching pantry items:', error)};
   };
 
-  useEffect(() => {fetchItems(); console.log(display)}, [items.length]);
+  useEffect(() => {fetchItems()}, [items.length]);
 
   //search bar functionality
   const [search, setSearch] = useState('');
+  
   const handleSearch = (e) => {
     if (e.target.value.length > 0) {
       const searchInput = e.target.value;
@@ -76,7 +77,7 @@ const Grid = ({ handleItem }) => {
     <div className='pantry'>
       <div className='pantry-header'>
         <h1>Pantry</h1>
-        <input type="text" value={search} placeholder='Search' onChange={handleSearch} className='search-bar' />
+        <input type="text" value={search} onChange={handleSearch} placeholder='Search' className='search-bar' />
       </div>
       <div className='cat-bar'>
         <button id='0' onClick={(e) => handleCategory(items, e.target.id)} className='cat-button-clicked'>All</button>
@@ -93,7 +94,7 @@ const Grid = ({ handleItem }) => {
       </div>
       {Array.isArray(items) && items.length === 0 && (<h1 className={'blank-txt'}>Add your first pantry item...</h1>)}
       <div className='pantry-grid'>
-        {Array.isArray(display) && Array.isArray(items) && items.length > 0 && (display.map((item) => (
+        {Array.isArray(display) && items.length > 0 && (display.map((item) => (
           <div key={item.id} className='pantry-item'>
             <button onClick={() => handleItem(item)} className='pantry-button'><img src={item.image} className={item.item_status === '3' ? 'pantry-fresh' : item.item_status === '1' ? 'pantry-exp' : 'pantry-soon'} alt={item.name}></img>
             <p className='pantry-overlay'>{item.name}</p>
