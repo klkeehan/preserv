@@ -8,42 +8,40 @@ const Grid = ({ handleItem }) => {
   const [catDisplay, setCatDisplay] = useState([]);
   const [newItems, setNewItems] = useState([]);
   //category filters for data mapping
-  const [prodData, setProdData] = useState([]);
-  const [proData, setProData] = useState([]);
-  const [dairyData, setDairyData] = useState([]);
-  const [grainData, setGrainData] = useState([]);
-  const [cannedData, setCannedData] = useState([]);
-  const [condData, setCondData] = useState([]);
-  const [bevData, setBevData] = useState([]);
-  const [frozData, setFrozData] = useState([]);
-  const [snackData, setSnackData] = useState([]);
-  const [otherData, setOtherData] = useState([]);
+  const [prodData, setProdData] = useState();
+  const [proData, setProData] = useState();
+  const [dairyData, setDairyData] = useState();
+  const [grainData, setGrainData] = useState();
+  const [cannedData, setCannedData] = useState();
+  const [condData, setCondData] = useState();
+  const [bevData, setBevData] = useState();
+  const [frozData, setFrozData] = useState();
+  const [snackData, setSnackData] = useState();
+  const [otherData, setOtherData] = useState();
 
   //fetching pantry items
   const fetchItems = async () => {
     try {
       const response = await axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/pantry.php');
-      const data = response.data;
-      setItems(data);
-      if (data.length > 0) {
-        setProdData(data.filter((item) => item.category === 'Produce'));
-        setProData(data.filter((item) => item.category === 'Proteins'));
-        setDairyData(data.filter((item) => item.category === 'Dairy'));
-        setGrainData(data.filter((item) => item.category === 'Grains'));
-        setCannedData(data.filter((item) => item.category === 'Canned'));
-        setCondData(data.filter((item) => item.category === 'Condiments'));
-        setBevData(data.filter((item) => item.category === 'Beverages'));
-        setFrozData(data.filter((item) => item.category === 'Frozen'));
-        setSnackData(data.filter((item) => item.category === 'Snacks'));
-        setOtherData(data.filter((item) => item.category === 'Other'));
-      }
-      setDisplay(data);
-      setCatDisplay(data);
-    } catch (error) { console.error('Error fetching pantry items:', error); }
+      setItems(response.data);
+      if (items.length > 0) {
+        setProdData(items.filter((item) => item.category === 'Produce'));
+        setProData(items.filter((item) => item.category === 'Proteins'));
+        setDairyData(items.filter((item) => item.category === 'Dairy'));
+        setGrainData(items.filter((item) => item.category === 'Grains'));
+        setCannedData(items.filter((item) => item.category === 'Canned'));
+        setCondData(items.filter((item) => item.category === 'Condiments'));
+        setBevData(items.filter((item) => item.category === 'Beverages'));
+        setFrozData(items.filter((item) => item.category === 'Frozen'));
+        setSnackData(items.filter((item) => item.category === 'Snacks'));
+        setOtherData(items.filter((item) => item.category === 'Other'));
+      };
+      setDisplay(response.data);
+      setCatDisplay(response.data);
+    } catch (error) {console.error('Error fetching pantry items:', error)};
   };
 
-  // Fetch once on mount only — avoids infinite re-fetch loop
-  useEffect(() => { fetchItems(); }, []);
+  useEffect(() => {fetchItems()}, [items.length]);
 
   //search bar functionality
   const [search, setSearch] = useState('');
@@ -52,10 +50,8 @@ const Grid = ({ handleItem }) => {
     if (e.target.value.length > 0) {
       const searchInput = e.target.value;
       setSearch(searchInput);
-      // Use searchInput directly (not stale `search` state)
-      const filtered = catDisplay.filter((item) => item.name.toLowerCase().includes(searchInput.toLowerCase()));
-      setNewItems(filtered);
-      setDisplay(filtered);
+      setNewItems(catDisplay.filter((item) => item.name.toLowerCase().includes(search.toLowerCase())));
+      setDisplay(newItems)
     } else {
       setSearch('');
       setDisplay(catDisplay);
@@ -65,7 +61,7 @@ const Grid = ({ handleItem }) => {
   //category menu buttons styling and display change
   function handleCategory(type, id) {
     let btn = document.getElementById(id);
-    for (var x = 0; x < 11; x++) {
+    for(var x=0; x<11; x++) {
       let homeButton = document.getElementById(0);
       homeButton.classList.add('cat-button');
       let button = document.getElementById(x);
@@ -100,14 +96,13 @@ const Grid = ({ handleItem }) => {
       <div className='pantry-grid'>
         {Array.isArray(display) && items.length > 0 && (display.map((item) => (
           <div key={item.id} className='pantry-item'>
-            <button onClick={() => handleItem(item)} className='pantry-button'>
-              <img src={item.image} className={item.item_status === '3' ? 'pantry-fresh' : item.item_status === '1' ? 'pantry-exp' : 'pantry-soon'} alt={item.name}></img>
-              <p className='pantry-overlay'>{item.name}</p>
+            <button onClick={() => handleItem(item)} className='pantry-button'><img src={item.image} className={item.item_status === '3' ? 'pantry-fresh' : item.item_status === '1' ? 'pantry-exp' : 'pantry-soon'} alt={item.name}></img>
+            <p className='pantry-overlay'>{item.name}</p>
             </button>
           </div>
         )))}
       </div>
-      <div className='spacer' style={{ height: '220px' }}>
+      <div className='spacer' style={{height:'220px'}}>
         <p className='hidden-txt'>hidden</p>
       </div>
     </div>
