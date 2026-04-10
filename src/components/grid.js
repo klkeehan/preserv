@@ -45,7 +45,7 @@ const Grid = ({ handleItem }) => {
 
   //search bar functionality
   const [search, setSearch] = useState('');
-  
+
   const handleSearch = (e) => {
     if (e.target.value.length > 0) {
       const searchInput = e.target.value;
@@ -71,7 +71,7 @@ const Grid = ({ handleItem }) => {
     setDisplay(type);
     setCatDisplay(type);
   };
-    
+
   //jsx
   return (
     <div className='pantry'>
