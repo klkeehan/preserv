@@ -1011,14 +1011,17 @@ textarea {
 /*check box styling*/
 .shopping-item input[type="checkbox"] {
   appearance: none;
-  width: 35px;
-  height: 35px;
-  align-self: center;
-  background: url('assets/checkbox-unselected.png');
+  box-sizing: border-box;
+  width: 30px;
+  height: 30px;
+  border: 2px var(--black) solid;
+  border-radius: 5px;
+
 }
 
 .shopping-item input[type="checkbox"]:checked {
-  background-image: url('assets/checkbox-selected.png');
+  background-image: url('https://students.gaim.ucf.edu/~ka822136/preserv/src/assets/checkbox-selected.svg');
+  background-size: contain;
 }
 
 /*includes name and quantity*/
