@@ -120,8 +120,7 @@ const Edit = ({ itemID, itemImg, itemName, itemQuantity, itemPurch, itemExp, ite
             <img className='edit-image' id='item-image' src={url} alt={itemName}></img><br></br>
             <div className='image-opts'>
               <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload' onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
-              <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'></input>
-              <button className='image-input' onClick={() => document.getElementById('camera-capture').click()}><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
+              <input type='file' capture='camera' accept='image/*' className='upload'></input><label for='file'><img src={camera} className='image-input' alt='camera icon' style={{height:'18px'}}/></label>
             </div>
             <button type='submit' className='save-button' style={{position:'absolute'}}>Save Item</button>
           </form>

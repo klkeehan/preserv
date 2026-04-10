@@ -697,6 +697,7 @@ textarea {
 .image-input {
   justify-content: center;
   width: fit-content;
+  height: 20px;
   border-radius: 12px;
   border: 0px none;
   margin-top: 5px;
@@ -719,7 +720,7 @@ textarea {
 }
 
 .image-opts {
-  display: block;
+  display: inline-flex;
   width: 200px;
   margin-top: 0px;
   height: 20px;
@@ -1016,7 +1017,6 @@ textarea {
   height: 30px;
   border: 2px var(--black) solid;
   border-radius: 5px;
-
 }
 
 .shopping-item input[type="checkbox"]:checked {

@@ -53,8 +53,6 @@ const Pantry = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
     pingNotifications();
   }, []);
 
-  let [name, setName] = useState('');
-  let [image, setImage] = useState('');
   let url = ('https://students.gaim.ucf.edu/~ka822136/preserv/src/assets/logomark.png');
   let status = 3;
 
@@ -179,12 +177,6 @@ const Pantry = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
           mode: 'cors'
         });
         const data = await response.json();
-        const title = data.item_attributes.title;
-        const image2 = data.item_attributes.image;
-        console.log('item name is', title);
-        console.log('item image link is', image2);
-        setName(data.item_attributes.title);
-        setImage(data.item_attributes.image);
         setContent(<Form name={data.item_attributes.title} image={data.item_attributes.image} handlePantry={() => setContent(pantryHome)}/>);
       } catch (err) {document.getElementById('scan-msg').textContent = ('Something went wrong with the API, please try again later.');};
     };
@@ -263,8 +255,7 @@ const Pantry = ({ pantryLoad, shoppingLoad, recipeLoad, accountLoad }) => {
           <img className='edit-image' id='item-image' src={url} alt='item'></img><br></br>
           <div className='image-opts'>
             <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload' onChange={handleImageUpload}></input><label htmlFor='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
-            <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload' onChange={handleImageUpload}></input>
-            <button className='image-input'><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
+            <input type='file' capture='camera' accept='image/*' className='upload'></input><label for='file'><img src={camera} className='image-input' alt='camera icon' style={{height:'18px'}}/></label>
           </div>
           <button type='submit' className='save-button' style={{position:'absolute'}}>submit</button>
         </form>
