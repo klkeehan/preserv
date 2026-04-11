@@ -341,7 +341,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
                     <p onClick={skiptoHousehold}>Household Settings</p>
                     <label for='profileUpload' className="change-profile-picture-class">Change Profile Picture...</label>
                     <input type='file' id='profileUpload' accept='image/jpeg, image/png, image/webp' className = "hide-this-input-please" onChange={handleImageUpload}/>
-                        <Popup contentStyle={{width:'273px', height:'240px'}} trigger={<p>Change Password...</p>}modal nested onClose={() => setPasswordError('')}>
+                        <Popup contentStyle={{width:'273px', height:'300px'}} trigger={<p>Change Password...</p>}modal nested onClose={() => setPasswordError('')}>
                         {close => (
                             <div className='modal'>
                                 <div className='content' style={{textAlign:'left', marginLeft:'35px'}}>
@@ -350,7 +350,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
                                     <input className="item-input" style={{width:'200px'}} type="password" onChange={(e) => setNewPassword(e.target.value)}/>
                                     <label className="label2">Confirm Password:</label>
                                     <input className="item-input" style={{width:'200px'}} type="password" onChange={(e) => setConfirmPassword(e.target.value)}/>
-                                    {passwordError !== '' && <p style={{color:'red'}}>{passwordError}</p>}
+                                    {passwordError !== '' && <p style={{color:'#FF006A', marginTop:'-10px', marginLeft:'-35px', textAlign:'center', display:'block'}}>{passwordError}</p>}
                                     </div>
                                     <button className='green-button' onClick={() => {
                                         if (!passwordReg.test(newPassword)) {
