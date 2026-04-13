@@ -311,11 +311,11 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 <h2>Edit Recipe</h2>
                 <div className='spacer' style={{height:'120px'}}></div>
                 <label className='label2'>Recipe Name:<br></br><input type="text" value={recipeName} onChange={(e) => setRecipeName(e.target.value)} className='item-input'/></label><br></br>
+                <div class="divider"></div>
+                <label className='label2'>Ingredients:</label>
                 {ingredients.map((ingredient,index) => (
                 <div key={index}>
-                    {ingredientError && <p className='err-txt'>{ingredientError}</p>}
 
-                    <label className='label2'>Ingredients:</label>
                     < br/>
                     <input className='item-input' value={ingredient.name} onChange={(e) => updateIngredientRow(index, 'name', e.target.value)} />
                     <input className='item-input' type='number' value={ingredient.quantity} onChange={(e) => updateIngredientRow(index, 'quantity',e.target.value)} />
@@ -374,12 +374,18 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                         <option value='wineglass'>wineglass</option>
                         <option value='tumbler'>tumbler</option>
                     </select>
+                    <div class="divider"></div>
                 </div>
             ))}
+            < br/>
+            <div>{ingredientError && <p className='invalid-txt'>{ingredientError}</p>}</div>
+            < br/>
             <button className='ingredient-button' onClick={addIngredientRow}>Add Ingredient</button>
             < br/>
-                <label className='label2'>Instructions:<br></br><textarea value={instructions} onChange={(e) => setInstructions(e.target.value)}></textarea></label>< br/>
+            <label className='label2'>Instructions:</label>< br/>
+                <br></br><textarea value={instructions} onChange={(e) => setInstructions(e.target.value)}></textarea>< br/>
                 <p className='label2'>Image:</p>
+                 <img className='edit-image' id='item-image' src={selectedRecipe.image || 'https://students.gaim.ucf.edu/~ka822136/preserv/src/assets/logomark.png'} alt={selectedRecipe.name}></img><br></br>
                 <div className='image-opts'>
                     <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload' onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
                     <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'onChange={handleImageUpload}></input>
@@ -400,11 +406,11 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
             <h2>New Recipe</h2>
             <div className='spacer' style={{height:'120px'}}></div>
             <label className='label2'>Recipe Name:<input type="text" className='item-input' value={recipeName} onChange={(e) => setRecipeName(e.target.value)}/></label>< br/>
+            <label className='label2'>Ingredients:</label>
             {/*<label className='label2'>Ingredients:<textarea></textarea></label>*/}
             {ingredients.map((ingredient,index) => (
                 <div key={index}>
-                    {ingredientError && <p className='err-txt'>{ingredientError}</p>}
-                    <label className='label2'>Ingredients:</label>
+
                     < br/>
                     <input className='item-input' value={ingredient.name} onChange={(e) => updateIngredientRow(index, 'name', e.target.value)} />
                     <input className='item-input' type='number' value={ingredient.quantity} onChange={(e) => updateIngredientRow(index, 'quantity',e.target.value)} />
@@ -463,12 +469,18 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                         <option value='wineglass'>wineglass</option>
                         <option value='tumbler'>tumbler</option>
                     </select>
+                    <div class="divider"></div>
                 </div>
             ))}
+            < br/>
+            <div>{ingredientError && <p className='invalid-txt'>{ingredientError}</p>}</div>
+            < br/>
             <button className='ingredient-button' onClick={addIngredientRow}>Add Ingredient</button>
             < br/>
             <label className='label2'>Instructions:<textarea value={instructions} onChange={(e) => setInstructions(e.target.value)}></textarea></label>< br/>
             <p className='label2'>Image:</p>
+            {/*<img className='edit-image' id='item-image' src={selectedRecipe.image || 'https://students.gaim.ucf.edu/~ka822136/preserv/src/assets/logomark.png'} alt={selectedRecipe.name}></img><br></br>*/}
+                <div className='image-opts'></div>
                 <div className='image-opts'>
                     <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload'onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
                     <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'onChange={handleImageUpload}></input>
