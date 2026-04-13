@@ -385,6 +385,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
             <label className='label2'>Instructions:</label>< br/>
                 <br></br><textarea value={instructions} onChange={(e) => setInstructions(e.target.value)}></textarea>< br/>
                 <p className='label2'>Image:</p>
+                 <img className='edit-image' id='item-image' src={selectedRecipe.image || 'https://students.gaim.ucf.edu/~ka822136/preserv/src/assets/logomark.png'} alt={selectedRecipe.name}></img><br></br>
                 <div className='image-opts'>
                     <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload' onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
                     <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'onChange={handleImageUpload}></input>
@@ -478,6 +479,8 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
             < br/>
             <label className='label2'>Instructions:<textarea value={instructions} onChange={(e) => setInstructions(e.target.value)}></textarea></label>< br/>
             <p className='label2'>Image:</p>
+            {/*<img className='edit-image' id='item-image' src={selectedRecipe.image || 'https://students.gaim.ucf.edu/~ka822136/preserv/src/assets/logomark.png'} alt={selectedRecipe.name}></img><br></br>*/}
+                <div className='image-opts'></div>
                 <div className='image-opts'>
                     <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload'onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
                     <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'onChange={handleImageUpload}></input>
