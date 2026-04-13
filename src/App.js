@@ -55,7 +55,7 @@ function App() {
     const passwordReg = /^(?=.*?[0-9])(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[^0-9A-Za-z]).{4,12}$/;
     const passwordFlag = passwordReg.test(formValues.password);
     const passTxt = document.querySelector('#passMsg');
-    if (!passwordFlag) {passTxt.textContent = 'Enter a string containing at least 1 number, 1 capital and 1 lowercase letter, and 1 symbol'}
+    if (!passwordFlag) {passTxt.textContent = 'Enter a string between 4-12 characters containing at least 1 number, 1 capital and 1 lowercase letter, and 1 symbol'}
     else {validFlag++};
 
     console.log(validFlag);
