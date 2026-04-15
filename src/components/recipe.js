@@ -26,6 +26,10 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
         setIngredients([...ingredients, { name:'', quantity: '', measurement: ''}])
     };
 
+    const removeIngredientRow = (index) => {
+        setIngredients(ingredients.filter((_, i) => i !== index));
+    };
+
     //RegEx for preventing inputs that will break formatting in the database. Leaving most of formatting very lenient for the sake of freedom to name recipes with own unique names.
     const updateIngredientRow = (index, field, value) => {
         setIngredientError('');
@@ -81,8 +85,19 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
         };
     };
 
+    const validateRecipe = () => {
+        if (!recipeName.trim()) { setIngredientError("Please enter a recipe name"); return false; }
+        if (!instructions.trim()) { setIngredientError("Please enter instructions"); return false; }
+        for (const i of ingredients) {
+            if (!i.name.trim()) { setIngredientError("Please fill in all ingredient names"); return false; }
+            if (!i.quantity) { setIngredientError("Please fill in all ingredient quantities"); return false; }
+        }
+        return true;
+    };
+
 //adding new recipes
     const handleNewRecipe = async () => {
+        if (!validateRecipe()) return;
         try {
             const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/recipes.php', {
                 name: recipeName,
@@ -110,6 +125,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     };
 //function for updating recipes after edit
     const handleEditRecipe = async () => {
+        if (!validateRecipe()) return;
         try {
             const response = await axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/recipes.php', {
                 id: selectedRecipe.id,
@@ -196,7 +212,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 setRecipeName('');
                 setInstructions('');
                 setIngredients([{ name:'', quantity: '', measurement: ''}]);
-
+                setImage('');
                  getPage("new");}}><img src={add} alt='add button' style={{width:'42px', height:'43px'}}></img></button>
             <div className='navbar'>
                 <button className='nav-button' onClick={pantryLoad}><svg width="48" height="59" viewBox="0 0 48 59" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -374,6 +390,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                         <option value='wineglass'>wineglass</option>
                         <option value='tumbler'>tumbler</option>
                     </select>
+                    <button className='ingredient-button' style={{marginLeft:'8px'}} onClick={() => removeIngredientRow(index)}>Remove</button>
                     <div class="divider"></div>
                 </div>
             ))}
@@ -391,7 +408,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                     <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'onChange={handleImageUpload}></input>
                     <button className='image-input' onClick={() => document.getElementById('camera-capture').click()}><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
                 </div>
-                <button onClick={handleEditRecipe} disabled={ingredientError !== ''} style={{opacity: ingredientError !== '' ? 0.5 :1}} className='save-button'>Save Recipe</button>
+                <button onClick={handleEditRecipe} disabled={ingredientError !== '' || !recipeName.trim() || !instructions.trim()} style={{opacity: ingredientError !== '' || !recipeName.trim() || !instructions.trim() ? 0.5 :1}} className='save-button'>Save Recipe</button>
             </div>
         <button className='close-button' onClick={() => getPage("view")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
@@ -469,6 +486,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                         <option value='wineglass'>wineglass</option>
                         <option value='tumbler'>tumbler</option>
                     </select>
+                    <button className='ingredient-button' style={{marginLeft:'8px'}} onClick={() => removeIngredientRow(index)}>Remove</button>
                     <div class="divider"></div>
                 </div>
             ))}
@@ -479,14 +497,14 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
             < br/>
             <label className='label2'>Instructions:<textarea value={instructions} onChange={(e) => setInstructions(e.target.value)}></textarea></label>< br/>
             <p className='label2'>Image:</p>
-            {/*<img className='edit-image' id='item-image' src={selectedRecipe.image || 'https://students.gaim.ucf.edu/~ka822136/preserv/src/assets/logomark.png'} alt={selectedRecipe.name}></img><br></br>*/}
+            <img className='edit-image' id='item-image' src={image || 'https://students.gaim.ucf.edu/~ka822136/preserv/src/assets/logomark.png'} alt='new recipe'></img><br></br>
                 <div className='image-opts'></div>
                 <div className='image-opts'>
                     <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload'onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
                     <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'onChange={handleImageUpload}></input>
                     <button className='image-input' onClick={() => document.getElementById('camera-capture').click()}><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
                 </div>
-            <button onClick={handleNewRecipe} disabled={ingredientError !== ''} style={{opacity: ingredientError !== '' ? 0.5 :1}} className='save-button'>Save Recipe</button>
+            <button onClick={handleNewRecipe} disabled={ingredientError !== '' || !recipeName.trim() || !instructions.trim()} style={{opacity: ingredientError !== '' || !recipeName.trim() || !instructions.trim() ? 0.5 :1}} className='save-button'>Save Recipe</button>
             </div>
             <button className='close-button' onClick={() => getPage("home")}><img src={x} style={{width:'70px'}} alt='exit button'></img></button>
         </div>
