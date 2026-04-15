@@ -878,12 +878,21 @@ textarea {
   text-align: left;
 }
 
+.recipes-missing-txt {
+  font-size: 18px;
+  color: var(--green);
+  font-style: italic;
+  width: 300px;
+  margin-top: 20px;
+  margin-left: 20px;
+  text-align: left;
+}
 
 /*recipe styling*/
 .recipes-grid {
   position: absolute;
   top: 0;
-  margin-top: 120px;
+  margin-top: 150px;
   width: 363px;
   height: 600px;
   display: flexbox;
@@ -1445,4 +1454,21 @@ aside {
   max-width: 300px;
   margin-top: -20px;
   margin-bottom: 5px;
+}
+
+.recipes-search {
+  position: absolute;
+  top: 5%;
+  left: 30px;
+  margin-top: 65px;
+  width: 250px;
+  height: 30px;
+  padding-left: 10px;
+  font-family: figtree;
+  font-size: 14px;
+  font-weight: 700;
+  background-color: #e3e3e3;
+  border: 2px var(--green) solid;
+  border-radius: 20px;
+  color: var(--black);
 }

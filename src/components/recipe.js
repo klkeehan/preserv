@@ -21,6 +21,11 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     const [instructions, setInstructions] = useState('');
     const [image, setImage] = useState('');
     const [ingredientError, setIngredientError] = useState('');
+    const [searchFilter, setSearchFilter] = useState('');
+
+//fun little function for the experimental recipe search bar
+    const filterRecipes = recipesSet.filter(recipe => recipe.name.toLowerCase().includes(searchFilter.toLowerCase())
+);
 //set up for handling the troublesome and evil ingredients
     const addIngredientRow = () => {
         setIngredients([...ingredients, { name:'', quantity: '', measurement: ''}])
@@ -188,14 +193,19 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     pantryStuff();
   }, []);
     //recipe home page, using map to generate recipe cards pulling from recipes.json until we get the backend set up
+    //ADDED A RECIPE SEARCH FEATURE, it filters the recipes in real time as you type, matching the recipe name with the search input. It is not case sensitive and will display "No recipes found" if there are no matches, or "No recipes yet — add your first one!" if there are no recipes. So uhhh thats pretty neat ngl. Also it works on any bit of the recipe name making search easier as it needs not to be perfect yay
     let recipeHome = (
         <div className='layout'>
             <h1>My Recipes</h1>
+            <input className='recipes-search' type='text' placeholder='Search recipes...' value={searchFilter} onChange={(e) => setSearchFilter(e.target.value)}></input>
             <div className="recipes-grid">
                 {Array.isArray(recipesSet) && recipesSet.length === 0 && (
-                    <h1 className='blank-txt' style={{marginTop:'0px'}}>No recipes yet — add your first one!</h1>
+                    <h1 className='recipes-missing-txt' style={{marginTop:'0px'}}>No recipes yet — add your first one!</h1>
                 )}
-                {Array.isArray(recipesSet) && recipesSet.map((recipe) => (
+                {Array.isArray(filterRecipes) && filterRecipes.length === 0 && recipesSet.length > 0 && (
+    <h1 className='recipes-missing-txt'>No recipes found</h1>
+)}
+                {Array.isArray(filterRecipes) && filterRecipes.map((recipe) => (
                     <div className="recipes-card" key ={recipe.id}>
                         <button className='recipe-button' onClick={() => {
                             getSelectedRecipe(recipe);
@@ -402,7 +412,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
             <label className='label2'>Instructions:</label>< br/>
                 <br></br><textarea value={instructions} onChange={(e) => setInstructions(e.target.value)}></textarea>< br/>
                 <p className='label2'>Image:</p>
-                 <img className='edit-image' id='item-image' src={selectedRecipe.image || 'https://students.gaim.ucf.edu/~ka822136/preserv/src/assets/logomark.png'} alt={selectedRecipe.name}></img><br></br>
+                   <img className='edit-image' id='item-image' src={image || 'https://students.gaim.ucf.edu/~ka822136/preserv/src/assets/logomark.png'} alt='new recipe'></img><br></br>
                 <div className='image-opts'>
                     <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload' onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
                     <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'onChange={handleImageUpload}></input>
