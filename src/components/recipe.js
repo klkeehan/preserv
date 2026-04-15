@@ -24,8 +24,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
     const [searchFilter, setSearchFilter] = useState('');
 
 //fun little function for the experimental recipe search bar
-    const filterRecipes = recipesSet.filter(recipe => recipe.name.toLowerCase().includes(searchFilter.toLowerCase())
-);
+    const filterRecipes = Array.isArray(recipesSet) ? recipesSet.filter(recipe => recipe.name.toLowerCase().includes(searchFilter.toLowerCase())) : [];
 //set up for handling the troublesome and evil ingredients
     const addIngredientRow = () => {
         setIngredients([...ingredients, { name:'', quantity: '', measurement: ''}])
