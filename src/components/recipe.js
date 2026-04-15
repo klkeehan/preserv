@@ -275,7 +275,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                         }));
                         getPage("edit");
                         }} style={{marginLeft:'10px'}}>Edit</button>
-                    <Popup  trigger={<button className="item-button">Delete</button>}modal nested>
+                    <Popup  contentStyle={{width:'273px'}} trigger={<button className="item-button">Delete</button>}modal nested>
                                             {close => (
                                                 <div className='modal'>
                                                     <div className='content'>
@@ -288,12 +288,12 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                                                 </div>
                                             )}
                                         </Popup>
-                        <Popup trigger={<button className='item-button'><img height="22" src="https://students.gaim.ucf.edu/~ka822136/preserv/src/assets/info-icon-1-white.png" alt="help"/></button>}modal nested>
+                        <Popup contentStyle={{width:'273px', height:'230px'}} trigger={<button className='item-button'><img height="22" src="https://students.gaim.ucf.edu/~ka822136/preserv/src/assets/info-icon-1-white.png" alt="help"/></button>}modal nested>
                                             {close => (
                                                 <div className='modal'>
                                                 <div className='content'>
                                                     <div className='popup-text2'>
-                                                        The <div className='missing-icon'></div> indicates missing ingredients. Click the "shopping cart" button to add them to your shopping list!
+                                                        The <span style={{color: '#ff006a', fontSize: '30px'}}>•</span> indicates missing ingredients. Click the "shopping cart" button to add them to your shopping list!
                                                     </div>
                                                 </div>
                                                 <div>
