@@ -1,6 +1,6 @@
 services:
   frontend:
-    image: kari2a/preserv:ms6
+    image: kari2a/preserv:ms7
     platform: linux/amd64
     ports:
       - '8080:8080'
