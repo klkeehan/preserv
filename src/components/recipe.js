@@ -159,9 +159,11 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 const [name, quantity, measurement] = item.split('|');
                 const response = await axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/shopping.php', {
                     name: name,
-                    quantity:measurement === 'none' ? quantity : 1,
+                    quantity:(measurement === 'none'|| measurement === '') ? quantity : 1,
 
             });
+            console.log(measurement, quantity);
+            console.log('name:', name, 'quantity:', quantity, 'measurement:', measurement);
             setShoppingList(response.data);
             }
 
