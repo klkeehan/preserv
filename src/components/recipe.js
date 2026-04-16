@@ -413,11 +413,12 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
             <label className='label2'>Instructions:</label>< br/>
                 <br></br><textarea value={instructions} onChange={(e) => setInstructions(e.target.value)}></textarea>< br/>
                 <p className='label2'>Image:</p>
-                   <img className='edit-image' id='item-image' src={image || 'https://students.gaim.ucf.edu/~ka822136/preserv/src/assets/logomark.png'} alt='new recipe'></img><br></br>
+                   <img className='upload' id='item-image' src={image || 'https://students.gaim.ucf.edu/~ka822136/preserv/src/assets/logomark.png'} alt='new recipe'></img><br></br>
                 <div className='image-opts'>
                     <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload' onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
-                    <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'onChange={handleImageUpload}></input>
-                    <button className='image-input' onClick={() => document.getElementById('camera-capture').click()}><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
+                    <input type='file' id='camera-capture' capture='environment' style={{height: '18px', marginLeft:'5px'}} accept='image/*' className='upload'onChange={handleImageUpload}></input>
+                    <label className='image-input' onClick={() => document.getElementById('camera-capture').click()}><img src={camera} alt='camera icon' style={{height:'18px'}}></img></label>
+
                 </div>
                 <button onClick={handleEditRecipe} disabled={ingredientError !== '' || !recipeName.trim() || !instructions.trim()} style={{opacity: ingredientError !== '' || !recipeName.trim() || !instructions.trim() ? 0.5 :1}} className='save-button'>Save Recipe</button>
             </div>
@@ -513,7 +514,7 @@ const Recipe = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad}) => {
                 <div className='image-opts'>
                     <input type='file' id='file' accept='image/jpeg, image/png, image/webp, image/gif' className='upload'onChange={handleImageUpload}></input><label for='file' className='image-input'>Upload <img src={upload} alt='upload icon' style={{height: '18px', marginLeft:'5px'}}></img></label>
                     <input type='file' id='camera-capture' capture='environment' style={{display:'none'}} accept='image/*' className='upload'onChange={handleImageUpload}></input>
-                    <button className='image-input' onClick={() => document.getElementById('camera-capture').click()}><img src={camera} alt='camera icon' style={{height:'18px'}}></img></button>
+                    <label className='image-input' onClick={() => document.getElementById('camera-capture').click()}><img src={camera} alt='camera icon' style={{height:'18px'}}></img></label>
                 </div>
             <button onClick={handleNewRecipe} disabled={ingredientError !== '' || !recipeName.trim() || !instructions.trim()} style={{opacity: ingredientError !== '' || !recipeName.trim() || !instructions.trim() ? 0.5 :1}} className='save-button'>Save Recipe</button>
             </div>
