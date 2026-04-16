@@ -35,8 +35,8 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
     useEffect(() => {
         axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/session.php')
             .then((response) => {
-                console.log("session response:", response.data);
-                console.log("in_household value:", response.data.in_household);
+                //console.log("session response:", response.data);
+                //console.log("in_household value:", response.data.in_household);
                 setCurrentUser(response.data);
                 if (response.data.in_household === "1") {
                     setInHousehold(true);
@@ -49,7 +49,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
     useEffect(() => {
         axios.get('https://students.gaim.ucf.edu/~ka822136/preserv/backend/account.php')
             .then((response) => {
-                console.log("account data:", response.data);
+                //console.log("account data:", response.data);
                 setAccountData(response.data);
             })
             .catch((error) => {console.error("Account fetch error:", error);});
@@ -110,7 +110,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
         }
         axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/account.php', { field: field, value: trueorfalse })
             .then((response) => {
-                console.log("Notification updated", response.data);
+                //console.log("Notification updated", response.data);
                 if (isOn) {
                     setAccountData({...accountData, [field]: "1"});
                 } else {
@@ -130,7 +130,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
     function createHousehold() {
         axios.post("https://students.gaim.ucf.edu/~ka822136/preserv/backend/household.php")
             .then((response) => {
-                console.log("create household response:", response.data)
+                //console.log("create household response:", response.data)
                 if (response.data.success === true) {
                     getPage("created");
                 }
@@ -160,7 +160,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
     function uploadProfilePicture (imagelink) {
         axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/account.php', { field: 'profile_photo', value: imagelink, isProfilePicture: true })
             .then((response => {
-                console.log("Profile picture updated:", response.data);
+                //console.log("Profile picture updated:", response.data);
                 setAccountData({...accountData, profile_photo: imagelink});
             }))
             .catch((error) => {console.error("Profile photo update error:", error);});
@@ -205,7 +205,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
     function updatePermission(userId, field, value) {
         axios.put('https://students.gaim.ucf.edu/~ka822136/preserv/backend/household.php', { permission: true, user_id: userId, field: field, value: value })
             .then((response) => {
-                console.log("Permission updated:", response.data);
+                //console.log("Permission updated:", response.data);
                 setSelectedUser({...selectedUser, [field] : value});
             })
             .catch((error) => {console.error("Permission update erorr:", error)});
@@ -290,7 +290,7 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
 
      // Some borderline neccessary household navigation tactics
     function skiptoHousehold () {
-        console.log("inHousehold:", inHousehold);
+        //console.log("inHousehold:", inHousehold);
         if (inHousehold) {
             getPage("created");
         } else {
@@ -321,8 +321,8 @@ const Account = ({pantryLoad, shoppingLoad, recipeLoad, accountLoad, loginLoad})
     function handleLogout() {
     axios.post('https://students.gaim.ucf.edu/~ka822136/preserv/backend/logout.php')
         .then((response) => {
-            console.log("Logout response:", response.data);
-            console.log("loginLoad");
+            //("Logout response:", response.data);
+            //console.log("loginLoad");
             loginLoad();
         })
         .catch((error) => {console.error("Logout error:", error);});
