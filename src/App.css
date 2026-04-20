@@ -462,6 +462,7 @@ textarea {
   margin-top: 145px;
   padding-top: 4px;
   width: 373px;
+  height: 575px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   column-gap: 0px;
